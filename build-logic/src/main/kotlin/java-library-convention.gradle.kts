@@ -1,13 +1,36 @@
 plugins {
-//    java = 自己编译、运行的 Java 项目。
-//    java-library = 是一个给别人依赖的 Java 库，因此需要 api / implementation 这套依赖边界
+    // java-library：对外可被依赖的库，提供 api / implementation 依赖边界
     `java-library`
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
 }
 
 repositories {
     mavenCentral()
 }
 
-tasks.withType<Test> {
+val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
+
+dependencies {
+    val lombok = libs.findLibrary("lombok").get()
+    // Lombok 仅编译期使用，不要进 runtime
+    compileOnly(lombok)
+    annotationProcessor(lombok)
+    testCompileOnly(lombok)
+    testAnnotationProcessor(lombok)
+
+    implementation(libs.findLibrary("guava").get())
+    // 日志门面：具体实现（logback 等）由应用模块自行引入
+    implementation(libs.findLibrary("slf4j-api").get())
+
+    testImplementation(libs.findLibrary("junit-jupiter").get())
+    testRuntimeOnly(libs.findLibrary("junit-platform-launcher").get())
+}
+
+tasks.withType<Test>().configureEach {
     useJUnitPlatform()
 }

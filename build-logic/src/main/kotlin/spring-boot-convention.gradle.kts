@@ -1,17 +1,12 @@
 plugins {
-    java
+    id("java-library-convention")
+    // bootRun / bootJar 等能力
     id("org.springframework.boot")
-    id("io.spring.dependency-management")
 }
 
-repositories {
-    mavenCentral()
-}
+    val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
-dependencies {
-    "testImplementation"("org.springframework.boot:spring-boot-starter-test")
-}
-
-tasks.withType<Test> {
-    useJUnitPlatform()
-}
+    dependencies {
+        implementation(platform(libs.findLibrary("spring-boot-dependencies").get()))
+        testImplementation(libs.findLibrary("spring-boot-starter-test").get())
+    }

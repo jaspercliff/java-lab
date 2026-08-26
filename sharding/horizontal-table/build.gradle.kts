@@ -1,28 +1,15 @@
 plugins {
-    id("java-library-convention")
-    // bootRun bootJar 等能力
-    alias(libs.plugins.spring.boot)
+    id("spring-boot-convention")
 }
 
 group = "com.jasper"
 version = "0.0.1-SNAPSHOT"
 
-java {
-    toolchain { languageVersion = JavaLanguageVersion.of(21) }
-}
-
-repositories { mavenCentral() }
-
 dependencies {
-
-    implementation(platform(libs.spring.boot.dependencies))
     implementation(libs.spring.boot.starter.web)
     implementation(libs.spring.boot.starter.jdbc)
     implementation(libs.mybatis.plus)
 
-
-    implementation(libs.lombok)
-    annotationProcessor(libs.lombok)
 
 
     implementation(libs.sharding.jdbc)
@@ -35,9 +22,4 @@ dependencies {
     implementation(libs.sharding.standalone.repo.memory)
     implementation(libs.sharding.authority.simple)
     runtimeOnly(libs.mysql.connector.j)
-
-
-    testImplementation(libs.spring.boot.starter.test)
 }
-
-tasks.withType<Test> { useJUnitPlatform() }
