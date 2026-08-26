@@ -1,0 +1,9 @@
+spring:
+  application:
+    name:  spring-boot-starter-jdbc-demo
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # 注意：这里用的是 localhost 和映射端口 3307
+    url: jdbc:mysql://127.0.0.1:3307/java-lab?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: passwd

@@ -1,13 +1,5 @@
-plugins {
-    id("spring-boot-convention")
-}
+
 
 group = "com.jasper"
-version = "unspecified"
+version = "1.0.0"
 
-dependencies {
-    implementation(libs.spring.boot.starter.web)
-    implementation(libs.spring.boot.starter.jdbc)
-
-    runtimeOnly(libs.mysql.connector.j)
-}

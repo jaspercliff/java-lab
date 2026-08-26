@@ -22,4 +22,7 @@ plugins {
 rootProject.name = "java-lab"
 include("sharding")
 include("sharding:horizontal-table")
+
+// spring-boot-starter
 include("spring-boot-starter")
+include("spring-boot-starter:spring-boot-starter-jdbc-demo")
