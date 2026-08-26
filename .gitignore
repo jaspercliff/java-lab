@@ -9,3 +9,4 @@ build
 /.settings
 
 .idea
+container/db_data

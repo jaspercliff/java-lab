@@ -1,0 +1,34 @@
+services:
+  db:
+    image: mysql:8.4
+    container_name: java-lab
+    restart: always
+
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "500m"
+        max-file: "3"
+
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+
+    ports:
+      - "3307:3306"
+
+    volumes:
+      - ./container/db_data:/var/lib/mysql
+      - ./container/etc/my.cnf:/etc/mysql/conf.d/my.cnf:ro
+      - ./container/backup:/backup
+      - ./container/init:/docker-entrypoint-initdb.d:ro
+
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 4G
+        reservations:
+          memory: 1G
