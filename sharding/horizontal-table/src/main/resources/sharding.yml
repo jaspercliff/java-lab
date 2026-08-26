@@ -1,0 +1,38 @@
+mode:
+  type: Standalone
+  repository:
+    type: Memory
+
+dataSources:
+  m1:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    jdbcUrl: jdbc:mysql://127.0.0.1:3310/demo?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&useSSL=false
+    username: root
+    password: passwd
+
+rules:
+  - !SHARDING
+    tables:
+      t_order:
+        actualDataNodes: m1.t_order_$->{1..2} # 逻辑表 t_order 实际对应数据库 m1 里的 t_order_1 和 t_order_2 两张物理表
+        tableStrategy:
+          standard:
+            shardingColumn: user_id
+            shardingAlgorithmName: order-inline
+        keyGenerateStrategy:
+          column: id
+          keyGeneratorName: snowflake
+
+    shardingAlgorithms:
+      order-inline:
+        type: INLINE
+        props:
+          algorithm-expression: t_order_$->{(user_id % 2) + 1}
+
+    keyGenerators:
+      snowflake:
+        type: SNOWFLAKE
+
+props:
+  sql-show: true

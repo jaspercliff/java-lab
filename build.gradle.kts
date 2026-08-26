@@ -1,5 +1,6 @@
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
+    java
 }
 
 repositories {
@@ -9,12 +10,12 @@ repositories {
 
 dependencies {
     // Use JUnit Jupiter for testing.
-    testImplementation(libs.junit.jupiter)
-
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-
-    // This dependency is used by the application.
-    implementation(libs.guava)
+//    testImplementation(libs.junit.jupiter)
+//
+//    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+//
+//    // This dependency is used by the application.
+//    implementation(libs.guava)
 }
 
 // Apply a specific Java toolchain to ease working on different environments.

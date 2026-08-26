@@ -7,3 +7,5 @@ build
 # Ignore Kotlin plugin data
 .kotlin
 /.settings
+
+.idea
