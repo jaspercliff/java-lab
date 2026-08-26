@@ -7,3 +7,6 @@ spring:
     url: jdbc:mysql://127.0.0.1:3307/java-lab?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
     username: root
     password: passwd
+logging:
+  level:
+    org.springframework.jdbc.core: DEBUG

@@ -1,6 +1,6 @@
 package com.jasper.dao;
 
-import com.jasper.entity.SysUser;
+import com.jasper.pojo.entity.SysUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;

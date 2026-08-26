@@ -1,4 +1,4 @@
-package com.jasper.entity;
+package com.jasper.pojo.entity;
 
 import lombok.Data;
 
