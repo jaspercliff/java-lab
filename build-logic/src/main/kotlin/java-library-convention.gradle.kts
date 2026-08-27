@@ -26,6 +26,7 @@ dependencies {
     implementation(libs.findLibrary("guava").get())
     // 日志门面：具体实现（logback 等）由应用模块自行引入
     implementation(libs.findLibrary("slf4j-api").get())
+    runtimeOnly(libs.findLibrary("logback-classic").get())
 
     testImplementation(libs.findLibrary("junit-jupiter").get())
     testRuntimeOnly(libs.findLibrary("junit-platform-launcher").get())
