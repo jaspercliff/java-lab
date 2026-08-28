@@ -10,3 +10,8 @@ build
 
 .idea
 container/db_data
+bin/
+.classpath
+.settings
+.factorypath
+.project

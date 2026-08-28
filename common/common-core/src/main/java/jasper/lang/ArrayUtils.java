@@ -14,11 +14,11 @@ public final class ArrayUtils {
     }
 
 
-    public static <T> T first(T[] array) {
+    public static <T> T getFirst(T[] array) {
         return isEmpty(array) ? null : array[0];
     }
 
-    public static <T> T last(T[] array) {
+    public static <T> T getLast(T[] array) {
         return isEmpty(array) ? null : array[array.length - 1];
     }
 
