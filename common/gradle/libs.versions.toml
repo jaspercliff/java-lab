@@ -1,0 +1,35 @@
+[versions]
+guava = "33.5.0-jre"
+slf4j = "2.0.17"
+logback = "1.5.32"
+lombok = "1.18.42"
+caffeine = "3.2.3"
+junit = "6.0.1"
+
+mysql-connector = "9.6.0"
+mybatis-plus = "3.5.15"
+freemarker = "2.3.34"
+
+[libraries]
+# 三方库
+caffeine = { group = "com.github.ben-manes.caffeine", name = "caffeine", version.ref = "caffeine" }
+slf4j-api = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4j" }
+logback-classic = { group = "ch.qos.logback", name = "logback-classic", version.ref = "logback" }
+lombok = { group = "org.projectlombok", name = "lombok", version.ref = "lombok" }
+guava = { module = "com.google.guava:guava", version.ref = "guava" }
+
+junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter"}
+# 启动和发现测试
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher"}
+
+mysql-connector-j = { module = "com.mysql:mysql-connector-j", version.ref = "mysql-connector" }
+mybatis-plus = { module = "com.baomidou:mybatis-plus", version.ref = "mybatis-plus" }
+mybatis-plus-generator = { module = "com.baomidou:mybatis-plus-generator", version.ref = "mybatis-plus" }
+freemarker = { module = "org.freemarker:freemarker", version.ref = "freemarker" }
+
+[bundles]
+junit = [
+    "junit-jupiter",
+    "junit-platform-launcher"
+]
