@@ -20,8 +20,6 @@ plugins {
 }
 
 rootProject.name = "java-lab"
-include("sharding")
-include("sharding:horizontal-table")
 
 // spring-boot-starter
 include("spring-boot-starter")
@@ -33,3 +31,6 @@ include("library:guavaDemo")
 include("library:caffeineDemo")
 include("library:mapstructDemo")
 include("base")
+include("dataAccess")
+include("dataAccess:sharding")
+include("dataAccess:sharding:horizontal-table")
