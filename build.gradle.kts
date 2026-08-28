@@ -1,11 +1,23 @@
 plugins {
-    // Apply the application plugin to add support for building a CLI application in Java.
-    java
+    // java-library：对外可被依赖的库，提供 api / implementation 依赖边界
+    `java-library`
 }
+
+
 
 repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
+}
+
+subprojects {
+    if (project.path != ":base") {
+        plugins.withId("java-library") {
+            dependencies {
+                add("implementation", project(":base"))
+            }
+        }
+    }
 }
 
 dependencies {
