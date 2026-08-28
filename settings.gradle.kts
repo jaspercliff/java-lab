@@ -34,3 +34,5 @@ include("base")
 include("dataAccess")
 include("dataAccess:sharding")
 include("dataAccess:sharding:horizontal-table")
+
+include("dataAccess:jdbc")
