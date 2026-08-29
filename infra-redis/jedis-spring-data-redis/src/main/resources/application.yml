@@ -1,0 +1,24 @@
+spring:
+  docker:
+    compose:
+      file: infra-redis/compose.yml
+      #           lifecycle: none start-only start-and-stop
+      lifecycle-management: start-only
+      start:
+        command: up
+        arguments:
+          # 如果你之前在 compose.yml 里定义了 3 个服务，后来删掉了 1 个。
+          # 当再次运行项目时，那个被删掉的容器（孤儿容器）依然可能在后台占着端口。这个参数会自动把这些“不在名单上”的残留容器清理掉
+          - "--remove-orphans"
+      stop:
+        command: down
+        arguments:
+          - "--remove-orphans"
+      arguments:
+        - "--project-name=java-lab-redis"
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: passwd
+      client-type: jedis

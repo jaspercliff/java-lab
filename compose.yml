@@ -20,10 +20,10 @@ services:
       - "3307:3306"
 
     volumes:
-      - ./container/db_data:/var/lib/mysql
-      - ./container/etc/my.cnf:/etc/mysql/conf.d/my.cnf:ro
-      - ./container/backup:/backup
-      - ./container/init:/docker-entrypoint-initdb.d:ro
+      - ./container/mysql8.4/db_data:/var/lib/mysql
+      - ./container/mysql8.4/etc/my.cnf:/etc/mysql/conf.d/my.cnf:ro
+      - ./container/mysql8.4/backup:/backup
+      - ./container/mysql8.4/init:/docker-entrypoint-initdb.d:ro
 
     deploy:
       resources:

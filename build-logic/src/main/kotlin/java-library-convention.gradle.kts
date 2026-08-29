@@ -28,6 +28,9 @@ dependencies {
     implementation(libs.findLibrary("slf4j-api").get())
     runtimeOnly(libs.findLibrary("logback-classic").get())
 
+    testImplementation(
+        platform(libs.findLibrary("junit-bom").get())
+    )
     testImplementation(libs.findLibrary("junit-jupiter").get())
     testRuntimeOnly(libs.findLibrary("junit-platform-launcher").get())
 }

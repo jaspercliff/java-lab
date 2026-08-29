@@ -10,6 +10,7 @@ build
 
 .idea
 container/db_data
+container/redis8/data/
 bin/
 .classpath
 .settings
