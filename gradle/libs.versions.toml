@@ -13,16 +13,17 @@ slf4j = "2.0.17"
 logback = "1.5.32"
 lombok = "1.18.42"
 caffeine = "3.2.3"
-jedis = "8.0.0"
-
 testcontainers = "2.0.5"
 
+jedis = "8.0.0"
+lettuce = "7.7.0.RELEASE"
 
 [libraries]
 # 三方库
 caffeine = { group = "com.github.ben-manes.caffeine", name = "caffeine", version.ref = "caffeine" }
 
-jedis = {module="redis.clients:jedis",version.ref="jedis"}
+jedis = { module = "redis.clients:jedis", version.ref = "jedis" }
+lettuce-core = { module = "io.lettuce:lettuce-core", version.ref = "lettuce" }
 
 ## convention中引入
 slf4j-api = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4j" }
@@ -32,7 +33,7 @@ lombok = { group = "org.projectlombok", name = "lombok", version.ref = "lombok" 
 guava = { module = "com.google.guava:guava", version.ref = "guava" }
 
 junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }
-junit-jupiter = { module = "org.junit.jupiter:junit-jupiter"}
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter" }
 # 启动和发现测试
 junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher" }
 
@@ -42,7 +43,6 @@ testcontainers-testcontainers = { module = "org.testcontainers:testcontainers" }
 
 mysql-connector-j = { module = "com.mysql:mysql-connector-j", version.ref = "mysql-connector" }
 mybatis-plus = { module = "com.baomidou:mybatis-plus-spring-boot3-starter", version.ref = "mybatis-plus" }
-
 
 
 sharding-jdbc = { module = "org.apache.shardingsphere:shardingsphere-jdbc", version.ref = "sharding-jdbc" }
@@ -59,9 +59,9 @@ sharding-authority-simple = { module = "org.apache.shardingsphere:shardingsphere
 spring-boot-dependencies = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot" }
 spring-boot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web" }
 spring-boot-starter-jdbc = { module = "org.springframework.boot:spring-boot-starter-jdbc" }
-spring-boot-starter-data-redis = {module ="org.springframework.boot:spring-boot-starter-data-redis"}
+spring-boot-starter-data-redis = { module = "org.springframework.boot:spring-boot-starter-data-redis" }
 spring-boot-starter-test = { module = "org.springframework.boot:spring-boot-starter-test" }
-spring-boot-docker-compose = {module = "org.springframework.boot:spring-boot-docker-compose"}
+spring-boot-docker-compose = { module = "org.springframework.boot:spring-boot-docker-compose" }
 
 spring-boot-gradle-plugin = { module = "org.springframework.boot:spring-boot-gradle-plugin", version.ref = "spring-boot" }
 
@@ -70,6 +70,7 @@ spring-boot-gradle-plugin = { module = "org.springframework.boot:spring-boot-gra
 
 [bundles]
 testcontainers = [
-    "testcontainers-junit-jupiter",
-    "testcontainers-testcontainers"
+  "testcontainers-junit-jupiter",
+  "testcontainers-testcontainers",
 ]
+
