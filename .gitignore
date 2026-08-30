@@ -9,10 +9,11 @@ build
 /.settings
 
 .idea
-container/db_data
-container/redis8/data/
 bin/
 .classpath
 .settings
 .factorypath
 .project
+
+container/db_data
+/container/redis8/single/data/
