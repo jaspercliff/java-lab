@@ -1,5 +1,6 @@
 package com.jasper.service;
 
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
@@ -12,7 +13,7 @@ public class RedisConfigCheck {
 
     private final RedisProperties redisProperties;
 
-    @jakarta.annotation.PostConstruct
+    @PostConstruct
     public void check() {
         log.info(
                 "redis host={}, port={}, username={}, password={}",

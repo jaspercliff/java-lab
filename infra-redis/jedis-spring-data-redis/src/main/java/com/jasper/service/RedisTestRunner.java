@@ -1,11 +1,13 @@
 package com.jasper.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 @Configuration
+@Slf4j
 public class RedisTestRunner {
 
     /**
@@ -23,8 +25,7 @@ public class RedisTestRunner {
             stringRedisTemplate.opsForValue().set("name", "jasper");
 
             String name = stringRedisTemplate.opsForValue().get("name");
-
-            System.out.println(name);
+            log.info("name:{}", name);
         };
     }
 }
