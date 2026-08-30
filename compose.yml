@@ -32,3 +32,4 @@ services:
           memory: 4G
         reservations:
           memory: 1G
+

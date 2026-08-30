@@ -23,6 +23,7 @@ import java.util.concurrent.Executors;
 public class JedisTest {
 
     // static 是全局使用的 整个类
+    @SuppressWarnings("resource") // 由testcontainer管理
     @Container
     static final GenericContainer<?> REDIS =
             new GenericContainer<>("redis:8")

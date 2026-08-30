@@ -15,5 +15,6 @@ bin/
 .factorypath
 .project
 
-container/db_data
+container/mysql8.4/db_data
+container/mysql8.4/backup
 /container/redis8/single/data/

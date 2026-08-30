@@ -1,0 +1,19 @@
+spring:
+  docker:
+    compose:
+      file: infra-redis/compose.yml
+
+      lifecycle-management: start-only
+
+      start:
+        command: up
+        arguments:
+          - "--remove-orphans"
+
+      stop:
+        command: down
+        arguments:
+          - "--remove-orphans"
+
+      arguments:
+        - "--project-name=java-lab-redis"
