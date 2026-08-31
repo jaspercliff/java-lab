@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: redissionDemo
+  config:
+    import: classpath:compose-support.yml
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: passwd
+      client-type: lettuce
+      timeout: 2s # redis 命令响应
+      connect-timeout: 500ms

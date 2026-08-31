@@ -18,6 +18,8 @@ testcontainers = "2.0.5"
 jedis = "8.0.0"
 lettuce = "7.7.0.RELEASE"
 
+redisson-starter = "3.52.0"
+
 [libraries]
 # 三方库
 caffeine = { group = "com.github.ben-manes.caffeine", name = "caffeine", version.ref = "caffeine" }
@@ -65,6 +67,10 @@ spring-boot-docker-compose = { module = "org.springframework.boot:spring-boot-do
 
 spring-boot-gradle-plugin = { module = "org.springframework.boot:spring-boot-gradle-plugin", version.ref = "spring-boot" }
 
+###################################### starter 
+
+redisson-spring-boot-starter = { module = "org.redisson:redisson-spring-boot-starter", version.ref = "redisson-starter" }
+
 [plugins]
 #spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
 
@@ -73,4 +79,3 @@ testcontainers = [
   "testcontainers-junit-jupiter",
   "testcontainers-testcontainers",
 ]
-
