@@ -1,4 +1,4 @@
-package jasper.result;
+package com.jasper.result;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

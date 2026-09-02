@@ -15,5 +15,5 @@
  * @author jasper
  * @since 1.0.0
  */
-package jasper.lang;
+package com.jasper.lang;
 

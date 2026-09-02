@@ -21,6 +21,8 @@ plugins {
 
 rootProject.name = "java-lab"
 
+include("java-basic")
+
 // spring-boot-starter
 include("spring-boot-starter")
 include("spring-boot-starter:spring-boot-starter-jdbc-demo")
@@ -44,3 +46,9 @@ include("infra-redis:lettuceDemo")
 include("infra-redis:jedis-spring-data-redis")
 include("infra-redis:lettuce-spring-data-lettuce")
 include("infra-redis:redissonDemo")
+
+include("java-basic:newFeauture")
+include("java-basic:newFeauture:8")
+include("java-basic:newFeauture:21")
+include("java-basic:newFeauture:9")
+include("java-basic:foundation")

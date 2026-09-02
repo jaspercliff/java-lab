@@ -1,4 +1,4 @@
-package jasper.result;
+package com.jasper.api;
 
 /**
  * 响应码接口，方便自定义业务状态码枚举

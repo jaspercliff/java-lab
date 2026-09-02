@@ -1,4 +1,4 @@
-package jasper.lang;
+package com.jasper.lang;
 
 import com.jasper.result.FieldDifference;
 

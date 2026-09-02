@@ -5,6 +5,9 @@ logback = "1.5.32"
 lombok = "1.18.42"
 caffeine = "3.2.3"
 junit = "6.0.1"
+mapstruct = "1.6.3"
+mapstruct-lombok = "0.2.0"
+jackson = "2.22.2"
 
 mysql-connector = "9.6.0"
 mybatis-plus = "3.5.15"
@@ -17,6 +20,11 @@ slf4j-api = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4j" }
 logback-classic = { group = "ch.qos.logback", name = "logback-classic", version.ref = "logback" }
 lombok = { group = "org.projectlombok", name = "lombok", version.ref = "lombok" }
 guava = { module = "com.google.guava:guava", version.ref = "guava" }
+mapstruct = { module = "org.mapstruct:mapstruct", version.ref = "mapstruct" }
+mapstruct-processor = { module = "org.mapstruct:mapstruct-processor", version.ref = "mapstruct" }
+#mapstruct 读取 lombok生成的getter setter 等
+mapstruct-lombok-binding = { module = "org.projectlombok:lombok-mapstruct-binding", version.ref = "mapstruct-lombok" }
+jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
 
 junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }
 junit-jupiter = { module = "org.junit.jupiter:junit-jupiter"}

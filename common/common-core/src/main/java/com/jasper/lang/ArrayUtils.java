@@ -1,4 +1,4 @@
-package jasper.lang;
+package com.jasper.lang;
 
 public final class ArrayUtils {
 

@@ -1,4 +1,4 @@
-package jasper.result;
+package com.jasper.result;
 
 /**
  * 通用返回

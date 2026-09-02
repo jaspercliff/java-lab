@@ -11,11 +11,13 @@ java {
 
 repositories {
     mavenCentral()
+    mavenLocal()
 }
 
 val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
 dependencies {
+    implementation("com.jasper:common-core:1.0.0")
     val lombok = libs.findLibrary("lombok").get()
     // Lombok 仅编译期使用，不要进 runtime
     compileOnly(lombok)
