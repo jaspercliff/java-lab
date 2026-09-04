@@ -59,3 +59,5 @@ include("java-basic:spiDemo:storage-api")
 include("java-basic:spiDemo:storage-minio")
 include("java-basic:spiDemo:storage-rustfs")
 include("java-basic:spiDemo:business")
+
+include("library:jacksonDemo")

@@ -3,4 +3,8 @@ plugins {
 }
 
 dependencies{
+
+    implementation(libs.mapstruct)
+    annotationProcessor(libs.mapstruct.processor)
+    annotationProcessor(libs.mapstruct.lombok.binding)
 }
