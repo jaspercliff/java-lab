@@ -1,4 +1,5 @@
 services:
+#  Universal MySQL Container
   db:
     image: mysql:8.4
     container_name: java-lab

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jasper.mapper.SysUserMapper">
+
+    <!-- 插入数据 -->
+    <insert id="insertSysUser" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO sys_user (dept_id, username, password, nickname, avatar, email, phone, status, is_deleted, created_at, updated_at)
+        VALUES (#{deptId}, #{username}, #{password}, #{nickname}, #{avatar}, #{email}, #{phone}, #{status}, #{isDeleted}, NOW(), NOW())
+    </insert>
+
+    <!-- 带 @Param 注解的插入 -->
+    <insert id="insertSysUserWithParam" useGeneratedKeys="true" keyProperty="sysUser.id">
+        INSERT INTO sys_user (dept_id, username, password, nickname, avatar, email, phone, status, is_deleted, created_at, updated_at)
+        VALUES (#{sysUser.deptId}, #{sysUser.username}, #{sysUser.password}, #{sysUser.nickname}, #{sysUser.avatar}, #{sysUser.email}, #{sysUser.phone}, #{sysUser.status}, #{sysUser.isDeleted}, NOW(), NOW())
+    </insert>
+
+</mapper>
