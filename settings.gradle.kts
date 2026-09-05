@@ -61,3 +61,5 @@ include("java-basic:spiDemo:storage-rustfs")
 include("java-basic:spiDemo:business")
 
 include("library:jacksonDemo")
+include("designPattern")
+include("dataAccess:mybatis")
