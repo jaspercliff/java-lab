@@ -1,6 +1,6 @@
 package jasper.basic.io.NIO;
 
-import com.jasper.io.Constants;
+import jasper.basic.io.Constants;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -13,12 +13,14 @@ public class FileChannelSimpleCopy {
     public static void main(String[] args) throws IOException {
         final Path srcPath = Paths.get(Constants.NIO_FILE_SOURCE_PATH);
         final Path desPath = Paths.get(Constants.NIO_FILE_TARGET_PATH);
-        copy(srcPath,desPath,(progress,transferred,total)->{
-            System.out.println(progress);
-            System.out.println(transferred);
-            System.out.println(total);
-        });
-
+        copy(
+                srcPath,
+                desPath,
+                (progress, transferred, total) -> {
+                    System.out.println(progress);
+                    System.out.println(transferred);
+                    System.out.println(total);
+                });
     }
 
     @FunctionalInterface
@@ -29,8 +31,9 @@ public class FileChannelSimpleCopy {
     public static void copy(Path srcPath, Path desPath, listener listener) throws IOException {
 
         try (FileChannel srcChannel = FileChannel.open(srcPath, StandardOpenOption.READ);
-             FileChannel desChannel = FileChannel.open(desPath, StandardOpenOption.WRITE, StandardOpenOption.CREATE)
-        ) {
+                FileChannel desChannel =
+                        FileChannel.open(
+                                desPath, StandardOpenOption.WRITE, StandardOpenOption.CREATE)) {
             final long totalSize = srcChannel.size();
             long transferred = 0;
             final ByteBuffer byteBuffer = ByteBuffer.allocate(2);

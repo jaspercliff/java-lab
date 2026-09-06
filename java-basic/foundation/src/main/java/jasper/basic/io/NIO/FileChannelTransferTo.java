@@ -1,6 +1,6 @@
 package jasper.basic.io.NIO;
 
-import com.jasper.io.Constants;
+import jasper.basic.io.Constants;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -15,13 +15,15 @@ public class FileChannelTransferTo {
         final SocketChannel clientChannel = SocketChannel.open();
         clientChannel.connect(new InetSocketAddress(Constants.IP, Constants.PORT));
         FileChannel fileChannel = file.getChannel();
-        try (file; fileChannel; clientChannel) {
+        try (file;
+                fileChannel;
+                clientChannel) {
             long position = 0;
             long count = fileChannel.size();
             long transferred = 0;
 
-            while (count >0) {
-                transferred  = fileChannel.transferTo(position, count , clientChannel);
+            while (count > 0) {
+                transferred = fileChannel.transferTo(position, count, clientChannel);
                 position += transferred;
                 count -= transferred;
             }
