@@ -1,20 +1,10 @@
 plugins {
-    id("java")
-}
-
-group = "com.jasper"
-version = "unspecified"
-
-repositories {
-    mavenCentral()
+    id("java-library-convention")
 }
 
 dependencies {
-    testImplementation(platform("org.junit:junit-bom:6.0.0"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-}
-
-tasks.test {
-    useJUnitPlatform()
+    implementation(platform(libs.spring.framework.bom))
+    implementation(libs.spring.context)
+    implementation(libs.spring.aop)
+    implementation(libs.aspectj.weaver)
 }
