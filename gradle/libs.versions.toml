@@ -74,6 +74,7 @@ sharding-authority-simple = { module = "org.apache.shardingsphere:shardingsphere
 spring-framework-bom = {module = "org.springframework:spring-framework-bom",version.ref = "spring"}
 spring-context = { module = "org.springframework:spring-context" }
 spring-aop = { module = "org.springframework:spring-aop" }
+spring-tx = { module = "org.springframework:spring-tx" }
 aspectj-weaver = { module = "org.aspectj:aspectjweaver", version.ref = "aspectj" }
 
 spring-boot-docker-compose = { module = "org.springframework.boot:spring-boot-docker-compose" }
