@@ -1,0 +1,14 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+
+interface BeanFactory
+interface ListableBeanFactory extends BeanFactory
+interface ApplicationContext extends ListableBeanFactory
+interface ConfigurableApplicationContext extends ApplicationContext
+
+note right of BeanFactory: Bean 的实例化和依赖注入
+note right of ListableBeanFactory: 允许你枚举（遍历）容器中的所有 Bean 定义或 Bean 实例
+note right of ApplicationContext: 预实例化（Eager Load）：容器启动时，就会把所有单例 Bean 实例化好 国际化 事件发布机制 资源加载
+
+@enduml
