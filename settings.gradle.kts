@@ -74,3 +74,5 @@ include("spring-lab:web:servlet")
 include("spring-lab:web:mvc")
 include("spring-lab:web:webflux")
 include("spring-lab:intergration")
+
+include("openIntegration")
