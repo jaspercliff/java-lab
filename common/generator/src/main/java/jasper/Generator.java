@@ -12,15 +12,15 @@ public class Generator {
 
     /** 数据源配置 */
     private static final DataSourceConfig.Builder DATA_SOURCE_CONFIG =
-            new DataSourceConfig.Builder("jdbc:mysql://127.0.0.1:3307/learn", "root", "passwd")
+            new DataSourceConfig.Builder("jdbc:mysql://127.0.0.1:3307/java-lab", "root", "passwd")
                     .keyWordsHandler(new MySqlKeyWordsHandler());
 
     public static final String USER_HOME = System.getProperty("user.home");
     // 1. 定义项目的根路径（不包含 src/main/java）
-    public static final String PROJECT_PATH = USER_HOME + "/code/java/person/springDemo";
+    public static final String PROJECT_PATH = USER_HOME + "/code/java/person/java-lab";
 
-    public static final String PARENT_PACKAGE = "com.jasper.springDemo";
-    public static final String TABLE_NAME = "test_user";
+    public static final String PARENT_PACKAGE = "generator";
+    public static final String TABLE_NAME = "sys_user_role";
 
     public static void main(String[] args) {
         FastAutoGenerator.create(DATA_SOURCE_CONFIG)
@@ -55,7 +55,6 @@ public class Generator {
                                     .controllerBuilder()
                                     .enableRestStyle()
                                     .controllerBuilder();
-//                                    .superClass("com.jasper.springDemo.base.BaseController");
                         })
                 .templateEngine(new FreemarkerTemplateEngine())
                 .execute();

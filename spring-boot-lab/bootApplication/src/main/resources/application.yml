@@ -1,0 +1,58 @@
+spring:
+  application:
+    name: bootApplication
+  # cache:
+  #   type: caffeine
+  #   cache-names: item
+  #   caffeine:
+  #     # 10分钟过期，最大1万条，开启统计
+  #     spec: expireAfterWrite=10m,maximumSize=10000,recordStats
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # 注意：这里用的是 localhost 和映射端口 3307
+    url: jdbc:mysql://127.0.0.1:3307/java-lab?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    password: passwd
+      #  data:
+      #    redis:
+      #      password: passwd
+      # sentinel: 
+      #   master: mymaster
+      #   nodes:
+      #     - 127.0.0.1:26380
+      #     - 127.0.0.1:26381
+      #     - 127.0.0.1:26382
+      # cluster:
+      #   nodes:
+      #   - 192.168.31.36:6380
+      #   - 192.168.31.36:6381
+      #   - 192.168.31.36:6382
+      #   - 192.168.31.36:6383
+      #   - 192.168.31.36:6384
+    #   - 192.168.31.36:6385
+logging:
+  level:
+    io.lettuce.core: debug
+    com.jasper: debug
+  pattern:
+    dateformat: HH:mm:ss:SSS
+mybatis-plus:
+  #  实体类包路径（用于别名扫描，这样 XML 里可以直接写 User 而不用全类名）
+  type-aliases-package: com.example.project.entity
+  #  全局配置
+  global-config:
+    db-config:
+      # 主键类型：AUTO(数据库自增), ASSIGN_ID(雪花算法), ASSIGN_UUID(UUID)
+      # 生产推荐 ASSIGN_ID，方便分布式扩展
+      id-type: auto
+      # 逻辑删除配置（生产环境通常不真删数据，而是改状态）
+      logic-delete-field: is_deleted # 全局逻辑删除的实体字段名
+      logic-delete-value: 1       # 已删除状态值
+      logic-not-delete-value: 0   # 未删除状态值
+
+  # 4. 原生 MyBatis 配置
+  configuration:
+    # 开启驼峰命名转换：数据库字段 user_name -> 实体属性 userName
+    map-underscore-to-camel-case: true
+    # 开启二级缓存（按需开启）
+    cache-enabled: false
+

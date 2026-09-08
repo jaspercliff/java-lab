@@ -1,6 +1,5 @@
 package com.jasper.pojo.dto;
 
-import com.jasper.pojo.entity.SysRole;
 import lombok.Data;
 
 import java.io.Serial;

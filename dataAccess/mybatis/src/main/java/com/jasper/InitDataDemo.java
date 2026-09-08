@@ -26,7 +26,7 @@ public class InitDataDemo {
             user.setId(1L);
             user.setUsername("jasper");
             user.setNickname("贾斯珀");
-            user.setStatus(1);
+            user.setStatus((byte) 1);
             user.setPassword("123456");
             mapper.insertUser(user);
 

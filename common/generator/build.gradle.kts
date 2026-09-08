@@ -15,6 +15,8 @@ dependencies {
     implementation(libs.mybatis.plus)
     implementation(libs.mybatis.plus.generator)
     implementation(libs.freemarker)
+    implementation(libs.slf4j.api)
+    implementation(libs.logback.classic)
 }
 
 tasks.test {

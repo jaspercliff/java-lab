@@ -1,8 +1,8 @@
 package com.jasper.mapper;
 
 import com.jasper.pojo.dto.SysUserRoleDTO;
-import com.jasper.pojo.entity.SysUser;
 //import org.apache.ibatis.annotations.CacheNamespace;
+import com.jasper.pojo.entity.SysUser;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;

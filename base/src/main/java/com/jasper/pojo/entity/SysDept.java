@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- * 菜单权限表
+ * 部门表
  * </p>
  *
  * @author jasper
@@ -22,64 +22,58 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
-@TableName("sys_menu")
-public class SysMenu implements Serializable {
+@TableName("sys_dept")
+public class SysDept implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 菜单ID
+     * 部门ID
      */
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
     /**
-     * 父菜单ID
+     * 父部门ID
      */
     @TableField("parent_id")
     private Long parentId;
 
     /**
-     * 菜单名称
+     * 祖级列表
      */
-    @TableField("menu_name")
-    private String menuName;
+    @TableField("ancestors")
+    private String ancestors;
 
     /**
-     * 权限标识
+     * 部门名称
      */
-    @TableField("permission_key")
-    private String permissionKey;
+    @TableField("dept_name")
+    private String deptName;
 
     /**
-     * 类型：1-目录，2-菜单，3-按钮
-     */
-    @TableField("`type`")
-    private Byte type;
-
-    /**
-     * 路由地址
-     */
-    @TableField("`path`")
-    private String path;
-
-    /**
-     * 组件路径
-     */
-    @TableField("`component`")
-    private String component;
-
-    /**
-     * 图标
-     */
-    @TableField("icon")
-    private String icon;
-
-    /**
-     * 排序
+     * 显示顺序
      */
     @TableField("sort_order")
     private Integer sortOrder;
+
+    /**
+     * 负责人
+     */
+    @TableField("leader")
+    private String leader;
+
+    /**
+     * 联系电话
+     */
+    @TableField("phone")
+    private String phone;
+
+    /**
+     * 邮箱
+     */
+    @TableField("email")
+    private String email;
 
     /**
      * 状态：0-禁用，1-正常
