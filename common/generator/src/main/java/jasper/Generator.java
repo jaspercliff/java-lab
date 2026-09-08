@@ -54,8 +54,8 @@ public class Generator {
                                     .enableTableFieldAnnotation()
                                     .controllerBuilder()
                                     .enableRestStyle()
-                                    .controllerBuilder()
-                                    .superClass("com.jasper.springDemo.base.BaseController");
+                                    .controllerBuilder();
+//                                    .superClass("com.jasper.springDemo.base.BaseController");
                         })
                 .templateEngine(new FreemarkerTemplateEngine())
                 .execute();

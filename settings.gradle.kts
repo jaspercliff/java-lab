@@ -76,3 +76,4 @@ include("spring-lab:web:webflux")
 include("spring-lab:intergration")
 
 include("openIntegration")
+include("spring-boot-lab:bootApplication")
