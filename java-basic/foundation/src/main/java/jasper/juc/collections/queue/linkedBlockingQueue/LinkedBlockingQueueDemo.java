@@ -1,4 +1,4 @@
-package jasper.juc.collections.queue;
+package jasper.juc.collections.queue.linkedBlockingQueue;
 
 import java.util.concurrent.LinkedBlockingQueue;
 
