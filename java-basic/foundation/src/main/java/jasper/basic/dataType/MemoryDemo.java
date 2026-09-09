@@ -18,11 +18,11 @@ public class MemoryDemo {
         // 'refVar' 这个引用变量本身在栈中，
         // 但它指向的对象 new Integer(50) 在堆中。
         // jdk9 deprecated
-        Integer refVar = new Integer(50);
+//        Integer refVar = new Integer(50);
 
         System.out.println(localVar);
         System.out.println(longVar);
-        System.out.println(refVar);
+//        System.out.println(refVar);
     }
 
     public static void main(String[] args) throws InterruptedException {
