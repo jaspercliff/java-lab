@@ -2,7 +2,9 @@ package com.jasper;
 
 import com.jasper.mapper.SysUserMapper;
 import com.jasper.pojo.entity.SysUser;
+
 import lombok.extern.slf4j.Slf4j;
+
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -30,8 +32,6 @@ public class CrudDemo {
             user.setAvatar("https://example.com/avatar.jpg");
             user.setEmail("jasper@example.com");
             user.setPhone("13800138000");
-            user.setStatus(1);
-            user.setIsDeleted(0);
 
             SysUser user1 = new SysUser();
             user1.setDeptId(1L);
@@ -41,8 +41,6 @@ public class CrudDemo {
             user1.setAvatar("https://example.com/avatar1.jpg");
             user1.setEmail("jasper_param@example.com");
             user1.setPhone("13800138001");
-            user1.setStatus(1);
-            user1.setIsDeleted(0);
 
             mapper.insertSysUser(user);
             mapper.insertSysUserWithParam(user1);

@@ -1,5 +1,7 @@
 package com.jasper.pojo.dto;
 
+import com.jasper.pojo.entity.SysRole;
+
 import lombok.Data;
 
 import java.io.Serial;
@@ -9,8 +11,7 @@ import java.util.List;
 
 @Data
 public class SysUserRoleDTO implements Serializable {
-    @Serial
-    private static final long serialVersionUID = 1L;
+    @Serial private static final long serialVersionUID = 1L;
 
     private Long id;
     private String username;
