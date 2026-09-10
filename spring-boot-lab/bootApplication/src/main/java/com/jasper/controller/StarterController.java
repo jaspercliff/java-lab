@@ -2,6 +2,7 @@ package com.jasper.controller;
 
 import com.cliff.JasperEnableService;
 import com.cliff.JasperHelloService;
+import com.jasper.config.anno.Auth;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,7 @@ public class StarterController {
     }
 
     @GetMapping("enable")
+    @Auth
     public String enable() {
         return  enableService.isEnabled();
     }

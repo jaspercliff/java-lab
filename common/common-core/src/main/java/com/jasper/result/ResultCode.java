@@ -1,4 +1,4 @@
-package com.jasper.enums;
+package com.jasper.result;
 
 import com.jasper.result.IResultCode;
 import lombok.AllArgsConstructor;
@@ -20,7 +20,7 @@ public enum ResultCode implements IResultCode {
     NOT_FOUND(404, "请求资源不存在"),
     METHOD_NOT_ALLOWED(405, "请求方法不允许"),
     VALIDATE_FAILED(412, "参数校验失败"),
-
+    INTERNAL_SERVER_ERROR(500, "服务器内部错误"),
     FAILED(500, "系统执行出错"),
     SERVICE_UNAVAILABLE(503, "服务不可用");
 
