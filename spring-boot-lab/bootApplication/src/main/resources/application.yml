@@ -56,7 +56,7 @@ mybatis-plus:
     # 开启二级缓存（按需开启）
     cache-enabled: false
 
-#jasper:
-#  hello:
-#    enabled: true
-#    name: Jasper
+jasper:
+  hello:
+    enabled: true
+    name: cliff

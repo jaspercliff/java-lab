@@ -1,11 +1,5 @@
 package com.jasper.ioc.circular;
 
-import com.jasper.context.annotation.importDemo.ImportConfig;
-import com.jasper.service.DynamicService;
-import com.jasper.service.ServiceA;
-import com.jasper.service.ServiceB;
-import com.jasper.service.ThirdPartyService;
-
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;

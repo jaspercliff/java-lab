@@ -1,4 +1,4 @@
-package com.jasper;
+package com.jasper.config;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -19,7 +19,7 @@ import java.lang.reflect.Method;
 @Aspect
 public class LogAspect {
 
-    @Around("CommonPointcuts.logPointcut()")
+    @Around("com.jasper.aspect.CommonPointcuts.logPointcut()")
     public Object doAround(ProceedingJoinPoint joinPoint) {
         return TimeTracker.measure("log around aspect", () -> {
             MethodSignature signature =
@@ -44,19 +44,19 @@ public class LogAspect {
         });
     }
 
-    @Before("CommonPointcuts.exePcd()")
+    @Before("com.jasper.aspect.CommonPointcuts.exePcd()")
     public void doBefore(JoinPoint joinPoint) {
         String methodName = joinPoint.getSignature().getName();
         log.info("execution >>> AOP 验证成功！正在执行方法: {}", methodName);
     }
 
-    @Before("CommonPointcuts.withinPcd()")
+    @Before("com.jasper.aspect.CommonPointcuts.withinPcd()")
     public void doBeforeWithin(JoinPoint joinPoint) {
         String methodName = joinPoint.getSignature().getName();
         log.info("within >>> AOP 验证成功！正在执行方法: {}", methodName);
     }
 
-    @Before("CommonPointcuts.withinAnnoPcd()")
+    @Before("com.jasper.aspect.CommonPointcuts.withinAnnoPcd()")
     public void doBeforeWithinAnno(JoinPoint joinPoint) {
         String methodName = joinPoint.getSignature().getName();
         log.info("@within >>> AOP 验证成功！正在执行方法: {}", methodName);
@@ -64,7 +64,7 @@ public class LogAspect {
 
 //     * @AfterReturning 方法正常返回后
 //     * @AfterThrowing 方法抛出异常后
-    @After("CommonPointcuts.userParamPcd()")
+    @After("com.jasper.aspect.CommonPointcuts.userParamPcd()")
     public void doBeforeUserParam(JoinPoint joinPoint) {
         String methodName = joinPoint.getSignature().getName();
         log.info("args >>> AOP 验证成功！正在执行方法: {}", methodName);

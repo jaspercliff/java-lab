@@ -1,5 +1,7 @@
 package com.jasper;
 
+import com.jasper.config.JasperHelloProperties;
+
 public class JasperHelloService {
 
     private final JasperHelloProperties properties;

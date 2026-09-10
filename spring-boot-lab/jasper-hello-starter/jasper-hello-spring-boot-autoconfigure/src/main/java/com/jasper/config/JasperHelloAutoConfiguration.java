@@ -1,5 +1,6 @@
-package com.jasper;
+package com.jasper.config;
 
+import com.jasper.JasperHelloService;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
