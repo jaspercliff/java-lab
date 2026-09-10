@@ -1,0 +1,3 @@
+# Starter 提供了哪些自动配置类
+# Spring Boot 2 : spring.factories
+com.jasper.JasperHelloAutoConfiguration

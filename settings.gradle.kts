@@ -77,3 +77,6 @@ include("spring-lab:intergration")
 
 include("openIntegration")
 include("spring-boot-lab:bootApplication")
+include("spring-boot-lab:jasper-hello-starter")
+include("spring-boot-lab:jasper-hello-starter:jasper-hello-spring-boot-autoconfigure")
+include("spring-boot-lab:jasper-hello-starter:jasper-hello-spring-boot-starter")

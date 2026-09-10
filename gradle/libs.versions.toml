@@ -76,10 +76,15 @@ spring-aop = { module = "org.springframework:spring-aop" }
 spring-tx = { module = "org.springframework:spring-tx" }
 aspectj-weaver = { module = "org.aspectj:aspectjweaver", version.ref = "aspectj" }
 
+
+spring-boot-dependencies = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot" }
+spring-boot-autoconfigure = {module = "org.springframework.boot:spring-boot-autoconfigure"}
+spring-boot-configuration-processor = {module="org.springframework.boot:spring-boot-configuration-processor"}
+
+
 spring-boot-docker-compose = { module = "org.springframework.boot:spring-boot-docker-compose" }
 spring-boot-gradle-plugin = { module = "org.springframework.boot:spring-boot-gradle-plugin", version.ref = "spring-boot" }
 ###################################### spring starter
-spring-boot-dependencies = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot" }
 spring-boot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web" }
 spring-boot-starter-jdbc = { module = "org.springframework.boot:spring-boot-starter-jdbc" }
 spring-boot-starter-data-redis = { module = "org.springframework.boot:spring-boot-starter-data-redis" }
