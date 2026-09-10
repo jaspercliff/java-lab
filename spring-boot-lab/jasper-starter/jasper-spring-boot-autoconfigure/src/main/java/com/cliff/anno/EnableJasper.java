@@ -1,6 +1,6 @@
-package com.jasper.anno;
+package com.cliff.anno;
 
-import com.jasper.config.JasperImportSelector;
+import com.cliff.config.JasperImportSelector;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
