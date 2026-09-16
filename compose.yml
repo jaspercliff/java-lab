@@ -2,7 +2,7 @@ services:
 #  Universal MySQL Container
   db:
     image: mysql:8.4
-    container_name: java-lab
+    container_name: java-lab-db
     restart: always
 
     logging:
@@ -33,4 +33,9 @@ services:
           memory: 4G
         reservations:
           memory: 1G
-
+    networks:
+      - java-lab
+networks:
+  java-lab:
+    name: java-lab
+    driver: bridge
