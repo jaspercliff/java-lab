@@ -1,0 +1,26 @@
+services:
+
+  seata-server:
+    image: apache/seata-server:2.6.0
+    container_name: seata-server
+    restart: unless-stopped
+
+    ports:
+      - "8091:8091"
+      - "7091:7091"
+
+    environment:
+      # Seata Server
+      - SEATA_IP=seata-server
+      - SEATA_PORT=8091
+
+    volumes:
+      - ./logs:/seata-server/logs
+      - ./resources:/seata-server/resources
+
+    networks:
+      - java-lab
+
+networks:
+  java-lab:
+    external: true
