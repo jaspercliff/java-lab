@@ -9,8 +9,11 @@ dependencies {
     implementation(libs.mybatis.plus)
     implementation(platform(libs.bom.alibaba))
     implementation(platform(libs.bom.springcloud))
+    implementation(libs.nacos.discovery)
+//    implementation(libs.nacos.config)
     implementation(libs.seata)
     implementation(libs.openfeign)
     implementation(libs.loadbalancer)
+    implementation(libs.spring.boot.starter.actuator)
 }
 

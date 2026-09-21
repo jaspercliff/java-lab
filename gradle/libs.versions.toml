@@ -81,6 +81,7 @@ spring-boot-docker-compose = { module = "org.springframework.boot:spring-boot-do
 spring-boot-gradle-plugin = { module = "org.springframework.boot:spring-boot-gradle-plugin", version.ref = "spring-boot" }
 ###################################### spring starter
 spring-boot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web" }
+spring-boot-starter-actuator = {group = "org.springframework.boot",name = "spring-boot-starter-actuator"}
 spring-boot-starter-jdbc = { module = "org.springframework.boot:spring-boot-starter-jdbc" }
 spring-boot-starter-data-redis = { module = "org.springframework.boot:spring-boot-starter-data-redis" }
 spring-boot-starter-test = { module = "org.springframework.boot:spring-boot-starter-test" }

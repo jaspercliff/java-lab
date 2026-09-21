@@ -1,15 +1,17 @@
 spring:
   cloud:
     nacos:
-      username: nacos
-      password: nacos
       discovery:
         enabled: true
         server-addr: localhost:8848
-      config:
-        server-addr: localhost:8848
+        username: nacos
+        password: nacos
+#      config:
+#        server-addr: localhost:8848
+#        username: nacos
+#        password: nacos
   datasource:
-    url: jdbc:mysql://localhost:3307/storage_db?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3307/seata_storage?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
     username: root
     password: passwd
     driver-class-name: com.mysql.cj.jdbc.Driver

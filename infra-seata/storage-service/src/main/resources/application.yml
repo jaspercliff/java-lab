@@ -6,6 +6,9 @@ spring:
     name: storage-service
   profiles:
     active: dev
+#  config:
+#    import: "optional:nacos:storage-service"
+
 management:
   endpoint:
     health:
