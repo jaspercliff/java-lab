@@ -18,13 +18,12 @@ management:
       exposure:
         include: '*'
 seata:
-  tx-service-group: my_test_tx_group
-
+  tx-service-group: my_test_tx_group # 事务组
   service:
     vgroup-mapping:
-      my_test_tx_group: default
-    grouplist:
-      default: 127.0.0.1:8091
+      my_test_tx_group: default      # 事务组对应那个集群
+#    grouplist: # nacos registry 这里这样写直接写死
+#      default: 127.0.0.1:8091
 
 mybatis-plus:
   configuration:

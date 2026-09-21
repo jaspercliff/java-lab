@@ -43,5 +43,8 @@ public class OrderService {
         accountClient.debit(userId, money);
 
         log.info("Order process completed successfully.");
+
+        // 模拟异常
+        throw new RuntimeException("模拟 Seata 全局事务回滚");
     }
 }
