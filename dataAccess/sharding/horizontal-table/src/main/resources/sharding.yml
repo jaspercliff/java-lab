@@ -16,10 +16,18 @@ dataSources:
     jdbcUrl: jdbc:mysql://127.0.0.1:3307/sharding-order-2?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&useSSL=false
     username: root
     password: passwd
-
+  m3: # 垂直分库
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    jdbcUrl: jdbc:mysql://127.0.0.1:3307/sharding-user?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&useSSL=false
+    username: root
+    password: passwd
 rules:
   - !SHARDING
     tables:
+      t_user:
+        actualDataNodes: m3.t_user
+
       t_order:
         actualDataNodes: m$->{1..2}.t_order_$->{1..2}
 
