@@ -35,7 +35,17 @@ public class OrderDaoTest {
 
     @Test
     void selectByUserId() {
+        // 根据userId 分库 带分片键 只去一个库   表没有分片键 union all 俩张表
         List<Map<String, Object>> maps = orderDao.selectByUserId(1001L);
+        for (Map<String, Object> map : maps) {
+            System.out.println(map);
+        }
+    }
+
+    @Test
+    void selectById() {
+        // 根据Id 分表 带分片键 去俩个库 一张表
+        List<Map<String, Object>> maps = orderDao.selectById(1309108431176597505L);
         for (Map<String, Object> map : maps) {
             System.out.println(map);
         }

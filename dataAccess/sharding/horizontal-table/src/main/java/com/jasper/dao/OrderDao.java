@@ -69,4 +69,19 @@ public class OrderDao {
 
         return jdbcTemplate.queryForList(sql, userId);
     }
+
+    public List<Map<String, Object>> selectById(Long id) {
+        String sql = """
+            SELECT
+                id,
+                user_id,
+                order_no,
+                amount,
+                status
+            FROM t_order
+            WHERE id = ?
+            """;
+
+        return jdbcTemplate.queryForList(sql, id);
+    }
 }
