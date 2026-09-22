@@ -1,20 +1,40 @@
 spring:
-  cloud:
-    nacos:
-      username: nacos
-      password: nacos
-      discovery:
-        enabled: true
-        server-addr: localhost:8848
-      config:
-        server-addr: localhost:8848
   datasource:
     url: jdbc:mysql://localhost:3307/seata_account?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
     username: root
     password: passwd
     driver-class-name: com.mysql.cj.jdbc.Driver
+  cloud:
+    nacos:
+      discovery:
+        enabled: true
+        server-addr: localhost:8848
+        username: nacos
+        password: nacos
+#      config:
+#        server-addr: localhost:8848
+#        username: nacos
+#        password: nacos
+seata:
+  enabled: true
+  application-id: ${spring.application.name}
 
-  # 显式关闭 Docker Compose 自动化，防止它去乱读本地的 compose 文件
-  docker:
-    compose:
-      enabled: false
+  tx-service-group: ${spring.application.name}-tx-group
+  config:
+    type: nacos
+    nacos:
+      serverAddr: 127.0.0.1:8848
+      dataId: "seata.yml"
+      namespace: infra-seata
+      group: SEATA_GROUP
+      username: 'nacos'
+      password: 'nacos'
+  registry:
+    type: nacos
+    nacos:
+      application: seata-server
+      server-addr: 127.0.0.1:8848
+      cluster: default
+      group: SEATA_GROUP
+      username: 'nacos'
+      password: 'nacos'
