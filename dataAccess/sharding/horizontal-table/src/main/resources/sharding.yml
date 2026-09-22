@@ -60,6 +60,8 @@ rules:
     keyGenerators:
       snowflake:
         type: SNOWFLAKE
-
+  - !BROADCAST
+    tables:
+      - t_dict # 广播表 所有数据库都有的
 props:
   sql-show: true

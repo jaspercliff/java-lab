@@ -23,4 +23,9 @@ public class UserDaoTest {
         Map<String, Object> stringObjectMap = userDao.get(1L);
         log.info("{}", stringObjectMap);
     }
+    @Test
+    public void test3() {
+        Map<String, Object> withStatus = userDao.getWithStatus(1L);
+        log.info("{}", withStatus);
+    }
 }

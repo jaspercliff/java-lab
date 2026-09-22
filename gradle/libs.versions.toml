@@ -61,6 +61,8 @@ sharding-mysql-dialect = { module = "org.apache.shardingsphere:shardingsphere-jd
 sharding-standalone-mode = { module = "org.apache.shardingsphere:shardingsphere-standalone-mode-core", version.ref = "sharding-jdbc" }
 sharding-standalone-repo-memory = { module = "org.apache.shardingsphere:shardingsphere-standalone-mode-repository-memory", version.ref = "sharding-jdbc" }
 sharding-authority-simple = { module = "org.apache.shardingsphere:shardingsphere-authority-simple", version.ref = "sharding-jdbc" }
+sharding-broadcase-core = {module = "org.apache.shardingsphere:shardingsphere-broadcast-core", version.ref = "sharding-jdbc" }
+
 
 
 spring-framework-bom = {module = "org.springframework:spring-framework-bom",version.ref = "spring"}

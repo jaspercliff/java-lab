@@ -36,6 +36,20 @@ CREATE TABLE t_order_2 (
   DEFAULT CHARSET = utf8mb4
     COMMENT = '订单表-2';
 
+CREATE TABLE `t_dict` (
+                          `id` BIGINT NOT NULL COMMENT '字典ID',
+                          `dict_type` VARCHAR(64) NOT NULL COMMENT '字典类型',
+                          `dict_code` VARCHAR(64) NOT NULL COMMENT '字典编码',
+                          `dict_name` VARCHAR(128) NOT NULL COMMENT '字典名称',
+                          `sort` INT NOT NULL DEFAULT 0 COMMENT '排序',
+                          `status` TINYINT NOT NULL DEFAULT 1 COMMENT '状态',
+                          PRIMARY KEY (`id`),
+                          UNIQUE KEY `uk_type_code` (`dict_type`, `dict_code`)
+) ENGINE=InnoDB
+  DEFAULT CHARSET=utf8mb4
+  COLLATE=utf8mb4_unicode_ci
+    COMMENT='公共字典表';
+
 CREATE DATABASE IF NOT EXISTS `sharding-order-2` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `sharding-order-2`;
 CREATE TABLE t_order_1 (
@@ -75,6 +89,21 @@ CREATE TABLE t_order_2 (
     COMMENT = '订单表-2';
 
 
+CREATE TABLE `t_dict` (
+                          `id` BIGINT NOT NULL COMMENT '字典ID',
+                          `dict_type` VARCHAR(64) NOT NULL COMMENT '字典类型',
+                          `dict_code` VARCHAR(64) NOT NULL COMMENT '字典编码',
+                          `dict_name` VARCHAR(128) NOT NULL COMMENT '字典名称',
+                          `sort` INT NOT NULL DEFAULT 0 COMMENT '排序',
+                          `status` TINYINT NOT NULL DEFAULT 1 COMMENT '状态',
+                          PRIMARY KEY (`id`),
+                          UNIQUE KEY `uk_type_code` (`dict_type`, `dict_code`)
+) ENGINE=InnoDB
+  DEFAULT CHARSET=utf8mb4
+  COLLATE=utf8mb4_unicode_ci
+    COMMENT='公共字典表';
+
+
 CREATE DATABASE IF NOT EXISTS `sharding-user` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `sharding-user`;
 
@@ -97,3 +126,19 @@ CREATE TABLE `t_user` (
                             UNIQUE KEY `uk_phone` (`phone`),
                             KEY `idx_dept_id` (`dept_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户表';
+
+
+CREATE TABLE `t_dict` (
+                          `id` BIGINT NOT NULL COMMENT '字典ID',
+                          `dict_type` VARCHAR(64) NOT NULL COMMENT '字典类型',
+                          `dict_code` VARCHAR(64) NOT NULL COMMENT '字典编码',
+                          `dict_name` VARCHAR(128) NOT NULL COMMENT '字典名称',
+                          `sort` INT NOT NULL DEFAULT 0 COMMENT '排序',
+                          `status` TINYINT NOT NULL DEFAULT 1 COMMENT '状态',
+                          PRIMARY KEY (`id`),
+                          UNIQUE KEY `uk_type_code` (`dict_type`, `dict_code`)
+) ENGINE=InnoDB
+  DEFAULT CHARSET=utf8mb4
+  COLLATE=utf8mb4_unicode_ci
+    COMMENT='公共字典表';
+

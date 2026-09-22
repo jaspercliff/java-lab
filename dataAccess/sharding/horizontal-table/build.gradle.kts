@@ -9,7 +9,7 @@ dependencies {
     implementation(libs.spring.boot.starter.web)
     implementation(libs.spring.boot.starter.jdbc)
     implementation(libs.mybatis.plus)
-
+    runtimeOnly(libs.mysql.connector.j)
 
 
     implementation(libs.sharding.jdbc)
@@ -21,5 +21,5 @@ dependencies {
     implementation(libs.sharding.standalone.mode)
     implementation(libs.sharding.standalone.repo.memory)
     implementation(libs.sharding.authority.simple)
-    runtimeOnly(libs.mysql.connector.j)
+    implementation(libs.sharding.broadcase.core) // 广播表
 }

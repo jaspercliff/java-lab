@@ -40,4 +40,31 @@ public class UserDao {
                 id
         );
     }
+
+    /**
+     * 查询用户 + 用户状态名称
+     */
+    public Map<String, Object> getWithStatus(Long id) {
+
+        String sql = """
+        SELECT
+            u.id,
+            u.dept_id,
+            u.username,
+            u.nickname,
+            u.email,
+            u.phone,
+            u.status,
+            d.dict_name AS status_name,
+            u.created_at,
+            u.updated_at
+        FROM t_user u
+        LEFT JOIN t_dict d
+            ON d.dict_type = 'user_status'
+           AND d.dict_code = u.status
+        WHERE u.id = ?
+        """;
+
+        return jdbcTemplate.queryForMap(sql, id);
+    }
 }
