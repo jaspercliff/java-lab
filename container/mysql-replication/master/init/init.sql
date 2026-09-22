@@ -1,0 +1,5 @@
+CREATE USER 'repl'@'%' IDENTIFIED BY 'passwd';
+
+GRANT REPLICATION SLAVE ON *.* TO 'repl'@'%';
+
+FLUSH PRIVILEGES;
