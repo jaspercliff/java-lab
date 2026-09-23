@@ -22,4 +22,5 @@ dependencies {
     implementation(libs.sharding.standalone.repo.memory)
     implementation(libs.sharding.authority.simple)
     implementation(libs.sharding.broadcase.core) // 广播表
+    implementation(libs.shardingsphere.readwrite.splitting.core)
 }

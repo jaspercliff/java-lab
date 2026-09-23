@@ -62,6 +62,8 @@ sharding-standalone-mode = { module = "org.apache.shardingsphere:shardingsphere-
 sharding-standalone-repo-memory = { module = "org.apache.shardingsphere:shardingsphere-standalone-mode-repository-memory", version.ref = "sharding-jdbc" }
 sharding-authority-simple = { module = "org.apache.shardingsphere:shardingsphere-authority-simple", version.ref = "sharding-jdbc" }
 sharding-broadcase-core = {module = "org.apache.shardingsphere:shardingsphere-broadcast-core", version.ref = "sharding-jdbc" }
+shardingsphere-readwrite-splitting-core = {module = "org.apache.shardingsphere:shardingsphere-readwrite-splitting-core",version.ref="sharding-jdbc"}
+
 
 
 
