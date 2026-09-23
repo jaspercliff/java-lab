@@ -1,12 +1,5 @@
 plugins {
-    id("java")
-}
-
-group = "com.jasper"
-version = "unspecified"
-
-repositories {
-    mavenCentral()
+    id("spring-boot-convention")
 }
 
 dependencies {
@@ -15,8 +8,4 @@ dependencies {
     implementation(libs.mysql.connector.j)
     implementation(libs.mybatis.plus)
 
-}
-
-tasks.test {
-    useJUnitPlatform()
 }

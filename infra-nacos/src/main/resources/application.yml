@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: nacosApplication
+  profiles:
+    active: dev
