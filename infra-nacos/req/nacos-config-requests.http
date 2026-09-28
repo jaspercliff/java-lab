@@ -1,0 +1,10 @@
+###
+GET http://localhost:8080/nacos/valueAnnotation
+
+
+###
+GET http://localhost:8080/nacos/configurationProperties
+
+###
+
+GET http://localhost:8080/nacos/nacosConfigAnno

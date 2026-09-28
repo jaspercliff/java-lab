@@ -3,3 +3,16 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3307/java-lab?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
     password: passwd
+  cloud:
+    nacos:
+      username: nacos
+      password: nacos
+      server-addr: localhost:8848
+      discovery:
+        enabled: true
+        namespace: dev
+      config:
+        namespace: dev
+  config:
+    import:
+      - optional:nacos:infra-nacos.yml?group=INFRA_NACOS_GROUP&refreshEnabled=true

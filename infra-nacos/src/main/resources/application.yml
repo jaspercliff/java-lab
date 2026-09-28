@@ -3,3 +3,9 @@ spring:
     name: nacosApplication
   profiles:
     active: dev
+# jvm > env(path variable) > nacos
+# nacos 和配置文件都有时，nacos 配置文件优先级高于配置文件
+config:
+  hobby: smoking
+config1:
+  sex: male

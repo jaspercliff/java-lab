@@ -8,4 +8,9 @@ dependencies {
     implementation(libs.mysql.connector.j)
     implementation(libs.mybatis.plus)
 
+
+    implementation(platform(libs.bom.alibaba))
+    implementation(platform(libs.bom.springcloud))
+    implementation(libs.nacos.discovery)
+    implementation(libs.nacos.config)
 }
