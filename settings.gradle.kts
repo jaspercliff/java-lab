@@ -87,3 +87,4 @@ include("infra-seata:storage-service")
 
 include("infra-nacos")
 include("infra-sentinel")
+include("infra-nacos:nacos-config")
