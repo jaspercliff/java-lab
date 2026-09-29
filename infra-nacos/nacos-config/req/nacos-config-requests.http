@@ -8,3 +8,8 @@ GET http://localhost:8080/nacos/configurationProperties
 ###
 
 GET http://localhost:8080/nacos/nacosConfigAnno
+
+### docking get config
+GET http://localhost:8080/nacos/getConfig?
+    dataId=infra-nacos.yml&
+    group=INFRA_NACOS_GROUP
