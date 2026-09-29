@@ -1,0 +1,9 @@
+### 发布 Nacos 配置
+POST http://localhost:8080/nacos/publishConfig
+Content-Type: application/json
+
+{
+  "dataId": "infra-nacos.yml",
+  "group": "INFRA_NACOS_GROUP",
+  "content": "config:\n  name: jasper\n  age: 15\n  hobby: smoke\n\nconfig1:\n  name: cliff\n  age: 16\n  sex: female\n\nrate: 0.6"
+}
