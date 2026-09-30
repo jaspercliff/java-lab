@@ -1,0 +1,8 @@
+###
+GET http://localhost:8081/consumer/mvcContract
+
+###
+GET http://localhost:8081/consumer/mvcContract/test
+
+###
+GET http://localhost:8081/consumer/mvcContract/echo/consumer jasper

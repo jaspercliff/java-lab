@@ -1,0 +1,8 @@
+###
+GET http://localhost:8081/consumer/restclient
+
+###
+GET http://localhost:8081/consumer/restclient/test
+
+###
+GET http://localhost:8081/consumer/restclient/echo/consumer jasper

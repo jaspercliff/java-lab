@@ -1,0 +1,8 @@
+###
+GET http://localhost:8081/consumer/defaultContract
+
+###
+GET http://localhost:8081/consumer/defaultContract/test
+
+###
+GET http://localhost:8081/consumer/defaultContract/echo/consumer jasper
