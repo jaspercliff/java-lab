@@ -1,0 +1,48 @@
+package com.jasper.controller;
+
+import com.jasper.result.ApiResponse;
+import lombok.RequiredArgsConstructor;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestClient;
+
+@RestController
+@RequestMapping("consumer/restclient")
+@RequiredArgsConstructor
+public class ConsumerRestController {
+
+    private final RestClient.Builder restClientBuilder;
+
+
+    @GetMapping
+    public ApiResponse<String> index() {
+        return restClientBuilder
+                .build()
+                .get()
+                .uri("http://producer-service/producer")
+                .retrieve()
+                .body(new ParameterizedTypeReference<ApiResponse<String>>() {
+                });
+    }
+
+    @GetMapping("/test")
+    public ApiResponse<String> test() {
+        return restClientBuilder.build().get()
+                .uri("http://producer-service/producer/test")
+                .retrieve()
+                .body(new ParameterizedTypeReference<>() {
+                });
+    }
+
+    @GetMapping("/echo/{str}")
+    public ApiResponse<String> echo(@PathVariable String str) {
+        return restClientBuilder.build().get()
+                .uri("http://producer-service/producer/echo/{str}", str)
+                .retrieve()
+                .body(new ParameterizedTypeReference<>() {
+                });
+    }
+}

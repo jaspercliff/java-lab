@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>org.springframework.cloud.client.loadbalancer.reactive.ReactiveLoadBalancer</OriginalElement>
+  <nodes>
+    <node x="-482.0" y="388.0">org.springframework.cloud.loadbalancer.core.ReactorLoadBalancer</node>
+    <node x="-605.0" y="268.0">org.springframework.cloud.client.loadbalancer.reactive.ReactiveLoadBalancer</node>
+    <node x="-582.5" y="828.0">org.springframework.cloud.loadbalancer.core.RoundRobinLoadBalancer</node>
+    <node x="-368.5" y="768.0">org.springframework.cloud.loadbalancer.core.RandomLoadBalancer</node>
+    <node x="-466.0" y="508.0">org.springframework.cloud.loadbalancer.core.ReactorServiceInstanceLoadBalancer</node>
+  </nodes>
+  <notes>
+    <note x="-463.0" y="376.0">
+      <node>org.springframework.cloud.loadbalancer.core.ReactorServiceInstanceLoadBalancer</node>
+      <value>\n A marker interface for &lt;a href=\&quot;psi_element://org.springframework.cloud.loadbalancer.core.ReactorLoadBalancer\&quot;&gt;&lt;code&gt;ReactorLoadBalancer&lt;/code&gt;&lt;/a&gt; that allows selecting\n &lt;a href=\&quot;psi_element://org.springframework.cloud.client.ServiceInstance\&quot;&gt;&lt;code&gt;ServiceInstance&lt;/code&gt;&lt;/a&gt; objects.\n\n</value>
+      <edge>
+        <point x="0.0" y="0.0" />
+        <point x="0.0" y="0.0" />
+      </edge>
+    </note>
+    <note x="-114.46928746928768" y="346.0">
+      <node>org.springframework.cloud.loadbalancer.core.ReactorLoadBalancer</node>
+      <value>A Reactor based implementation of &lt;a href=\&quot;psi_element://org.springframework.cloud.client.loadbalancer.reactive.ReactiveLoadBalancer\&quot;&gt;&lt;code&gt;ReactiveLoadBalancer&lt;/code&gt;&lt;/a&gt;.\n\n 可以自定义 LoadBalancer</value>
+      <edge>
+        <point x="60.0" y="-14.0" />
+        <point x="-302.0" y="318.0" />
+        <point x="46.53071253071232" y="318.0" />
+        <point x="0.0" y="56.0" />
+      </edge>
+    </note>
+    <note x="-643.0" y="566.0">
+      <node>org.springframework.cloud.loadbalancer.core.RoundRobinLoadBalancer</node>
+      <value>默认使用的 ReactiveLoadBalancer 实现是 RoundRobinLoadBalancer</value>
+      <edge>
+        <point x="-60.25" y="-14.0" />
+        <point x="-522.25" y="802.0" />
+        <point x="-482.0" y="802.0" />
+        <point x="0.0" y="56.0" />
+      </edge>
+    </note>
+  </notes>
+  <edges>
+    <edge source="org.springframework.cloud.loadbalancer.core.RoundRobinLoadBalancer" target="org.springframework.cloud.loadbalancer.core.ReactorServiceInstanceLoadBalancer" relationship="REALIZATION">
+      <point x="60.25" y="-14.0" />
+      <point x="-401.75" y="742.0" />
+      <point x="-302.0" y="742.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="org.springframework.cloud.loadbalancer.core.ReactorServiceInstanceLoadBalancer" target="org.springframework.cloud.loadbalancer.core.ReactorLoadBalancer" relationship="INTERFACE_GENERALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="-302.0" y="482.0" />
+      <point x="-502.0" y="482.0" />
+      <point x="-502.0" y="362.0" />
+      <point x="-422.0" y="362.0" />
+      <point x="-60.0" y="-14.0" />
+    </edge>
+    <edge source="org.springframework.cloud.loadbalancer.core.ReactorLoadBalancer" target="org.springframework.cloud.client.loadbalancer.reactive.ReactiveLoadBalancer" relationship="INTERFACE_GENERALIZATION">
+      <point x="-60.0" y="-14.0" />
+      <point x="-422.0" y="342.0" />
+      <point x="-482.0" y="342.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="org.springframework.cloud.loadbalancer.core.RandomLoadBalancer" target="org.springframework.cloud.loadbalancer.core.ReactorServiceInstanceLoadBalancer" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="-262.0" y="742.0" />
+      <point x="-302.0" y="742.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+  </edges>
+  <RemovedNodes />
+  <RemovedEdges />
+  <settings layout="Hierarchic Compact" zoom="1.0853333333333333" showDependencies="false" x="-380.4999999999999" y="527.0" />
+  <SelectedNodes>
+    <node>org.springframework.cloud.loadbalancer.core.ReactorServiceInstanceLoadBalancer</node>
+  </SelectedNodes>
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

@@ -1,0 +1,15 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: loadbalancer-service
+  cloud:
+    loadbalancer:
+      enabled: true
+#      LoadBalancer 为每个服务 ID 创建一个独立的 Spring 子上下文。默认情况下，这些上下文在首次对某个服务 ID 进行负载均衡时才会被初始化
+#      立即加载这些上下文
+#      eager-load:
+#        clients:
+#          - first-client
+#          - second-client

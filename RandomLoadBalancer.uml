@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>org.springframework.cloud.loadbalancer.core.RandomLoadBalancer</OriginalElement>
+  <nodes>
+    <node x="-106.5" y="346.0">org.springframework.cloud.loadbalancer.core.RandomLoadBalancer</node>
+    <node x="-80.0" y="106.0">org.springframework.cloud.loadbalancer.core.ReactorLoadBalancer</node>
+    <node x="-83.0" y="-14.0">org.springframework.cloud.client.loadbalancer.reactive.ReactiveLoadBalancer</node>
+    <node x="-164.0" y="226.0">org.springframework.cloud.loadbalancer.core.ReactorServiceInstanceLoadBalancer</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="org.springframework.cloud.loadbalancer.core.ReactorServiceInstanceLoadBalancer" target="org.springframework.cloud.loadbalancer.core.ReactorLoadBalancer" relationship="INTERFACE_GENERALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="200.0" />
+      <point x="-100.0" y="200.0" />
+      <point x="-100.0" y="80.0" />
+      <point x="40.0" y="80.0" />
+      <point x="0.0" y="-14.0" />
+    </edge>
+    <edge source="org.springframework.cloud.loadbalancer.core.ReactorLoadBalancer" target="org.springframework.cloud.client.loadbalancer.reactive.ReactiveLoadBalancer" relationship="INTERFACE_GENERALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="org.springframework.cloud.loadbalancer.core.RandomLoadBalancer" target="org.springframework.cloud.loadbalancer.core.ReactorServiceInstanceLoadBalancer" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+  </edges>
+  <RemovedNodes />
+  <RemovedEdges />
+  <settings layout="Hierarchic Compact" zoom="1.5" showDependencies="false" x="5.684341886080802E-14" y="167.33333333333331" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
