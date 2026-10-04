@@ -1,7 +1,7 @@
 package com.jasper.controller;
 
 import com.jasper.result.ApiResponse;
-import lombok.RequiredArgsConstructor;
+import jakarta.annotation.Resource;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,15 +11,26 @@ import org.springframework.web.client.RestClient;
 
 @RestController
 @RequestMapping("consumer/restclient")
-@RequiredArgsConstructor
 public class ConsumerRestController {
 
-    private final RestClient.Builder restClientBuilder;
+    @Resource
+    private  RestClient.Builder loadBalanced;
+    @Resource
+    private  RestClient.Builder restClientBuilder;
 
-
+    @GetMapping("index1")
+    public ApiResponse<String> index1() {
+        return restClientBuilder
+                .build()
+                .get()
+                .uri("http://127.0.0.1:8081/producer")
+                .retrieve()
+                .body(new ParameterizedTypeReference<ApiResponse<String>>() {
+                });
+    }
     @GetMapping
     public ApiResponse<String> index() {
-        return restClientBuilder
+        return loadBalanced
                 .build()
                 .get()
                 .uri("http://producer-service/producer")
@@ -30,7 +41,7 @@ public class ConsumerRestController {
 
     @GetMapping("/test")
     public ApiResponse<String> test() {
-        return restClientBuilder.build().get()
+        return loadBalanced.build().get()
                 .uri("http://producer-service/producer/test")
                 .retrieve()
                 .body(new ParameterizedTypeReference<>() {
@@ -39,7 +50,7 @@ public class ConsumerRestController {
 
     @GetMapping("/echo/{str}")
     public ApiResponse<String> echo(@PathVariable String str) {
-        return restClientBuilder.build().get()
+        return loadBalanced.build().get()
                 .uri("http://producer-service/producer/echo/{str}", str)
                 .retrieve()
                 .body(new ParameterizedTypeReference<>() {

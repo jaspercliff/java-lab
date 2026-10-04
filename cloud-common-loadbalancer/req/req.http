@@ -2,6 +2,9 @@
 GET http://localhost:8084/consumer/restclient
 
 ###
+GET http://localhost:8084/consumer/restclient/index1
+
+###
 GET http://localhost:8084/consumer/restclient/test
 
 
