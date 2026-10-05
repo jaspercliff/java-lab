@@ -3,6 +3,9 @@ server:
 spring:
   application:
     name: consumer-service
+  threads:
+    virtual:
+      enabled: true
   cloud:
     nacos:
       username: nacos
