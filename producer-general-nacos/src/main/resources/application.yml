@@ -1,0 +1,18 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: producer-service
+  cloud:
+    nacos:
+      username: nacos
+      password: nacos
+      server-addr: localhost:8848
+      discovery:
+        enabled: true
+        namespace: dev
+#      config:
+#        namespace: dev
+#  config:
+#    import:
+#      - optional:nacos:infra-nacos.yml?group=INFRA_NACOS_GROUP&refreshEnabled=true
