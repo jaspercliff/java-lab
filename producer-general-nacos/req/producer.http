@@ -1,0 +1,8 @@
+###
+GET http://localhost:8081/producer
+
+###
+GET http://localhost:8081/producer/test
+
+###
+GET http://localhost:8081/producer/echo/jasper
