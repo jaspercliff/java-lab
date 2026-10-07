@@ -23,6 +23,7 @@ rootProject.name = "java-lab"
 
 include("java-basic")
 
+include("bootApplication")
 // spring-boot-starter
 include("spring-boot-starter")
 include("spring-boot-starter:spring-boot-starter-jdbc-demo")
@@ -75,7 +76,6 @@ include("spring-lab:web:mvc")
 include("spring-lab:web:webflux")
 include("spring-lab:integration")
 
-include("spring-boot-lab:bootApplication")
 include("spring-boot-lab:jasper-starter")
 include("spring-boot-lab:jasper-starter:jasper-spring-boot-autoconfigure")
 include("spring-boot-lab:jasper-starter:jasper-spring-boot-starter")
