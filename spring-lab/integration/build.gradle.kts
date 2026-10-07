@@ -1,11 +1,9 @@
 plugins {
-    java
+    id("spring-boot-convention")
 }
 
-group = "com.jasper"
-version = "0.0.1-SNAPSHOT"
+dependencies {
+    implementation(platform(libs.spring.framework.bom))
+    implementation(libs.spring.boot.starter.web)
 
-repositories { mavenCentral() }
-
-dependencies { }
-
+}

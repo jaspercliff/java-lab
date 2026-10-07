@@ -102,6 +102,7 @@ nacos-discovery = { group = "com.alibaba.cloud", name = "spring-cloud-starter-al
 nacos-config = { group = "com.alibaba.cloud", name = "spring-cloud-starter-alibaba-nacos-config" }
 seata = { group = "com.alibaba.cloud", name = "spring-cloud-starter-alibaba-seata" }
 loadbalancer = { group = "org.springframework.cloud", name = "spring-cloud-starter-loadbalancer" }
+resilience4j = {module = "org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j"}
 
 ################################# test
 junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }
