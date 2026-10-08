@@ -4,6 +4,8 @@ import com.jasper.config.CustomLoadBalancerConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.loadbalancer.annotation.LoadBalancerClient;
+import org.springframework.cloud.loadbalancer.annotation.LoadBalancerClients;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
  * 从注册中心 获取全部的实例列表
@@ -11,10 +13,21 @@ import org.springframework.cloud.loadbalancer.annotation.LoadBalancerClient;
  * 发送http请求
  */
 @SpringBootApplication
-@LoadBalancerClient(
-        name = "producer-service",
-        configuration = CustomLoadBalancerConfiguration.class
-)
+//@LoadBalancerClient(
+//        name = "producer-service-rest",
+//        configuration = CustomLoadBalancerConfiguration.class
+//)
+@LoadBalancerClients({
+        @LoadBalancerClient(
+                name = "producer-service-rest",
+                configuration = CustomLoadBalancerConfiguration.class
+        ),
+        @LoadBalancerClient(
+                name = "producer-service",
+                configuration = CustomLoadBalancerConfiguration.class
+        )
+})
+@EnableFeignClients
 public class LoadBalancerApplication {
     public static void main(String[] args) {
         SpringApplication.run(LoadBalancerApplication.class, args);

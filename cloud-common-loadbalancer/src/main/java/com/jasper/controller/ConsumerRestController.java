@@ -33,7 +33,7 @@ public class ConsumerRestController {
         return loadBalanced
                 .build()
                 .get()
-                .uri("http://producer-service/producer")
+                .uri("http://producer-service-rest/producer")
                 .retrieve()
                 .body(new ParameterizedTypeReference<ApiResponse<String>>() {
                 });
@@ -42,7 +42,7 @@ public class ConsumerRestController {
     @GetMapping("/test")
     public ApiResponse<String> test() {
         return loadBalanced.build().get()
-                .uri("http://producer-service/producer/test")
+                .uri("http://producer-service-rest/producer/test")
                 .retrieve()
                 .body(new ParameterizedTypeReference<>() {
                 });
@@ -51,7 +51,7 @@ public class ConsumerRestController {
     @GetMapping("/echo/{str}")
     public ApiResponse<String> echo(@PathVariable String str) {
         return loadBalanced.build().get()
-                .uri("http://producer-service/producer/echo/{str}", str)
+                .uri("http://producer-service-rest/producer/echo/{str}", str)
                 .retrieve()
                 .body(new ParameterizedTypeReference<>() {
                 });

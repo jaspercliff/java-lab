@@ -21,21 +21,21 @@ public class LoadBalancerConfig {
         List<ServiceInstance> instances = List.of(
                 new DefaultServiceInstance(
                         "producer-8081",
-                        "producer-service",
+                        "producer-service-rest",
                         "127.0.0.1",
                         8081,
                         false
                 ),
                 new DefaultServiceInstance(
                         "producer-8082",
-                        "producer-service",
+                        "producer-service-rest",
                         "127.0.0.1",
                         8082,
                         false
                 ),
                 new DefaultServiceInstance(
                         "producer-8083",
-                        "producer-service",
+                        "producer-service-rest",
                         "127.0.0.1",
                         8083,
                         false
@@ -46,7 +46,7 @@ public class LoadBalancerConfig {
 
             @Override
             public String getServiceId() {
-                return "producer-service";
+                return "producer-service-rest";
             }
 
             @Override

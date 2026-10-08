@@ -1,8 +1,8 @@
-###
-GET http://localhost:8084/consumer/restclient
-
-###
+### rest client 直接调
 GET http://localhost:8084/consumer/restclient/index1
+
+### 负载
+GET http://localhost:8084/consumer/restclient
 
 ###
 GET http://localhost:8084/consumer/restclient/test
