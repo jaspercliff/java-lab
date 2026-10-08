@@ -23,4 +23,22 @@ public class CustomLoadBalancerConfiguration {
 				.getLazyProvider(name, ServiceInstanceListSupplier.class),
 				name);
 	}
+
+//	@Bean
+//	ReactorLoadBalancer<ServiceInstance> roundRobinLoadBalancer(
+//			Environment environment,
+//			LoadBalancerClientFactory loadBalancerClientFactory) {
+//
+//		String name = environment.getProperty(
+//				LoadBalancerClientFactory.PROPERTY_NAME
+//		);
+//
+//		return new RoundRobinLoadBalancer(
+//				loadBalancerClientFactory.getLazyProvider(
+//						name,
+//						ServiceInstanceListSupplier.class
+//				),
+//				name
+//		);
+//	}
 }

@@ -1,0 +1,9 @@
+###
+GET http://localhost:8084/exchange
+
+###
+GET http://localhost:8084/exchange/test
+
+
+###
+GET http://localhost:8084/exchange/echo/jasper
