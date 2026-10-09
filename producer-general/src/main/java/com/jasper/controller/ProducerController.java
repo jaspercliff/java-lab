@@ -1,4 +1,4 @@
-package com.jasper;
+package com.jasper.controller;
 
 import com.jasper.result.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
