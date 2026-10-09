@@ -3,6 +3,12 @@ server:
 spring:
   application:
     name: ActuatorApplication
+  boot:
+    admin:
+      client:
+        url: http://localhost:18080
+        instance:
+          name: ${spring.application.name}
 management:
   info:
     env:
@@ -29,7 +35,11 @@ management:
           - metrics # 查看可用的监控指标
           - loggers # 查看和修改日志级别
           - mappings # 查看 Spring Web 接口映射
-
+          - threaddump # 获取应用程序当前的 Thread Dump 传统 Java 的 jstack 命令行工具的能力封装成了 HTTP 接口
+          - env  # 获取应用程序当前的所有 Environment 属性、配置参数以及 Spring 环境变量
+  endpoint:
+    health:
+      show-details: always
 
 info:
   app:

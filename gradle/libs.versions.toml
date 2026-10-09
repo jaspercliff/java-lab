@@ -21,6 +21,8 @@ redisson-starter = "3.52.0"
 junit = "5.14.4"
 testcontainers = "2.0.5"
 jakarta = "3.0.0"
+resilience4j = "2.4.0"
+spring-boot-admin= "3.5.11"
 
 spring = "6.2.19"
 spring-boot = "3.5.16"
@@ -90,10 +92,14 @@ spring-boot-starter-actuator = {group = "org.springframework.boot",name = "sprin
 spring-boot-starter-jdbc = { module = "org.springframework.boot:spring-boot-starter-jdbc" }
 spring-boot-starter-data-redis = { module = "org.springframework.boot:spring-boot-starter-data-redis" }
 spring-boot-starter-test = { module = "org.springframework.boot:spring-boot-starter-test" }
+spring-boot-starter-aop = {module = "org.springframework.boot:spring-boot-starter-aop"}
 
 ###################################### third starter
 
 redisson-spring-boot-starter = { module = "org.redisson:redisson-spring-boot-starter", version.ref = "redisson-starter" }
+resilience4j-spring-boot3 = {module ="io.github.resilience4j:resilience4j-spring-boot3",version.ref = "resilience4j"}
+spring-boot-admin-starter-server = {module = "de.codecentric:spring-boot-admin-starter-server",version.ref = "spring-boot-admin"}
+spring-boot-admin-starter-client = {module = "de.codecentric:spring-boot-admin-starter-client",version.ref = "spring-boot-admin"}
 
 ###################################### cloud
 openfeign = { group = "org.springframework.cloud", name = "spring-cloud-starter-openfeign"}
@@ -103,7 +109,7 @@ nacos-config = { group = "com.alibaba.cloud", name = "spring-cloud-starter-aliba
 seata = { group = "com.alibaba.cloud", name = "spring-cloud-starter-alibaba-seata" }
 loadbalancer = { group = "org.springframework.cloud", name = "spring-cloud-starter-loadbalancer" }
 resilience4j = {module = "org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j"}
-boot3-resilience4j = {module ="io.github.resilience4j:resilience4j-spring-boot3"}
+
 ################################# test
 junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }
 junit-jupiter = { module = "org.junit.jupiter:junit-jupiter" }

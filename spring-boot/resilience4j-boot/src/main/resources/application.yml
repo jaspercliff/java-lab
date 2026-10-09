@@ -1,0 +1,8 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: Resilience4jApplication
+  jackson:
+    serialization:
+      indent_output: true #让 Jackson 序列化生成的 JSON 自动进行格式化（Pretty Print），增加缩进和换行，提高可读性 dev use
