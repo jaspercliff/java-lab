@@ -8,5 +8,5 @@ dependencies {
     implementation(libs.mysql.connector.j)
     implementation(libs.mybatis.plus)
 
-    implementation(project(":spring-boot-lab:jasper-starter:jasper-spring-boot-starter"))
+    implementation(project(":spring-boot:jasper-starter:jasper-spring-boot-starter"))
 }
