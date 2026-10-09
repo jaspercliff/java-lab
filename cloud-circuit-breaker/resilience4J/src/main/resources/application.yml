@@ -1,0 +1,18 @@
+server:
+  port: 8084
+resilience4j:
+  circuitbreaker:
+    instances:
+      producerService:
+        slidingWindowType: COUNT_BASED
+        slidingWindowSize: 10 # 统计多少次请求
+        minimumNumberOfCalls: 5 # 至少多少次请求后才计算
+        failureRateThreshold: 50 #失败率达到多少熔断
+        waitDurationInOpenState: 10s #熔断后等待多久
+        permittedNumberOfCallsInHalfOpenState: 3 # 半开状态允许测试多少次
+        registerHealthIndicator: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,metrics,circuitbreakers,circuitbreakerevents

@@ -103,7 +103,7 @@ nacos-config = { group = "com.alibaba.cloud", name = "spring-cloud-starter-aliba
 seata = { group = "com.alibaba.cloud", name = "spring-cloud-starter-alibaba-seata" }
 loadbalancer = { group = "org.springframework.cloud", name = "spring-cloud-starter-loadbalancer" }
 resilience4j = {module = "org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j"}
-
+boot3-resilience4j = {module ="io.github.resilience4j:resilience4j-spring-boot3"}
 ################################# test
 junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }
 junit-jupiter = { module = "org.junit.jupiter:junit-jupiter" }

@@ -1,20 +1,14 @@
 plugins {
-    id("java")
-}
-
-group = "com.jasper"
-version = "unspecified"
-
-repositories {
-    mavenCentral()
+    id("spring-boot-convention")
 }
 
 dependencies {
-    testImplementation(platform("org.junit:junit-bom:6.0.0"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-}
-
-tasks.test {
-    useJUnitPlatform()
+    implementation(libs.spring.boot.starter.web)
+    implementation(platform(libs.bom.alibaba))
+    implementation(platform(libs.bom.springcloud))
+    implementation(libs.openfeign)
+    implementation(libs.resilience4j)
+    implementation(libs.boot3.resilience4j)
+    implementation(libs.spring.aop)
+    implementation(libs.spring.boot.starter.actuator)
 }
