@@ -1,0 +1,39 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: ActuatorApplication
+management:
+  info:
+    env:
+      enabled: true  # 启用 info 端点读取 info.* 环境属性的功能
+    git:
+      enabled: true
+      mode: full # simple
+    java:
+      enabled: true
+    os:
+      enabled: true
+    build:
+      enabled: true
+    process:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        # include 控制的是 HTTP 暴露范围，不代表所有端点都一定能够使用。端点还可能受启用状态、依赖条件、访问控制及安全配置影响
+        # include: '*'
+        include:
+          - health # 检查服务健康状态
+          - info # 查看应用信息
+          - metrics # 查看可用的监控指标
+          - loggers # 查看和修改日志级别
+          - mappings # 查看 Spring Web 接口映射
+
+
+info:
+  app:
+    name: ${spring.application.name}
+    description: Spring Boot Actuator Demo
+    version: 1.0.0
+    author: jasper
