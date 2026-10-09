@@ -1,21 +1,15 @@
 package com.jasper.pojo.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Cup {
     private String name;
     private int high;
-
-    public Cup(String name, int high) {
-        this.name = name;
-        this.high = high;
-    }
-
-    public int getHigh() {
-        return high;
-    }
-
-    public String getName() {
-        return name;
-    }
 
     @Override
     public String toString() {
