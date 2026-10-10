@@ -8,6 +8,10 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 /**
  * 事件类需要继承 ApplicationEvent，监听器需要实现 ApplicationListener 接口。<br>
  * 但在现代 Spring Boot 中，推荐使用 POJO 作为事件，使用 @EventListener 注解作为监听器
+ *
+ * spring default 审计日志
+ * public class AuditApplicationEvent extends ApplicationEvent
+ * AuditListener
  */
 @Slf4j
 public class Demo {
