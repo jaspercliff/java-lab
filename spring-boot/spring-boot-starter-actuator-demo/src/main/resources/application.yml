@@ -1,5 +1,13 @@
+config1:
+  name: jasper
+  age: 20
+  sex: male
+  custom-token: 123
 server:
-  port: 8081
+  port: 8084
+logging:
+  file:
+    name: ./logs/application.log # 当前工作目录 java-lab
 spring:
   application:
     name: ActuatorApplication
@@ -30,17 +38,58 @@ management:
         # include 控制的是 HTTP 暴露范围，不代表所有端点都一定能够使用。端点还可能受启用状态、依赖条件、访问控制及安全配置影响
         # include: '*'
         include:
-          - health # 检查服务健康状态
-          - info # 查看应用信息
-          - metrics # 查看可用的监控指标
-          - loggers # 查看和修改日志级别
-          - mappings # 查看 Spring Web 接口映射
-          - threaddump # 获取应用程序当前的 Thread Dump 传统 Java 的 jstack 命令行工具的能力封装成了 HTTP 接口
+#          /env、/configprops 和 /quartz 端点返回的信息可能是敏感的，因此默认情况下，值总是完全 fully sanitized (replaced by ******)
+          - auditevents # 显示当前应用程序的审计事件信息。需要有一个 AuditEventRepository bean 作为依赖组件
+          - beans # 所有spring bean
+          - caches # 暴露可用的缓存。 cacheManager
+          - conditions # 显示配置和自动配置类别评估的条件及其匹配原因  排查自动配置不生效
+          - configprops # Displays a collated list of all @ConfigurationProperties
           - env  # 获取应用程序当前的所有 Environment 属性、配置参数以及 Spring 环境变量
+          - flyway # todo learn
+          - health # 检查服务健康状态 生产通常只开 health
+#         Displays HTTP exchange information (by default, the last 100 HTTP request-response exchanges).
+#         Requires an HttpExchangeRepository bean
+          - httpexchanges # 轻量级网关日志中心
+          - info # 查看应用信息
+          - integrationgraph # todo learn Shows the Spring Integration graph. Requires a dependency on spring-integration-core.
+          - loggers # 查看和修改日志级别 允许你在“不重启服务”的前提下，动态查看和修改应用程序中任何一个包或类的日志级别
+          - liquibase # todo learn  compare with flyway
+          - metrics # 查看可用的监控指标 它底层集成了 Micrometer(类似slf4j)
+          - mappings # 查看 Spring Web 接口映射 Displays a collated list of all @RequestMapping paths.
+          - quartz # todo shows information about Quartz Scheduler jobs
+          - scheduledtasks # todo Displays the scheduled tasks in your application.
+          - sessions # todo spring session
+          - shutdown # Lets the application be gracefully shutdown. Only works when using jar packaging. Disabled by default.
+#         Shows the startup steps data collected by the ApplicationStartup. Requires the SpringApplication to be configured with a BufferingApplicationStartup.
+#         展示应用程序在启动过程中各个阶段的耗时与步骤数据
+          - startup
+          - threaddump # 获取应用程序当前的 Thread Dump 传统 Java 的 jstack 命令行工具的能力封装成了 HTTP 接口
+#         web only
+          - heapdump # 生成并下载当前 JVM 的内存快照文件 排查oom full gc
+          - logfile # 直接在网页上返回当前应用的日志文件内容 应用必须在配置文件中指定了日志路径（如配置了 logging.file.name 或 logging.file.path）
+          #引入了 micrometer-registry-prometheus
+          - prometheus # todo 将应用内部收集到的所有 Micrometer 指标，转化为 Prometheus 能够直接抓取（Scrape）的文本格式
   endpoint:
     health:
-      show-details: always
-
+      show-details: always # never when-authorized
+#      Liveness Probe 应用是否需要被重启 Readiness Probe 应用当前是否适合接收流量
+#      例如，应用刚启动时，Spring Boot 正在加载大量的 Bean、建立数据库连接池、预热缓存，此时进程虽然活着，但业务还没准备好
+      probes:
+        enabled: true # 开启 Kubernetes 探针支持
+#       actuator 单独部署时， k8s 同时检测actuator和business service
+#  双端口映射：它不仅在原来的管理端口上保留健康检查，还强制在主服务器端口（如你的业务端口 8084 或 8080）上额外暴露两个轻量级的健康路径：
+#        /livez：存活探针路径
+#        /readyz：就绪探针路径
+        add-additional-paths: true
+    env:
+      show-values: ALWAYS # 值会显示给所有用户 s long as no SanitizingFunction bean applies
+    configprops:
+      show-values: ALWAYS
+        # 将 keys-to-sanitize 设为空，意味着所有属性都不再脱敏，全部显示明文
+    shutdown:
+      access: UNRESTRICTED
+    heapdump:
+      access: UNRESTRICTED # no auth  RESTRICTED password   NONE disable
 info:
   app:
     name: ${spring.application.name}

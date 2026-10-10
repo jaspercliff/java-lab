@@ -1,8 +1,13 @@
 ### 默认情况下，Actuator 的 HTTP 端点通常只有 health 会被暴露
-GET http://localhost:8081/actuator/health
+GET {{url}}/health
 
 ###
-GET http://localhost:8081/actuator/info
+GET {{url}}/info
 
 ###
-GET http://localhost:8081/actuator/mappings
+GET {{url}}/metrics
+
+###
+GET {{url}}/beans
+###
+GET {{url}}/mappings
