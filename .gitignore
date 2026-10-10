@@ -22,3 +22,4 @@ container/mysql8.4/backup
 container/nacos2.5.4/logs/
 container/mysql-replication/master/data
 container/mysql-replication/slave/data
+*.log
