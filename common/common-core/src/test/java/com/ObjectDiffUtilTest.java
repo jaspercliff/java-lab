@@ -1,5 +1,6 @@
 package com;
 
+import com.jasper.lang.ObjectUtils;
 import com.jasper.result.FieldDifference;
 import com.pojo.Person;
 
@@ -16,7 +17,7 @@ public class ObjectDiffUtilTest {
         Person person1 = new Person("John", 30, null);
         Person person2 = new Person("Jane", 30, null);
 
-        List<FieldDifference> diffs = ObjectDiffUtil.compare(person1, person2);
+        List<FieldDifference> diffs = ObjectUtils.compare(person1, person2);
         for (FieldDifference diff : diffs) {
             System.out.println(diff);
         }
