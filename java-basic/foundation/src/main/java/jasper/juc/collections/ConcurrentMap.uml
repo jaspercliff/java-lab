@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>java.util.concurrent.ConcurrentMap</OriginalElement>
+  <nodes>
+    <node x="-107.0" y="106.0">java.util.concurrent.ConcurrentMap</node>
+    <node x="-25.5" y="-14.0">java.util.Map</node>
+    <node x="-126.0" y="226.0">java.util.concurrent.ConcurrentHashMap</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="java.util.concurrent.ConcurrentHashMap" target="java.util.concurrent.ConcurrentMap" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="java.util.concurrent.ConcurrentHashMap" target="java.util.Map" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="200.0" />
+      <point x="140.0" y="200.0" />
+      <point x="140.0" y="80.0" />
+      <point x="72.75" y="80.0" />
+      <point x="32.75" y="14.0" />
+    </edge>
+    <edge source="java.util.concurrent.ConcurrentMap" target="java.util.Map" relationship="INTERFACE_GENERALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="80.0" />
+      <point x="7.25" y="80.0" />
+      <point x="-32.75" y="14.0" />
+    </edge>
+  </edges>
+  <RemovedNodes />
+  <RemovedEdges />
+  <settings layout="Hierarchic Compact" zoom="1.5" showDependencies="false" x="17.0" y="130.0" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

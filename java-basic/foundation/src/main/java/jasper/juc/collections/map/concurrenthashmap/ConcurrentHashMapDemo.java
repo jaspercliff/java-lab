@@ -6,7 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author jasper
  * @since 2026-04-29 17:30:11
  */
-public class Demo {
+public class ConcurrentHashMapDemo {
     public static void main(String[] args) {
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<String, String>();
         map.put("1", "a");
