@@ -35,6 +35,7 @@ dependencies {
     )
     testImplementation(libs.findLibrary("junit-jupiter").get())
     testRuntimeOnly(libs.findLibrary("junit-platform-launcher").get())
+    testImplementation(libs.findLibrary("assertj").get())
 }
 
 tasks.withType<Test>().configureEach {
