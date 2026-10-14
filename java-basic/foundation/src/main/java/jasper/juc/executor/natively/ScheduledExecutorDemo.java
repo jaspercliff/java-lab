@@ -1,9 +1,10 @@
 package jasper.juc.executor.natively;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import lombok.extern.slf4j.Slf4j;
 
+import java.util.concurrent.*;
+
+@Slf4j
 public class ScheduledExecutorDemo {
     public static void main(String[] args) {
         // 创建一个核心线程数为 2 的定时线程池
@@ -23,6 +24,29 @@ public class ScheduledExecutorDemo {
             scheduler.scheduleWithFixedDelay(() -> {
                 System.out.println("FixedDelay 任务执行中...");
             }, 1, 3, TimeUnit.SECONDS);
+
+            ScheduledFuture<Integer> future = scheduler.schedule(() -> {
+                log.info("future demo");
+                return 100;
+            }, 3, TimeUnit.SECONDS);
+
+            long delay = future.getDelay(TimeUnit.SECONDS);
+            log.info("=======================future delay {}", delay);
+
+            boolean done = future.isDone();
+            log.info("=======================future done: {}", done);
+
+            Thread.sleep(3000);
+            if (!done) {
+                future.cancel(true);
+            }
+            // 阻塞获取
+            Integer o =  future.get();
+            log.info("======================future o: {}", o);
+        } catch (ExecutionException e) {
+            log.info(e.getLocalizedMessage());
+        } catch (InterruptedException e) {
+            log.info(e.getMessage());
         }
 
         // scheduler.shutdown();
