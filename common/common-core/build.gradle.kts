@@ -22,6 +22,8 @@ dependencies {
     annotationProcessor(libs.mapstruct.lombok.binding)
 
     implementation(libs.jackson.databind)
+
+    testImplementation(libs.assertj)
 }
 
 tasks.test {

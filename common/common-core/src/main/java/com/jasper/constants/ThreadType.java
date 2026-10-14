@@ -20,7 +20,7 @@ public enum ThreadType implements IEnum<String> {
     }
     public static ThreadType fromStringOrDefault(String value) {
         try {
-            if (value.trim().isEmpty()) {
+            if (value == null || value.trim().isEmpty()) {
                 return getDefault();
             }
             return IEnum.parseOf(ThreadType.class, value.trim());

@@ -36,6 +36,7 @@ mybatis-plus = { module = "com.baomidou:mybatis-plus", version.ref = "mybatis-pl
 mybatis-plus-generator = { module = "com.baomidou:mybatis-plus-generator", version.ref = "mybatis-plus" }
 freemarker = { module = "org.freemarker:freemarker", version.ref = "freemarker" }
 
+assertj = {module = "org.assertj:assertj-core",version="3.27.7"}
 [bundles]
 junit = [
     "junit-jupiter",

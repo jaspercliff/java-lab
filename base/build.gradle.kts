@@ -1,6 +1,7 @@
 plugins {
     id("java-library-convention")
     //其他模块可以通过 testImplementation(testFixtures(project(":base"))) 引用它提供的测试辅助代码
+    // see resilience4j-circuitbreaker build.gradle.kts
     id("java-test-fixtures")
 }
 
