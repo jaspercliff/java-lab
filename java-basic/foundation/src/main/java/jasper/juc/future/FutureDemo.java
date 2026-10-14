@@ -1,7 +1,10 @@
 package jasper.juc.future;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.concurrent.*;
 
+@Slf4j
 public class FutureDemo {
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         ExecutorService executorService = Executors.newFixedThreadPool(2);
@@ -13,11 +16,11 @@ public class FutureDemo {
                 throw new RuntimeException(e);
             }
         });
-        System.out.println("submit complete");
+        log.info("submit complete");
 
 //        阻塞获取
         Integer i = future.get();
-        System.out.println("i = " + i);
+        log.info("i={}",i);
         executorService.shutdown();
 
         ExecutorService executor = Executors.newSingleThreadExecutor();
@@ -27,7 +30,7 @@ public class FutureDemo {
                 try {
                     TimeUnit.SECONDS.sleep(1);
                 } catch (InterruptedException e) {
-                    System.out.println("线程被中断，退出任务");
+                    log.info("线程被中断，退出任务");
                     return;
                 }
             }
