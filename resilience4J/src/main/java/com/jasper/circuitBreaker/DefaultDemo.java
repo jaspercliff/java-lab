@@ -1,4 +1,4 @@
-package com.jasper;
+package com.jasper.circuitBreaker;
 
 import com.jasper.exception.BusinessException;
 import io.github.resilience4j.circuitbreaker.CircuitBreaker;

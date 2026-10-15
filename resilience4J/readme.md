@@ -49,3 +49,8 @@ dependencies {
 - 再看专用接口 CircuitBreakerRegistry：确认它增加了什么能力。
 - 接着看抽象类 AbstractRegistry：找到公共实现、默认行为和扩展点。
 - 最后看具体类 InMemoryCircuitBreakerRegistry：弄清楚内存存储、缓存或其他具体逻辑是怎么实现的
+
+## rate limiter 
+
+其核心基于周期性质的限流算法（内部通过时间周期划分切片来控制并发或许可证发放）。
+当请求超出限制时，可以通过配置让请求直接被拒绝，或者在指定时间内进行阻塞等待

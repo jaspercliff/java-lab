@@ -1,4 +1,4 @@
-package com.jasper;
+package com.jasper.circuitBreaker;
 
 import io.github.resilience4j.circuitbreaker.CircuitBreaker;
 import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig;

@@ -90,3 +90,16 @@ resilience4j:
         base-config: default # extends default config
       test:
         base-config: default
+  ratelimiter:
+    configs:
+      defaultSharedConfig:
+        register-health-indicator: true
+        limit-for-period: 3
+        limit-refresh-period: 3s
+        timeout-duration: 100ms
+    instances:
+      test:
+        base-config: defaultSharedConfig
+      backendA:
+        base-config: defaultSharedConfig
+

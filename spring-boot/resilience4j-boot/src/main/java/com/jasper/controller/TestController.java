@@ -1,6 +1,8 @@
 package com.jasper.controller;
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.RequestNotPermitted;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,5 +30,16 @@ public class TestController {
 
     private String fallback(HttpServerErrorException ex) {
         return "===fallback Recovered HttpServerErrorException: " + ex.getMessage();
+    }
+
+    @GetMapping("rateLimiter")
+//    permits 一次消耗几个permit 例如导出设置为5  invalid
+    @RateLimiter(name = "test",fallbackMethod = "fallback",permits = 4)
+    public String rateLimiter() {
+        return "rateLimiter";
+    }
+
+    private String fallback(RequestNotPermitted permitted) {
+        return "===fallback rateLimiter RequestNotPermitted: " + permitted.toString();
     }
 }

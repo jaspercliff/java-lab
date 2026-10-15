@@ -1,4 +1,4 @@
-package com.jasper;
+package com.jasper.circuitBreaker;
 
 import lombok.Setter;
 
