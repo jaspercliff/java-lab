@@ -28,6 +28,16 @@ public class CircuitBreakerEventDemo {
                 .slowCallRateThreshold(60)
                 .build();
         CircuitBreakerRegistry circuitBreakerRegistry = CircuitBreakerRegistry.of(circuitBreakerConfig);
+        circuitBreakerRegistry.getEventPublisher()
+                .onEntryAdded(entryAddedEvent -> {
+                    CircuitBreaker addedCircuitBreaker = entryAddedEvent.getAddedEntry();
+                    log.info("===CircuitBreaker {} added", addedCircuitBreaker.getName());
+                })
+                .onEntryRemoved(entryRemovedEvent -> {
+                    CircuitBreaker removedCircuitBreaker = entryRemovedEvent.getRemovedEntry();
+                    log.info("===CircuitBreaker {} removed", removedCircuitBreaker.getName());
+                });
+
         CircuitBreaker circuitBreaker = circuitBreakerRegistry.circuitBreaker("backend");
         EventConsumer<CircuitBreakerEvent> consumer =
                 event -> System.out.println("======收到事件：" + event);
@@ -63,6 +73,7 @@ public class CircuitBreakerEventDemo {
                 .onReset(event -> {
                     log.info("========reset event={}", event);
                 })
+
 //                .onEvent(consumer)
                 .onEvent(eventConsumer);
         ;
