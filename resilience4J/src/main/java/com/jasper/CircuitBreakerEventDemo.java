@@ -4,6 +4,7 @@ import io.github.resilience4j.circuitbreaker.CircuitBreaker;
 import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig;
 import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry;
 import io.github.resilience4j.circuitbreaker.event.CircuitBreakerEvent;
+import io.github.resilience4j.consumer.CircularEventConsumer;
 import io.github.resilience4j.core.EventConsumer;
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,7 +31,9 @@ public class CircuitBreakerEventDemo {
         CircuitBreaker circuitBreaker = circuitBreakerRegistry.circuitBreaker("backend");
         EventConsumer<CircuitBreakerEvent> consumer =
                 event -> System.out.println("======收到事件：" + event);
-
+        // 事件消费者缓冲区大小的参数 该消费者最多保留 10 个事件
+        CircularEventConsumer<CircuitBreakerEvent> eventConsumer =
+                new CircularEventConsumer<>(10);
         circuitBreaker.getEventPublisher()
                 .onSuccess(event -> { // 当一次调用被熔断器记录为成功时产生
                     log.info("=====success event={}", event);
@@ -60,7 +63,9 @@ public class CircuitBreakerEventDemo {
                 .onReset(event -> {
                     log.info("========reset event={}", event);
                 })
-                .onEvent(consumer);
+//                .onEvent(consumer)
+                .onEvent(eventConsumer);
+        ;
 //        eventConsumerBufferSize: 10
 //        事件发布与消费：事件产生后交给注册的消费者。
 //        事件缓冲区：将最近的一部分事件暂存起来，供后续读取
@@ -86,6 +91,12 @@ public class CircuitBreakerEventDemo {
 
             Thread.sleep(300); // 每次调用间隔 300 毫秒
         }
+        // 查看缓冲区中保存的事件
+        System.out.println("\n========== 缓冲区中的事件 ==========");
+
+        eventConsumer.getBufferedEvents().forEach(event -> {
+            log.info(event.toString());
+        });
         circuitBreaker.reset();
     }
 }

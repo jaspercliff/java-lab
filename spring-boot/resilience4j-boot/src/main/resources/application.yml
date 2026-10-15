@@ -72,6 +72,7 @@ resilience4j:
 
         slow-call-duration-threshold: 2 #定义多长时间算“慢
         slow-call-rate-threshold: 60 #定义慢调用比例阈值：当慢调用占比达到 60% 时触发熔断
+#        http://localhost:8081/actuator/circuitbreakerevents 查看
 #        它决定熔断器内部的事件缓冲区能保存多少条事件记录，方便你通过事件 API 获取最近的熔断器事件
         eventConsumerBufferSize: 10 # 设置 CircuitBreaker 事件消费者缓冲区的大小
 

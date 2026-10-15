@@ -48,6 +48,7 @@ ttl = {module= "com.alibaba:transmittable-thread-local",version.ref = "ttl"}
 cglib = {module = "cglib:cglib",version.ref = "cglib"}
 jakarta-annotation = {module = "jakarta.annotation:jakarta.annotation-api",version.ref="jakarta"}
 resilience4j-all = {module = "io.github.resilience4j:resilience4j-all",version.ref="resilience4j"}
+resilience4j-consumer = {module="io.github.resilience4j:resilience4j-consumer",version.ref="resilience4j"}
 
 # 三方库
 jedis = { module = "redis.clients:jedis", version.ref = "jedis" }
