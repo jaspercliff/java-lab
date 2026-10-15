@@ -26,6 +26,8 @@ public class CountBasedCircuitBreakerDemo {
                 .slowCallRateThreshold(60)
                 .build();
 
+        //Resilience4j使用基于ConcurrentHashMap的CircuitBreakerRegistry 来保证线程安全和原子性，
+        // 你可以使用CircuitBreakerRegistry管理（创建和检索）断路器实例
 // Create a CircuitBreakerRegistry with a custom global configuration
         CircuitBreakerRegistry circuitBreakerRegistry = CircuitBreakerRegistry.of(circuitBreakerConfig);
         CircuitBreaker circuitBreaker = circuitBreakerRegistry.circuitBreaker("backendA");

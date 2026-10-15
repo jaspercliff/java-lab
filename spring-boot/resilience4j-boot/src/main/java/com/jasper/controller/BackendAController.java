@@ -22,5 +22,8 @@ public class BackendAController {
         return backendAService.failure();
     }
 
-
+    @GetMapping("fallback")
+    public String failureWithFallback(){
+        return backendAService.failureWithFallback();
+    }
 }

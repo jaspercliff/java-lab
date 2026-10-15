@@ -6,6 +6,7 @@ import io.github.resilience4j.retry.annotation.Retry;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 
 @Component
 public class BackendAService implements Service{
@@ -27,14 +28,19 @@ public class BackendAService implements Service{
         throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "This is a remote client exception");
     }
     @Override
+    @CircuitBreaker(name = BACKEND_A,fallbackMethod = "")
     public String failure() {
-        return "";
+        throw new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "This is a remote exception");
     }
 
     @Override
+    @CircuitBreaker(name = BACKEND_A,fallbackMethod = "fallback")
     public String failureWithFallback() {
-        return "";
+        throw new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "This is a remote exception");
     }
 
+    private String fallback(HttpServerErrorException ex) {
+        return "===fallback Recovered HttpServerErrorException: " + ex.getMessage();
+    }
 
 }
