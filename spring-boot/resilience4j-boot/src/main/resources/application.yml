@@ -110,3 +110,15 @@ resilience4j:
     instances:
       test:
         base-config: default
+  retry:
+    instances:
+        test:
+            max-attempts: 3
+            wait-duration: 500ms
+            enable-exponential-backoff: true
+            exponential-backoff-multiplier: 2
+            exponential-max-wait-duration: 5s
+            retry-exceptions:
+            - org.springframework.web.client.HttpServerErrorException
+            - java.util.concurrent.TimeoutException
+            - java.io.IOException

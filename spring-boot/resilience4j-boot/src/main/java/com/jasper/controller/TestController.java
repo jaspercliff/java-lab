@@ -3,19 +3,24 @@ package com.jasper.controller;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.ratelimiter.RequestNotPermitted;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
+import io.github.resilience4j.retry.annotation.Retry;
 import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpServerErrorException;
 
+import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @RestController
 @RequestMapping("test")
+@Slf4j
 public class TestController {
 
     @GetMapping
@@ -41,6 +46,25 @@ public class TestController {
         return "rateLimiter";
     }
 
+    //for test
+    private final AtomicInteger counter = new AtomicInteger();
+
+    @GetMapping("retry")
+    @Retry(name = "test", fallbackMethod = "fallback")
+    public String retry() throws IOException {
+        int attempt = counter.incrementAndGet();
+        log.info("查询库存，第 {} 次调用", attempt);
+        if (attempt < 3) {
+            throw new IOException("库存服务暂时不可用");
+        }
+        if (attempt == 3) {
+            counter.set(0); // 重置计数器，以便下次调用时重新开始计数
+        }
+        return "库存查询成功";
+    }
+
+
+
     @GetMapping("timeLimiter")
     @TimeLimiter(name = "test",fallbackMethod = "fallback")
     public CompletableFuture<String> timeLimiter() {
@@ -63,5 +87,10 @@ public class TestController {
 
     private CompletableFuture<String> fallback(TimeoutException e) {
         return CompletableFuture.completedFuture("库存查询超时");
+    }
+
+    private String fallback(IOException e) {
+        log.error("库存查询失败，已达到最大重试次数", e);
+        return "库存服务暂时不可用，请稍后重试";
     }
 }
