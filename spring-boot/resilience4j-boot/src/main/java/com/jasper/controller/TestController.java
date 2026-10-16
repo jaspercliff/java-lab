@@ -3,11 +3,16 @@ package com.jasper.controller;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.ratelimiter.RequestNotPermitted;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
+import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpServerErrorException;
+
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 @RestController
 @RequestMapping("test")
@@ -28,9 +33,6 @@ public class TestController {
         throw new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "This is a remote exception");
     }
 
-    private String fallback(HttpServerErrorException ex) {
-        return "===fallback Recovered HttpServerErrorException: " + ex.getMessage();
-    }
 
     @GetMapping("rateLimiter")
 //    permits 一次消耗几个permit 例如导出设置为5  invalid
@@ -39,7 +41,27 @@ public class TestController {
         return "rateLimiter";
     }
 
+    @GetMapping("timeLimiter")
+    @TimeLimiter(name = "test",fallbackMethod = "fallback")
+    public CompletableFuture<String> timeLimiter() {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            return "enough stock";
+        });
+    }
+
+    private String fallback(HttpServerErrorException ex) {
+        return "===fallback Recovered HttpServerErrorException: " + ex.getMessage();
+    }
     private String fallback(RequestNotPermitted permitted) {
         return "===fallback rateLimiter RequestNotPermitted: " + permitted.toString();
+    }
+
+    private CompletableFuture<String> fallback(TimeoutException e) {
+        return CompletableFuture.completedFuture("库存查询超时");
     }
 }

@@ -102,4 +102,11 @@ resilience4j:
         base-config: defaultSharedConfig
       backendA:
         base-config: defaultSharedConfig
-
+  timelimiter:
+    configs:
+      default:
+        timeout-duration: 2s # 大于2s就算超时
+        cancel-running-future: true
+    instances:
+      test:
+        base-config: default
