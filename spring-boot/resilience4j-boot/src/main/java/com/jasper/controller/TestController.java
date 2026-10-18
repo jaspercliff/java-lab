@@ -1,5 +1,7 @@
 package com.jasper.controller;
 
+import io.github.resilience4j.bulkhead.BulkheadFullException;
+import io.github.resilience4j.bulkhead.annotation.Bulkhead;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.ratelimiter.RequestNotPermitted;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
@@ -8,6 +10,7 @@ import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpServerErrorException;
@@ -77,7 +80,13 @@ public class TestController {
             return "enough stock";
         });
     }
-
+    @GetMapping("bulkhead/{param}")
+    @Bulkhead(name = "test", fallbackMethod = "fallback")
+    public String doSomething(@PathVariable String param) {
+        log.info("===doSomething param: {}", param);
+        // 核心业务逻辑（仍然运行在 Tomcat 线程上，但同时最多只有 5 个线程能进来）
+        return "Success: " + param;
+    }
     private String fallback(HttpServerErrorException ex) {
         return "===fallback Recovered HttpServerErrorException: " + ex.getMessage();
     }
@@ -92,5 +101,9 @@ public class TestController {
     private String fallback(IOException e) {
         log.error("库存查询失败，已达到最大重试次数", e);
         return "库存服务暂时不可用，请稍后重试";
+    }
+    private String fallback(BulkheadFullException ex) {
+        log.error("触发并发隔离降级：当前访问人数过多，请稍后再试。");
+        return "触发并发隔离降级：当前访问人数过多，请稍后再试。";
     }
 }

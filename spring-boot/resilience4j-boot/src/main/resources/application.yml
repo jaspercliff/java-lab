@@ -122,3 +122,11 @@ resilience4j:
             - org.springframework.web.client.HttpServerErrorException
             - java.util.concurrent.TimeoutException
             - java.io.IOException
+  bulkhead:
+    configs:
+        default:
+            max-concurrent-calls: 5
+            max-wait-duration: 0ms
+    instances:
+        test:
+            base-config: default
