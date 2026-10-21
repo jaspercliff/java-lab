@@ -1,5 +1,6 @@
 package com.jasper.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -10,6 +11,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @RestController
 @RequestMapping("/random")
+@Slf4j
 public class RandomController {
 
     // 线程安全的计数器
@@ -35,6 +37,7 @@ public class RandomController {
 
     @GetMapping("/absolute")
     public String absolute(@RequestParam(value = "rate", defaultValue = "0") int rate) {
+        log.info("Producer absolute called, rate={}", rate);
         int currentRate = Math.clamp(rate, 0, 100);
 
         if (currentRate == 0) {

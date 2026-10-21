@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 /**
  * 把 HTTP API 调用声明成 Java Interface，让远程调用看起来像调用本地方法。
  */
-@FeignClient(name = "producer-service",url = "http://127.0.0.1:8080",path = "producer")
+@FeignClient(name = "producer-service",url = "http://127.0.0.1:18081",path = "producer"
+        ,fallbackFactory = ProducerServiceClientFallbackFactory.class)
 public interface ProducerServiceClient {
 
     @GetMapping

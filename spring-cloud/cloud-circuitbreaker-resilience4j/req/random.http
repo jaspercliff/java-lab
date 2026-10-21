@@ -1,0 +1,2 @@
+###
+GET http://localhost:8081/random/absolute?rate=50

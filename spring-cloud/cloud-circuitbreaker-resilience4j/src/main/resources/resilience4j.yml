@@ -1,0 +1,44 @@
+resilience4j:
+  #  Starting with Resilience4j 3 you can switch the internal schedulers to Java virtual thread
+  thread:
+    type: virtual # see Resilience4jThreadAutoConfiguration
+  circuitbreaker:
+    configs:
+      default:
+        #是否将断路器的健康状态注册到 Spring Boot Actuator 的健康检查中 /actuator/health 可以SBA or Prometheus observe
+        register-health-indicator: true
+        slidingWindowType: COUNT_BASED # TIME_BASED
+        sliding-window-size: 10 # 拿最近 10 个请求计算失败率
+        minimum-number-of-calls: 5 # 最小统计请求数。在滑动窗口内，只有当请求数量达到至少 5 次后，断路器才会开始计算失败率并判断是否开启熔断
+        # 半开状态允许通过的探测请求数。当断路器从 OPEN 进入 HALF_OPEN（半开）状态时，只允许 3 次试探性请求通过以测试下游服务是否恢复
+        permitted-number-of-calls-in-half-open-state: 3
+        failure-rate-threshold: 50 # 失败率达到 50% 触发熔断
+        waitDurationInOpenState: 5s # from open to half open time
+        #        如果没有新的请求进来，断路器会一直停留在 OPEN 状态
+        #        只有当有新的请求刚好发过来时，Resilience4j 在处理这个请求的瞬间会检查一眼时间：“等待时间已经到了”，然后才会在这一瞬间顺便把状态切换为 HALF_OPEN
+        automaticTransitionFromOpenToHalfOpenEnabled: true # 自动切换到半开状态  会在后台启动一个定时调度线程 ScheduledExecutorService
+
+        slow-call-duration-threshold: 2 #定义多长时间算“慢
+        slow-call-rate-threshold: 60 #定义慢调用比例阈值：当慢调用占比达到 60% 时触发熔断
+        #        http://localhost:8081/actuator/circuitbreakerevents 查看
+        #        它决定熔断器内部的事件缓冲区能保存多少条事件记录，方便你通过事件 API 获取最近的熔断器事件
+        eventConsumerBufferSize: 10 # 设置 CircuitBreaker 事件消费者缓冲区的大小
+
+        # 超过 maxWaitDurationInHalfOpenState 配置的时间，规定时间内没有凑够指定的测试请求数,断路器就会放弃等待，强制从半开状态重新回到开启（Open）状态
+        # 0 代表没有最大等待时间的限制 一般不用设置 默认0就ok
+        maxWaitDurationInHalfOpenState: 0
+    instances:
+      # see @link CircuitBreakerNameResolver FeignClient名#方法名(参数类型)
+      # 这里就是匹配producer-service的全部方法
+      random-service:
+        base-config: default # extends default config
+  ratelimiter:
+    configs:
+      defaultSharedConfig:
+        register-health-indicator: true
+        limit-for-period: 30
+        limit-refresh-period: 3s
+        timeout-duration: 100ms
+    instances:
+      random-service:
+        base-config: defaultSharedConfig

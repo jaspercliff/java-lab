@@ -1,0 +1,48 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: Resilience4jCloudApplication
+  config:
+    import: 'classpath:resilience4j.yml'
+  jackson:
+    serialization:
+      indent_output: true #让 Jackson 序列化生成的 JSON 自动进行格式化（Pretty Print），增加缩进和换行，提高可读性 dev use
+  boot:
+    admin:
+      client:
+        url: http://127.0.0.1:18080
+        instance:
+          name: ${spring.application.name}
+          # 告诉 Admin Server：“请通过宿主机网关来访问我”
+          service-url: http://host.docker.internal:8081
+          health-url: http://host.docker.internal:8081/actuator/health
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: true # 启用 OpenFeign 的熔断功能
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+  info:
+    env:
+      enabled: true  # 启用 info 端点读取 info.* 环境属性的功能
+  health:
+    diskspace:
+      enabled: false # 检查应用所在服务器磁盘的剩余空间 减少不必要的io 开销
+    circuitbreakers:
+      enabled: true # 服务熔断器（Circuit Breaker）的状态（如：当前是 CLOSED 正常、OPEN 熔断，还是 HALF_OPEN 半开）
+    ratelimiters:
+      enabled: false
+
+info:
+  app:
+    name: ${spring.application.name}
+    description: resilience demo
+    version: 1.0.0
+    author: jasper

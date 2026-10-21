@@ -1,20 +1,17 @@
 plugins {
-    id("java")
-}
-
-group = "com.jasper"
-version = "unspecified"
-
-repositories {
-    mavenCentral()
+    id("spring-boot-convention")
 }
 
 dependencies {
-    testImplementation(platform("org.junit:junit-bom:6.0.0"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-}
+    implementation(libs.spring.boot.starter.web)
+//    When used with Spring Boot, it is necessary to include AOP.
+    implementation(libs.spring.boot.starter.aop)
+    implementation(libs.spring.boot.starter.actuator)
+    implementation(libs.spring.boot.admin.starter.client)
+    implementation(libs.spring.boot.starter.test)
 
-tasks.test {
-    useJUnitPlatform()
+    implementation(platform(libs.bom.alibaba))
+    implementation(platform(libs.bom.springcloud))
+    implementation(libs.openfeign)
+    implementation(libs.cloud.resilience4j)
 }
