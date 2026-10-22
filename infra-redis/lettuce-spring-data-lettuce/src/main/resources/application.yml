@@ -9,3 +9,20 @@ spring:
       client-type: lettuce
       timeout: 2s # redis 命令响应
       connect-timeout: 500ms
+  #  data:
+  #    redis:
+  #      password: passwd
+  # sentinel:
+  #   master: mymaster
+  #   nodes:
+  #     - 127.0.0.1:26380
+  #     - 127.0.0.1:26381
+  #     - 127.0.0.1:26382
+  # cluster:
+  #   nodes:
+  #   - 192.168.31.36:6380
+  #   - 192.168.31.36:6381
+  #   - 192.168.31.36:6382
+  #   - 192.168.31.36:6383
+  #   - 192.168.31.36:6384
+  #   - 192.168.31.36:6385

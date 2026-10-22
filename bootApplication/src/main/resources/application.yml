@@ -12,23 +12,7 @@ spring:
     # 注意：这里用的是 localhost 和映射端口 3307
     url: jdbc:mysql://127.0.0.1:3307/java-lab?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
     password: passwd
-      #  data:
-      #    redis:
-      #      password: passwd
-      # sentinel: 
-      #   master: mymaster
-      #   nodes:
-      #     - 127.0.0.1:26380
-      #     - 127.0.0.1:26381
-      #     - 127.0.0.1:26382
-      # cluster:
-      #   nodes:
-      #   - 192.168.31.36:6380
-      #   - 192.168.31.36:6381
-      #   - 192.168.31.36:6382
-      #   - 192.168.31.36:6383
-      #   - 192.168.31.36:6384
-    #   - 192.168.31.36:6385
+
 logging:
   level:
     io.lettuce.core: debug
