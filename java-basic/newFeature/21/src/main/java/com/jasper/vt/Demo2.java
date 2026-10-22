@@ -1,9 +1,12 @@
 package com.jasper.vt;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.time.Duration;
 import java.util.concurrent.Executors;
 import java.util.stream.IntStream;
 
+@Slf4j
 public class Demo2 {
     public static void main(String[] args) {
         /*
@@ -13,13 +16,11 @@ public class Demo2 {
          * 它会调用 awaitTermination()，阻塞主线程，直到所有已提交的虚拟线程任务全部执行完毕
          */
         try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
-            IntStream.range(0, 10).forEach(i -> {
-                executor.submit(() -> {
-                    System.out.println(i);
-                    Thread.sleep(Duration.ofSeconds(1));
-                    return i;
-                });
-            });
+            IntStream.range(0, 10).forEach(i -> executor.submit(() -> {
+                log.info("i: {}", i);
+                Thread.sleep(Duration.ofSeconds(1));
+                return i;
+            }));
         } // 自动等待所有任务完成
     }
 }
