@@ -4,7 +4,7 @@ import java.util.function.Supplier;
 public class SupplierExample {
     public static void main(String[] args) {
 // 示例1：生成一个随机数
-        Supplier<Double> randomNumberSupplier = () -> Math.random();
+        Supplier<Double> randomNumberSupplier = Math::random;
         System.out.println("Random Number: " + randomNumberSupplier.get());
 
         // 示例2：生成一个固定值
