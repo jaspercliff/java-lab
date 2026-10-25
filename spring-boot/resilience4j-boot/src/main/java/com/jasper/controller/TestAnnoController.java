@@ -24,33 +24,36 @@ import java.util.concurrent.atomic.AtomicInteger;
 @RestController
 @RequestMapping("test")
 @Slf4j
-public class TestController {
+public class TestAnnoController {
 
-    @GetMapping
-    public String test(){
-        return "test";
-    }
+    //for test
+    private final AtomicInteger counter = new AtomicInteger();
 
     /**
      * Fallback 是针对单次调用异常的处理；熔断是针对一段时间内调用结果的状态控制
-     * circuitBreaker open  reach 要求之后直接进去fallback
+     * circuitBreaker open  reach 要求之后直接进去fallback <br>
+     * see also cloud-circuitbreaker-resilience4j {@link com.jasper.controller.RandomController}
      */
-    @GetMapping("fallback")
+    @GetMapping("circuitBreaker")
     @CircuitBreaker(name = "test",fallbackMethod = "fallback")
     public String failureWithFallback() {
         throw new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "This is a remote exception");
     }
 
+    private String fallback(HttpServerErrorException ex) {
+        return "===fallback Recovered HttpServerErrorException: " + ex.getMessage();
+    }
 
     @GetMapping("rateLimiter")
 //    permits 一次消耗几个permit 例如导出设置为5  invalid
-    @RateLimiter(name = "test",fallbackMethod = "fallback",permits = 4)
+    @RateLimiter(name = "test", fallbackMethod = "fallback")
     public String rateLimiter() {
         return "rateLimiter";
     }
 
-    //for test
-    private final AtomicInteger counter = new AtomicInteger();
+    private String fallback(RequestNotPermitted permitted) {
+        return "===fallback rateLimiter RequestNotPermitted: " + permitted.toString();
+    }
 
     @GetMapping("retry")
     @Retry(name = "test", fallbackMethod = "fallback")
@@ -66,20 +69,29 @@ public class TestController {
         return "库存查询成功";
     }
 
-
+    private String fallback(IOException e) {
+        log.error("库存查询失败，已达到最大重试次数", e);
+        return "库存服务暂时不可用，请稍后重试";
+    }
 
     @GetMapping("timeLimiter")
     @TimeLimiter(name = "test",fallbackMethod = "fallback")
     public CompletableFuture<String> timeLimiter() {
         return CompletableFuture.supplyAsync(() -> {
             try {
-                TimeUnit.SECONDS.sleep(1);
+                TimeUnit.SECONDS.sleep(3000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
             return "enough stock";
         });
+
     }
+
+    private CompletableFuture<String> fallback(TimeoutException e) {
+        return CompletableFuture.completedFuture("库存查询超时");
+    }
+
     @GetMapping("bulkhead/{param}")
     @Bulkhead(name = "test", fallbackMethod = "fallback")
     public String doSomething(@PathVariable String param) {
@@ -87,21 +99,7 @@ public class TestController {
         // 核心业务逻辑（仍然运行在 Tomcat 线程上，但同时最多只有 5 个线程能进来）
         return "Success: " + param;
     }
-    private String fallback(HttpServerErrorException ex) {
-        return "===fallback Recovered HttpServerErrorException: " + ex.getMessage();
-    }
-    private String fallback(RequestNotPermitted permitted) {
-        return "===fallback rateLimiter RequestNotPermitted: " + permitted.toString();
-    }
 
-    private CompletableFuture<String> fallback(TimeoutException e) {
-        return CompletableFuture.completedFuture("库存查询超时");
-    }
-
-    private String fallback(IOException e) {
-        log.error("库存查询失败，已达到最大重试次数", e);
-        return "库存服务暂时不可用，请稍后重试";
-    }
     private String fallback(BulkheadFullException ex) {
         log.error("触发并发隔离降级：当前访问人数过多，请稍后再试。");
         return "触发并发隔离降级：当前访问人数过多，请稍后再试。";

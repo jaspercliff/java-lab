@@ -1,10 +1,10 @@
-GET http://localhost:8081/test/fallback
+GET http://localhost:8081/test/circuitBreaker
 
 ###
 GET http://localhost:8081/test/rateLimiter
 
 ###
-GET http://localhost:8081/test/timeLimiter
+GET http://localhost:8081/test/retry
 
 ###
-GET http://localhost:8081/test/retry
+GET http://localhost:8081/test/timeLimiter

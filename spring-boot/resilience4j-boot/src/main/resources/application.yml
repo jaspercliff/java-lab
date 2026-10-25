@@ -2,7 +2,7 @@ server:
   port: 8081
 spring:
   application:
-    name: Resilience4jApplication
+    name: Resilience4jBootApplication
   config:
     import: 'classpath:resilience4j.yml'
   jackson:
