@@ -14,9 +14,9 @@ import java.util.function.Supplier;
 @Slf4j
 public class RetryDemo {
     public static void main(String[] args) {
-        RetryConfig config = RetryConfig.custom().maxAttempts(3) //最大重试次数
+        RetryConfig config = RetryConfig.custom()
+                .maxAttempts(3) //最大重试次数
                 .waitDuration(Duration.ofMillis(1000)) //两次重试之间的时间间隔
-//                .retryOnResult(response -> response.getStatus() == 500) // 配置一个Predicate类型的函数，返回true表示需要进行重试
 //                .retryExceptions(IOException.class, TimeoutException.class) //配置一个Throwable类型的列表，被记录为失败类型，需要进行重试
                 .ignoreExceptions(BusinessException.class) //配置一个Throwable类型的列表，被记录为忽略类型，不需要进行重试
                 //如果连续失败，不一定每次都等待相同的时间。
@@ -27,6 +27,7 @@ public class RetryDemo {
                                 2.0
                         )
                 )
+                .failAfterMaxAttempts(true) //配置是否在达到最大重试次数后抛出异常，默认为true
                 .build();
 
         // 使用自定义的配置创建RetryRegistry
