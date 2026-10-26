@@ -1,5 +1,6 @@
 plugins {
     id("java-library-convention")
+    id("java-test-convention")
 }
 
 dependencies {
@@ -8,7 +9,4 @@ dependencies {
     testImplementation(platform(libs.testcontainers.bom))
     testImplementation(libs.bundles.testcontainers)
 
-    // testImplementation(platform(libs.testcontainers.bom))
-    // testImplementation(libs.testcontainers.junit.jupiter)
-    // testImplementation(libs.testcontainers.testcontainers)
 }
