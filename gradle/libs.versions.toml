@@ -31,6 +31,8 @@ springCloud = "2025.0.0"
 springCloudAlibaba = "2025.0.0.0"
 openfeign-jackson = "13.15"
 assertj = "3.27.7"
+mockito = "5.24.0"
+
 [libraries]
 
 slf4j-api = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4j" }
@@ -127,6 +129,7 @@ assertj = {module = "org.assertj:assertj-core",version.ref="assertj"}
 testcontainers-bom = { module = "org.testcontainers:testcontainers-bom", version.ref = "testcontainers" }
 testcontainers-junit-jupiter = { module = "org.testcontainers:testcontainers-junit-jupiter" }
 testcontainers-testcontainers = { module = "org.testcontainers:testcontainers" }
+mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito" }
 
 [plugins]
 #spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }

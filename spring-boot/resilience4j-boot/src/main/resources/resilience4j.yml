@@ -35,7 +35,7 @@ resilience4j:
         ignoreExceptions: # 指定哪些异常既不算失败，也不算成功
           - com.jasper.exception.BusinessException
     instances:
-      backendA:
+      backendB:
         base-config: default # extends default config
       test:
         base-config: default
@@ -49,7 +49,7 @@ resilience4j:
     instances:
       test:
         base-config: defaultSharedConfig
-      backendA:
+      backendB:
         base-config: defaultSharedConfig
   timelimiter:
     configs:
@@ -59,9 +59,12 @@ resilience4j:
     instances:
       test:
         base-config: default
+      backendB:
+        base-config: default
   retry:
-    instances:
-      test:
+    configs:
+      default:
+        register-health-indicator: true
         max-attempts: 3 # 最大重试次数
         wait-duration: 500ms # 重试间隔时间
         enable-exponential-backoff: true # 启用指数退避策略
@@ -71,6 +74,11 @@ resilience4j:
           - org.springframework.web.client.HttpServerErrorException
           - java.util.concurrent.TimeoutException
           - java.io.IOException
+    instances:
+      test:
+        base-config: default
+      backendB:
+        base-config: default
   bulkhead:
     configs:
       default:
@@ -78,4 +86,6 @@ resilience4j:
         max-wait-duration: 0ms # 最大等待时间 0ms 表示不等待，直接拒绝请求
     instances:
       test:
+        base-config: default
+      backendB:
         base-config: default
