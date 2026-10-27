@@ -17,6 +17,7 @@ dependencies {
     )
     testImplementation(libs.findLibrary("assertj").get())
     testImplementation(libs.findLibrary("mockito-core").get())
+    testImplementation(libs.findLibrary("mockito-junit-jupiter").get())
 
 }
 

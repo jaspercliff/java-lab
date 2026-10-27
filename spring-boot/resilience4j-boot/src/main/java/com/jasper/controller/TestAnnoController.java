@@ -1,14 +1,16 @@
 package com.jasper.controller;
 
+import com.jasper.exchange.ProducerRandomClient;
 import io.github.resilience4j.bulkhead.BulkheadFullException;
 import io.github.resilience4j.bulkhead.annotation.Bulkhead;
+import io.github.resilience4j.circuitbreaker.CallNotPermittedException;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.ratelimiter.RequestNotPermitted;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
 import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,10 +26,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 @RestController
 @RequestMapping("test")
 @Slf4j
+@RequiredArgsConstructor
 public class TestAnnoController {
 
     //for test
     private final AtomicInteger counter = new AtomicInteger();
+    private final ProducerRandomClient randomClient;
 
     /**
      * Fallback 是针对单次调用异常的处理；熔断是针对一段时间内调用结果的状态控制
@@ -37,13 +41,16 @@ public class TestAnnoController {
     @GetMapping("circuitBreaker")
     @CircuitBreaker(name = "test",fallbackMethod = "fallback")
     public String failureWithFallback() {
-        throw new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "This is a remote exception");
+        String absolute = randomClient.absolute();
+        return "absolute:" + absolute;
     }
 
-    private String fallback(HttpServerErrorException ex) {
+    private String fallback(HttpServerErrorException.InternalServerError ex) {
         return "===fallback Recovered HttpServerErrorException: " + ex.getMessage();
     }
-
+    private String fallback(CallNotPermittedException ex) {
+        return "===fallback Recovered CallNotPermittedException: " + ex.getMessage();
+    }
     @GetMapping("rateLimiter")
 //    permits 一次消耗几个permit 例如导出设置为5  invalid
     @RateLimiter(name = "test", fallbackMethod = "fallback")
