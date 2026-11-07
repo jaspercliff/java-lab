@@ -8,8 +8,11 @@ import lombok.extern.slf4j.Slf4j;
 import java.time.Duration;
 import java.util.function.Supplier;
 
+/**
+ * 默认就是基于信号量的实现，不是线程池隔离
+ */
 @Slf4j
-public class BulkheadDemo {
+public class SemaphoreBulkheadDemo {
     public static void main(String[] args) {
         BulkheadConfig config = BulkheadConfig.custom()
                 .maxConcurrentCalls(2) //允许多少线程并发执行

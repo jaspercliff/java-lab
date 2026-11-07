@@ -89,3 +89,12 @@ resilience4j:
         base-config: default
       backendB:
         base-config: default
+  thread-pool-bulkhead:
+    configs:
+      default:
+        maxThreadPoolSize: 4
+        coreThreadPoolSize: 2
+        queueCapacity: 2 # 最大允许执行6个任务
+    instances:
+      backendB:
+        baseConfig: default

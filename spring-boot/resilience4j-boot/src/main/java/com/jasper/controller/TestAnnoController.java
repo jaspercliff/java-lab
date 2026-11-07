@@ -45,12 +45,20 @@ public class TestAnnoController {
         return "absolute:" + absolute;
     }
 
+    /**
+     * 正常失败 降级
+     */
     private String fallback(HttpServerErrorException.InternalServerError ex) {
         return "===fallback Recovered HttpServerErrorException: " + ex.getMessage();
     }
+
+    /**
+     * fallback for circuitBreaker open
+     */
     private String fallback(CallNotPermittedException ex) {
         return "===fallback Recovered CallNotPermittedException: " + ex.getMessage();
     }
+
     @GetMapping("rateLimiter")
 //    permits 一次消耗几个permit 例如导出设置为5  invalid
     @RateLimiter(name = "test", fallbackMethod = "fallback")

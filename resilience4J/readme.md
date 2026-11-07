@@ -67,3 +67,5 @@ dependencies {
 ## bulkhead
 
 某个下游服务很慢时，限制同时有多少请求可以占用我的资源，避免把整个服务拖垮
+
+信号量隔离（java semaphore）和线程池隔离（java thread pool）是两种常用的隔离方式

@@ -1,2 +1,8 @@
 ###
 GET http://localhost:8081/testDeco/circuitBreaker
+###
+GET http://localhost:8081/testDeco/rateLimiter
+###
+GET http://localhost:8081/testDeco/retry
+###
+GET http://localhost:8081/testDeco/timeLimiter
