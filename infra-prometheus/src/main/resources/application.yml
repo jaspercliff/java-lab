@@ -1,0 +1,22 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: PrometheusApplication
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus,metrics
+  endpoint:
+    health:
+      show-details: always
+#      给 Spring Boot 应用产生的所有 Micrometer 指标，统一添加指定的标签
+#  jvm_threads_live_threads{
+#  application="PrometheusApplication",
+#  env="dev"
+#   } 25
+  metrics:
+    tags:
+      application: ${spring.application.name}
+      env: dev
