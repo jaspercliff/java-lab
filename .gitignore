@@ -23,3 +23,4 @@ container/nacos2.5.4/logs/
 container/mysql-replication/master/data
 container/mysql-replication/slave/data
 *.log
+/container/monitor/prometheus/prometheus_data/

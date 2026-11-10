@@ -1,0 +1,42 @@
+groups:
+  - name: infrastructure-alerts
+    rules:
+
+      # Prometheus 采集目标不可用
+      - alert: InstanceDown
+        expr: up == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "服务不可用"
+          description: "{{ $labels.job }} - {{ $labels.instance }} 已经无法采集超过 1 分钟"
+
+      # JVM Heap 使用率超过 85%
+      - alert: JvmHeapUsageHigh
+        expr: |
+          sum by (job, instance) (
+            jvm_memory_used_bytes{area="heap"}
+          )
+          /
+          sum by (job, instance) (
+            jvm_memory_max_bytes{area="heap"}
+          ) > 0.85
+        for: 3m
+        labels:
+          severity: warning
+        annotations:
+          summary: "JVM 堆内存使用率过高"
+          description: "{{ $labels.instance }} Heap 使用率超过 85%，当前值：{{ $value }}"
+
+      # CPU 使用率较高（需要 Node Exporter）
+      - alert: HostCpuHigh
+        expr: |
+          100 * (1 - avg by (instance) (
+            rate(node_cpu_seconds_total{mode="idle"}[5m])
+          )) > 80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "主机 CPU 使用率过高"
