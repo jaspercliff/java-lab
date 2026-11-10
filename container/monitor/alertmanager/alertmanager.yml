@@ -7,7 +7,7 @@ route:
   # 按告警名称、应用名称分组
   group_by:
     - alertname
-    - application
+    - app
 
   # 新告警等待 10 秒再发送
   group_wait: 10s
@@ -21,7 +21,11 @@ route:
 receivers:
   - name: spring-boot-webhook
     webhook_configs:
-      - url: http://192.168.31.189:8081/webhook/alert
+      - url: http://192.168.31.189:18082/webhook/alert
         send_resolved: true
         max_alerts: 20
         timeout: 10s
+        http_config:
+          authorization:
+            type: Bearer
+            credentials: dev-secret-change-me

@@ -1,0 +1,10 @@
+server:
+  port: 18082
+
+spring:
+  application:
+    name: alert-receiver
+
+alert:
+  webhook:
+    token: ${ALERT_WEBHOOK_TOKEN:dev-secret-change-me}

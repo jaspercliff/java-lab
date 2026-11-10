@@ -5,12 +5,12 @@ groups:
       # Prometheus 采集目标不可用
       - alert: InstanceDown
         expr: up == 0
-        for: 1m
+        for: 20s
         labels:
           severity: critical
         annotations:
           summary: "服务不可用"
-          description: "{{ $labels.job }} - {{ $labels.instance }} 已经无法采集超过 1 分钟"
+          description: "{{ $labels.job }} - {{ $labels.instance }} 已经无法采集超过 20 秒"
 
       # JVM Heap 使用率超过 85%
       - alert: JvmHeapUsageHigh
