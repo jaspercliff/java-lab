@@ -3,3 +3,24 @@ server:
 spring:
   application:
     name: producer-service
+jasper:
+  trace:
+    enabled: true
+
+    header-name: X-Trace-Id
+
+    response-header: true
+
+    accept-incoming: false
+
+    mdc-key: traceId
+
+    async:
+      enabled: true
+      core-pool-size: 4
+      max-pool-size: 16
+      queue-capacity: 500
+      keep-alive-seconds: 60
+      thread-name-prefix: trace-async-
+      wait-for-tasks-to-complete-on-shutdown: true
+      await-termination-seconds: 30

@@ -20,7 +20,8 @@ lettuce = "7.7.0.RELEASE"
 redisson-starter = "3.52.0"
 junit = "5.14.4"
 testcontainers = "2.0.5"
-jakarta = "3.0.0"
+jakarta-annotation = "3.0.0"
+jakarta-servlet = "6.1.0"
 resilience4j = "2.4.0"
 spring-boot-admin= "3.5.11"
 prometheus = "1.17.1"
@@ -48,7 +49,8 @@ mapstruct-lombok-binding = { module = "org.projectlombok:lombok-mapstruct-bindin
 jackson = {module = "tools.jackson.core:jackson-databind",version.ref = "jackson"}
 ttl = {module= "com.alibaba:transmittable-thread-local",version.ref = "ttl"}
 cglib = {module = "cglib:cglib",version.ref = "cglib"}
-jakarta-annotation = {module = "jakarta.annotation:jakarta.annotation-api",version.ref="jakarta"}
+jakarta-annotation = {module = "jakarta.annotation:jakarta.annotation-api",version.ref="jakarta-annotation"}
+jakarta-servlet = {module = "jakarta.servlet:jakarta.servlet-api",version.ref="jakarta-servlet"}
 resilience4j-all = {module = "io.github.resilience4j:resilience4j-all",version.ref="resilience4j"}
 resilience4j-consumer = {module="io.github.resilience4j:resilience4j-consumer",version.ref="resilience4j"}
 
@@ -81,12 +83,16 @@ spring-context = { module = "org.springframework:spring-context" }
 spring-aop = { module = "org.springframework:spring-aop" }
 spring-tx = { module = "org.springframework:spring-tx" }
 aspectj-weaver = { module = "org.aspectj:aspectjweaver", version.ref = "aspectj" }
+spring-web = { module = "org.springframework:spring-web" }
+
+
+spring-boot-dependencies = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot" }
+spring-boot-autoconfigure = {module = "org.springframework.boot:spring-boot-autoconfigure"}
+spring-boot = { module = "org.springframework.boot:spring-boot" }
 
 
 bom-springcloud = { module = "org.springframework.cloud:spring-cloud-dependencies", version.ref = "springCloud" }
 bom-alibaba = { module = "com.alibaba.cloud:spring-cloud-alibaba-dependencies", version.ref = "springCloudAlibaba" }
-spring-boot-dependencies = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot" }
-spring-boot-autoconfigure = {module = "org.springframework.boot:spring-boot-autoconfigure"}
 spring-boot-configuration-processor = {module="org.springframework.boot:spring-boot-configuration-processor"}
 micrometer-registry-prometheus = {module = "io.micrometer:micrometer-registry-prometheus",version.ref = "prometheus"}
 
