@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>org.springframework.core.task.TaskExecutor</OriginalElement>
+  <nodes>
+    <node x="42.0" y="66.0">java.util.concurrent.Executor</node>
+    <node x="155.0" y="426.0">org.springframework.core.task.SimpleAsyncTaskExecutor</node>
+    <node x="-56.0" y="246.0">org.springframework.core.task.TaskExecutor</node>
+    <node x="-115.0" y="426.0">org.springframework.core.task.SyncTaskExecutor</node>
+    <node x="0.0" y="366.0">org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor</node>
+    <node x="-118.5" y="126.0">java.lang.FunctionalInterface</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="org.springframework.core.task.SyncTaskExecutor" target="org.springframework.core.task.TaskExecutor" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="-19.0" y="340.0" />
+      <point x="21.0" y="340.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor" target="org.springframework.core.task.TaskExecutor" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="121.0" y="340.0" />
+      <point x="21.0" y="340.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="org.springframework.core.task.TaskExecutor" target="java.util.concurrent.Executor" relationship="INTERFACE_GENERALIZATION">
+      <point x="38.5" y="-14.0" />
+      <point x="59.5" y="220.0" />
+      <point x="101.0" y="220.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="org.springframework.core.task.SimpleAsyncTaskExecutor" target="org.springframework.core.task.TaskExecutor" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="281.0" y="340.0" />
+      <point x="21.0" y="340.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="org.springframework.core.task.TaskExecutor" target="java.lang.FunctionalInterface" relationship="REALIZATION">
+      <point x="-38.5" y="-14.0" />
+      <point x="-17.5" y="220.0" />
+      <point x="-19.0" y="220.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+  </edges>
+  <RemovedNodes />
+  <RemovedEdges />
+  <settings layout="Hierarchic Compact" zoom="1.2058823529411764" showDependencies="false" x="153.99999999999994" y="269.99999999999994" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
