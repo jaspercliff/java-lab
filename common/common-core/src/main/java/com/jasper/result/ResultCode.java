@@ -22,7 +22,12 @@ public enum ResultCode implements IResultCode {
     VALIDATE_FAILED(412, "参数校验失败"),
     INTERNAL_SERVER_ERROR(500, "服务器内部错误"),
     FAILED(500, "系统执行出错"),
-    SERVICE_UNAVAILABLE(503, "服务不可用");
+    SERVICE_UNAVAILABLE(503, "服务不可用"),
+    CONFLICT(50000, "资源状态冲突"),
+    SCHEDULER_ERROR(50001, "调度器操作失败"),
+    ;
+
+
 
     private final Integer code;
     private final String msg;
