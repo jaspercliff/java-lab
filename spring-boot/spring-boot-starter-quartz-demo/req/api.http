@@ -1,0 +1,24 @@
+### test interrupt job
+
+POST {{url}}/api/quartz/jobs/demo/slowJob/interrupt
+Content-Type: application/x-www-form-urlencoded
+
+
+### test durablejob
+
+POST {{url}}/api/quartz/jobs/demo/durableJob/trigger
+Content-Type: application/json
+
+### test delete job
+
+DELETE {{url}}/api/quartz/jobs/demo/helloJob
+
+### test misefire
+
+POST {{url}}/api/quartz/demo/misfire?
+    delaySeconds=5
+Content-Type: application/x-www-form-urlencoded
+
+###
+POST {{url}}/api/quartz/triggers/demo/misfireJob-trigger/resume
+Content-Type: application/x-www-form-urlencoded

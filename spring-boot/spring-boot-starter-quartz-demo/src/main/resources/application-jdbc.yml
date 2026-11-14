@@ -1,0 +1,60 @@
+# ============================================================================
+# JDBC JobStore + 集群示例
+#
+# 启动方式：
+#   docker compose up -d db                     # 根目录执行，MySQL 映射到 3307
+#   ./gradlew :quartz-demo:bootRun --args='--spring.profiles.active=jdbc'
+#
+# 表结构：
+#   src/main/resources/db/quartz-mysql.sql（可重复执行，不会清空已有任务）
+#
+# 集群验证：
+#   java -jar quartz-demo.jar --spring.profiles.active=jdbc --server.port=8091
+#   两个节点共用同一个库，isClustered=true 时同一个 Trigger 只会被一个节点抢到。
+# ============================================================================
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3307/quartz?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: passwd
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      # 集群节点数 × 连接数要小于 MySQL max_connections；
+      # Quartz 的 JobStore 会占用连接执行锁查询，不要配得太小。
+      maximum-pool-size: 10
+      minimum-idle: 2
+      connection-timeout: 3000
+
+# JDBC-JobStoreTX：Quartz 自己管理数据库事务。
+  quartz:
+    job-store-type: jdbc #JDBC-JobStoreCMT Spring Boot 会通过 SchedulerFactoryBean 使用 Spring 提供的 LocalDataSourceJobStore
+    # JDBC 模式下重启会读到已有 JobDetail，声明式 Bean 需要覆盖时设为 true
+    overwrite-existing-jobs: true
+
+    jdbc:
+      # always：每次启动执行下面的幂等 DDL（CREATE TABLE IF NOT EXISTS）
+      # 生产建议 never，并用 Flyway/Liquibase 管理表结构
+      initialize-schema: always
+      schema: classpath:db/quartz-mysql.sql
+
+    properties:
+      # Spring 提供的 LocalDataSourceJobStore：
+      # 复用 Spring 的 DataSource 和 PlatformTransactionManager，参与 Spring 事务
+      org.quartz.jobStore.class: org.springframework.scheduling.quartz.LocalDataSourceJobStore
+      # MySQL 使用标准 JDBC delegate；Oracle/PostgreSQL 等要换成对应 delegate
+      org.quartz.jobStore.driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+      org.quartz.jobStore.tablePrefix: QRTZ_
+      # 集群开关：多节点共享数据库时必须 true
+      org.quartz.jobStore.isClustered: true
+      # 节点心跳间隔，默认 15000ms；越小故障发现越快，但数据库压力越大
+      org.quartz.jobStore.clusterCheckinInterval: 15000
+      # 在数据库锁内获取 Trigger，避免集群下重复触发
+      org.quartz.jobStore.acquireTriggersWithinLock: true
+      # 错失触发阈值：演示用 5 秒，生产建议 60000
+      org.quartz.jobStore.misfireThreshold: 5000
+      # false：JobDataMap 以 Java 序列化 BLOB 存储（值必须可序列化）
+      # true ：以字符串 Properties 存储（所有值必须是 String，更安全，但类型受限）
+      org.quartz.jobStore.useProperties: false
+
+      # 集群节点实例 ID 必须唯一，AUTO 由 Quartz 自动生成
+      org.quartz.scheduler.instanceId: AUTO

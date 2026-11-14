@@ -1,0 +1,77 @@
+server:
+  port: 8090
+  # 优雅停机：等待正在处理的 HTTP 请求结束
+  shutdown: graceful
+
+spring:
+  application:
+    name: quartz-demo
+  profiles:
+    # 本地需要连接 MySQL 时保留 jdbc；想回到零依赖 RAM 模式，注释掉下面两行即可
+    active:
+      - jdbc
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
+  jackson:
+    serialization:
+      # Instant 输出 ISO-8601 字符串，而不是时间戳数字
+      write-dates-as-timestamps: false
+    mapper:
+      # 允许 {"triggerType":"cron"} 这种小写枚举
+      accept-case-insensitive-enums: true
+
+  quartz:
+    # memory：RAMJobStore，重启即丢，适合本地学习 / 单元测试
+    # jdbc：JDBCJobStore，持久化 + 集群，见 application-jdbc.yml
+    job-store-type: memory
+    scheduler-name: quartz-demo-scheduler
+    auto-startup: true
+    # 延迟 2 秒启动，给 Spring 容器和 Bootstrap 注册任务留时间
+    startup-delay: 2s
+    # 关闭时等待正在执行的 Job 结束（生产建议 true）
+    wait-for-jobs-to-complete-on-shutdown: true
+    # 已存在同名 Job 时是否覆盖；JDBC 模式在 application-jdbc.yml 中改为 true
+    overwrite-existing-jobs: false
+
+    properties:
+      # ---- Scheduler ----
+      org.quartz.scheduler.instanceName: quartz-demo-scheduler
+      # AUTO：集群中每个节点自动生成唯一实例 ID（JDBC 集群必须）
+      org.quartz.scheduler.instanceId: AUTO
+      # 关闭 Quartz 的版本更新检查，避免启动时访问外网
+      org.quartz.scheduler.skipUpdateCheck: true
+
+      # ---- 线程池 ----
+      # SimpleThreadPool 是 Quartz 自带线程池；线程数 = 同时可执行的 Job 数
+      org.quartz.threadPool.class: org.quartz.simpl.SimpleThreadPool
+      org.quartz.threadPool.threadCount: 10
+      org.quartz.threadPool.threadPriority: 5
+
+      # ---- JobStore ----
+      org.quartz.jobStore.class: org.quartz.simpl.RAMJobStore
+      # 超过该阈值才算 misfire；演示设为 5 秒，生产默认 60000（60 秒）
+      org.quartz.jobStore.misfireThreshold: 5000
+
+quartz-demo:
+  # 是否自动注册演示任务；关闭后仍可通过 REST 创建
+  bootstrap: true
+  group: demo
+  holiday-calendar: cnHolidays
+  time-zone: Asia/Shanghai
+
+logging:
+  level:
+    com.jasper.quartz: INFO
+    # Quartz 自身日志较啰嗦，生产可调 WARN；排查调度问题时可临时调 DEBUG
+    org.quartz: WARN
+
+---
+# 默认 memory 模式不需要数据库。spring-boot-starter-jdbc 在 classpath 上时，
+# Spring Boot 仍会尝试创建 DataSource，没有 url 就会启动失败，因此这里排除掉。
+# 激活 jdbc profile 时本段不生效（on-profile: "!jdbc"），改由 application-jdbc.yml 提供 MySQL 配置。
+spring:
+  config:
+    activate:
+      on-profile: "!jdbc"
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration

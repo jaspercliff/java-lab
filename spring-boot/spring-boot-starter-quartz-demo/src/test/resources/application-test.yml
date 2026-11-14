@@ -1,0 +1,4 @@
+# 测试专用：不依赖外部 MySQL，强制使用内存 JobStore
+spring:
+  quartz:
+    job-store-type: memory
