@@ -33,7 +33,7 @@ public class SlowJob implements InterruptableJob {
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
         String jobKey = context.getJobDetail().getKey().toString();
-        int seconds = context.getMergedJobDataMap().getIntValue("seconds");
+        int seconds = Integer.parseInt(context.getMergedJobDataMap().getString("seconds"));
         int ticks = Math.max(1, seconds * 10);
 
         executingThread = Thread.currentThread();

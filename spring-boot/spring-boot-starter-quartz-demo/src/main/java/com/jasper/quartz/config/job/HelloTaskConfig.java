@@ -17,7 +17,8 @@ public class HelloTaskConfig implements QuartzTaskDefinition {
                 .withIdentity("helloJob", properties.group())
                 .withDescription("基础 Job：JobDataMap、fireTime、result")
                 .usingJobData("message", "Hello from JobDetail")
-                .usingJobData("jobLevelNumber", 42)
+                .usingJobData("jobLevelNumber", "42")
+                .storeDurably()
                 .build();
     }
 

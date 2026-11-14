@@ -54,7 +54,7 @@ spring:
       org.quartz.jobStore.misfireThreshold: 5000
       # false：JobDataMap 以 Java 序列化 BLOB 存储（值必须可序列化）
       # true ：以字符串 Properties 存储（所有值必须是 String，更安全，但类型受限）
-      org.quartz.jobStore.useProperties: false
+      org.quartz.jobStore.useProperties: true
 
       # 集群节点实例 ID 必须唯一，AUTO 由 Quartz 自动生成
       org.quartz.scheduler.instanceId: AUTO

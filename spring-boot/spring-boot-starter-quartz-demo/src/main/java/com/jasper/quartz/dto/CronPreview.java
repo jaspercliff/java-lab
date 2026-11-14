@@ -1,6 +1,6 @@
 package com.jasper.quartz.dto;
 
-import java.time.Instant;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 /**
@@ -18,6 +18,6 @@ import java.util.List;
 public record CronPreview(
         String expression,
         String timeZone,
-        List<Instant> nextFireTimes
+        List<ZonedDateTime> nextFireTimes
 ) {
 }

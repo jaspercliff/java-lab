@@ -7,7 +7,6 @@ import org.quartz.impl.calendar.HolidayCalendar;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -43,18 +42,24 @@ public class QuartzCalendarService {
     }
 
     /**
-     * 当前被排除的日期（UTC Instant 表示，按 JVM 默认时区取当天 00:00）。
+     * 当前被排除的日期
      */
-    public List<Instant> excludedDates() {
-        return holidayCalendar.getExcludedDates().stream()
-                .map(Date::toInstant)
+    public List<LocalDate> excludedDates() {
+        ZoneId zone = ZoneId.systemDefault();
+
+        return holidayCalendar.getExcludedDates()
+                .stream()
+                .map(date -> date.toInstant()
+                        .atZone(zone)
+                        .toLocalDate())
+                .sorted()
                 .toList();
     }
 
     /**
      * 添加一个节假日，并立即让相关 Trigger 重新计算下一次触发时间。
      */
-    public List<Instant> addHoliday(LocalDate date) throws SchedulerException {
+    public List<LocalDate> addHoliday(LocalDate date) throws SchedulerException {
         holidayCalendar.addExcludedDate(toDate(date));
         reRegister();
         return excludedDates();
@@ -63,7 +68,7 @@ public class QuartzCalendarService {
     /**
      * 移除一个节假日。
      */
-    public List<Instant> removeHoliday(LocalDate date) throws SchedulerException {
+    public List<LocalDate> removeHoliday(LocalDate date) throws SchedulerException {
         holidayCalendar.removeExcludedDate(toDate(date));
         reRegister();
         return excludedDates();

@@ -1,39 +1,11 @@
 package com.jasper.quartz.service;
 
 import com.jasper.quartz.config.QuartzDemoProperties;
-import com.jasper.quartz.dto.CronPreview;
-import com.jasper.quartz.dto.CronUpdateRequest;
-import com.jasper.quartz.dto.ExecutingJobView;
-import com.jasper.quartz.dto.JobRequest;
-import com.jasper.quartz.dto.JobView;
-import com.jasper.quartz.dto.MisfirePolicy;
-import com.jasper.quartz.dto.SchedulerInfo;
-import com.jasper.quartz.dto.TriggerType;
-import com.jasper.quartz.dto.TriggerView;
+import com.jasper.quartz.dto.*;
 import com.jasper.quartz.job.MisfireJob;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.quartz.CalendarIntervalScheduleBuilder;
-import org.quartz.CalendarIntervalTrigger;
-import org.quartz.CronExpression;
-import org.quartz.CronScheduleBuilder;
-import org.quartz.CronTrigger;
-import org.quartz.DailyTimeIntervalScheduleBuilder;
-import org.quartz.DailyTimeIntervalTrigger;
-import org.quartz.DateBuilder;
-import org.quartz.Job;
-import org.quartz.JobBuilder;
-import org.quartz.JobDataMap;
-import org.quartz.JobDetail;
-import org.quartz.JobKey;
-import org.quartz.Scheduler;
-import org.quartz.SchedulerException;
-import org.quartz.SchedulerMetaData;
-import org.quartz.SimpleScheduleBuilder;
-import org.quartz.SimpleTrigger;
-import org.quartz.TimeOfDay;
-import org.quartz.Trigger;
-import org.quartz.TriggerBuilder;
-import org.quartz.TriggerKey;
+import org.quartz.*;
 import org.quartz.impl.matchers.GroupMatcher;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -42,15 +14,9 @@ import java.text.ParseException;
 import java.time.DateTimeException;
 import java.time.Instant;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.TimeZone;
+import java.util.*;
 
 /**
  * Quartz 调度核心服务：把官方 API 按“增删改查 + 启停 + 预览”封装成可复用的方法。
@@ -72,14 +38,35 @@ import java.util.TimeZone;
  */
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class QuartzJobService {
 
     private final Scheduler scheduler;
     private final QuartzDemoProperties properties;
 
-    public QuartzJobService(Scheduler scheduler, QuartzDemoProperties properties) {
-        this.scheduler = scheduler;
-        this.properties = properties;
+    /**
+     * 调度器元数据。
+     */
+    public SchedulerInfo schedulerInfo() throws SchedulerException {
+        SchedulerMetaData meta = scheduler.getMetaData();
+        return new SchedulerInfo(
+                meta.getSchedulerName(),
+                meta.getSchedulerInstanceId(),
+                meta.getSchedulerClass().getName(),
+                meta.getJobStoreClass().getName(),
+                meta.isJobStoreClustered(),
+                meta.isJobStoreSupportsPersistence(),
+                meta.getThreadPoolClass().getName(),
+                meta.getThreadPoolSize(),
+                meta.getNumberOfJobsExecuted(),
+                meta.getRunningSince() == null ? null : meta.getRunningSince().toInstant(),
+                meta.isStarted(),
+                meta.isInStandbyMode(), // 待机，暂停触发任务
+                meta.isShutdown(),
+                meta.getVersion(),
+                scheduler.getCalendarNames(),
+                scheduler.getJobGroupNames(),
+                scheduler.getTriggerGroupNames());
     }
 
     // ==================================================================
@@ -131,14 +118,16 @@ public class QuartzJobService {
             TimeZone zone = resolveTimeZone(timeZone);
             cron.setTimeZone(zone);
 
-            List<Instant> nextFireTimes = new ArrayList<>();
+            List<ZonedDateTime> nextFireTimes = new ArrayList<>();
+            //  每次都要以上一次触发时间作为下一次查询的起点
             Date cursor = new Date();
             for (int i = 0; i < safeCount; i++) {
+                // 返回严格晚于指定时间的下一次匹配时间
                 Date next = cron.getNextValidTimeAfter(cursor);
                 if (next == null) {
                     break;
                 }
-                nextFireTimes.add(next.toInstant());
+                nextFireTimes.add(next.toInstant().atZone(zone.toZoneId()));
                 cursor = next;
             }
             return new CronPreview(expression, zone.getID(), nextFireTimes);
@@ -160,30 +149,6 @@ public class QuartzJobService {
                 .toList();
     }
 
-    /**
-     * 调度器元数据。
-     */
-    public SchedulerInfo schedulerInfo() throws SchedulerException {
-        SchedulerMetaData meta = scheduler.getMetaData();
-        return new SchedulerInfo(
-                meta.getSchedulerName(),
-                meta.getSchedulerInstanceId(),
-                meta.getSchedulerClass().getName(),
-                meta.getJobStoreClass().getName(),
-                meta.isJobStoreClustered(),
-                meta.isJobStoreSupportsPersistence(),
-                meta.getThreadPoolClass().getName(),
-                meta.getThreadPoolSize(),
-                meta.getNumberOfJobsExecuted(),
-                meta.getRunningSince() == null ? null : meta.getRunningSince().toInstant(),
-                meta.isStarted(),
-                meta.isInStandbyMode(),
-                meta.isShutdown(),
-                meta.getVersion(),
-                scheduler.getCalendarNames(),
-                scheduler.getJobGroupNames(),
-                scheduler.getTriggerGroupNames());
-    }
 
     // ==================================================================
     // 创建 / 修改 / 删除
@@ -214,14 +179,33 @@ public class QuartzJobService {
 
         JobBuilder jobBuilder = JobBuilder.newJob(jobClass)
                 .withIdentity(jobKey)
-                .requestRecovery(Boolean.TRUE.equals(request.requestRecovery()));
+                .requestRecovery(Boolean.TRUE.equals(request.requestRecovery()));// 集群节点宕机
 
         if (StringUtils.hasText(request.description())) {
             jobBuilder.withDescription(request.description());
         }
         if (request.data() != null && !request.data().isEmpty()) {
-            // JobDataMap 的值在 JDBC 模式下需要可序列化；演示数据只放 String/Number/Boolean
-            jobBuilder.usingJobData(new JobDataMap(request.data()));
+            JobDataMap jobDataMap = new JobDataMap();
+
+            request.data().forEach((key, value) -> {
+                if (value == null) {
+                    throw new IllegalArgumentException(
+                            "JobDataMap 不允许 null: " + key
+                    );
+                }
+
+                if (value instanceof String
+                        || value instanceof Number
+                        || value instanceof Boolean) {
+                    jobDataMap.put(key, String.valueOf(value));
+                } else {
+                    throw new IllegalArgumentException(
+                            "JobDataMap 只允许 String、Number、Boolean: " + key
+                    );
+                }
+            });
+
+            jobBuilder.usingJobData(jobDataMap);
         }
 
         boolean durable = Boolean.TRUE.equals(request.durable());
@@ -343,6 +327,7 @@ public class QuartzJobService {
 
     // ==================================================================
     // 暂停 / 恢复 / 手动触发 / 中断
+    // pauseJob是暂停这个 Job 关联的所有 Trigger
     // ==================================================================
 
     public void pauseJob(String group, String name) throws SchedulerException {

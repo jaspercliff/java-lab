@@ -1,32 +1,18 @@
 package com.jasper.quartz.controller;
 
 import com.jasper.quartz.config.QuartzDemoProperties;
-import com.jasper.quartz.dto.CronPreview;
-import com.jasper.quartz.dto.CronUpdateRequest;
-import com.jasper.quartz.dto.ExecutionRecord;
-import com.jasper.quartz.dto.ExecutingJobView;
-import com.jasper.quartz.dto.JobRequest;
-import com.jasper.quartz.dto.JobView;
-import com.jasper.quartz.dto.SchedulerInfo;
+import com.jasper.quartz.dto.*;
 import com.jasper.quartz.listener.ExecutionHistory;
 import com.jasper.quartz.service.QuartzCalendarService;
 import com.jasper.quartz.service.QuartzJobService;
+import lombok.RequiredArgsConstructor;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.time.Instant;
 import java.time.LocalDate;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -70,6 +56,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/api/quartz")
+@RequiredArgsConstructor
 public class QuartzController {
 
     private final QuartzJobService jobService;
@@ -78,17 +65,6 @@ public class QuartzController {
     private final Scheduler scheduler;
     private final QuartzDemoProperties properties;
 
-    public QuartzController(QuartzJobService jobService,
-                            QuartzCalendarService calendarService,
-                            ExecutionHistory executionHistory,
-                            Scheduler scheduler,
-                            QuartzDemoProperties properties) {
-        this.jobService = jobService;
-        this.calendarService = calendarService;
-        this.executionHistory = executionHistory;
-        this.scheduler = scheduler;
-        this.properties = properties;
-    }
 
     // ------------------------------------------------------------------
     // 调度器信息
@@ -234,15 +210,15 @@ public class QuartzController {
     }
 
     @PostMapping("/calendars/{name}/holidays")
-    public List<Instant> addHoliday(@PathVariable String name,
-                                    @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date)
+    public List<LocalDate> addHoliday(@PathVariable String name,
+                                 @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date)
             throws SchedulerException {
         requireHolidayCalendar(name);
         return calendarService.addHoliday(date);
     }
 
     @DeleteMapping("/calendars/{name}/holidays")
-    public List<Instant> removeHoliday(@PathVariable String name,
+    public List<LocalDate> removeHoliday(@PathVariable String name,
                                        @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date)
             throws SchedulerException {
         requireHolidayCalendar(name);

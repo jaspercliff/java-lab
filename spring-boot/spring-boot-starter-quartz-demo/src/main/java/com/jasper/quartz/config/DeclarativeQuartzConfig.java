@@ -73,4 +73,29 @@ public class DeclarativeQuartzConfig {
                         .withMisfireHandlingInstructionDoNothing())
                 .build();
     }
+
+    @Bean
+    public JobDetail reportJobDetail() {
+        return JobBuilder.newJob(DeclarativeJob.class)
+                .withIdentity("reportJob", "declarative")
+                .withDescription("report job for test job crud")
+                .usingJobData("reportName", "每日业务报表")
+                .usingJobData("reportType", "DAILY")
+                .storeDurably()
+                .build();
+    }
+
+    @Bean
+    public Trigger reportJobTrigger(
+            @Qualifier("reportJobDetail") JobDetail reportJobDetail) {
+
+        return TriggerBuilder.newTrigger()
+                .withIdentity("reportJob-trigger", "declarative")
+                .withDescription("report job trigger for test job crud")
+                .forJob(reportJobDetail)
+                .withPriority(5)
+                .withSchedule(CronScheduleBuilder.cronSchedule("0 0 2 * * ?")
+                        .withMisfireHandlingInstructionDoNothing())
+                .build();
+    }
 }

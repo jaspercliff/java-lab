@@ -35,7 +35,7 @@ public class FailureJob implements Job {
 
         JobDataMap data = context.getMergedJobDataMap();
 
-        int maxRetries = Math.max(0, data.getIntValue("failTimes"));
+        int maxRetries = Math.max(0, Integer.parseInt(data.getString("failTimes")));
         int refireCount = context.getRefireCount();
 
         try {
@@ -85,7 +85,7 @@ public class FailureJob implements Job {
 
         JobDataMap data = context.getMergedJobDataMap();
 
-        int failBusinessTimes = data.getIntValue("businessFailTimes");
+        int failBusinessTimes = Integer.parseInt(data.getString("businessFailTimes"));
 
         int refireCount = context.getRefireCount();
 

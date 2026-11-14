@@ -1,0 +1,106 @@
+  // 调度器信息
+###
+GET {{url}}/api/quartz/scheduler
+
+
+###
+GET {{url}}/api/quartz/scheduler/executing
+
+###
+GET {{url}}/api/quartz/history
+
+// Job 查询 / 创建 / 删除
+###
+GET {{url}}/api/quartz/jobs
+
+### 查询具体的job
+GET {{url}}/api/quartz/jobs/declarative/reportJob
+
+### add job 这里要求是定义好的job类 发现又需要 可以修改配置 但是replace要为false
+POST {{url}}/api/quartz/jobs
+Content-Type: application/json
+
+{
+  "name": "reportJob",
+  "group": "declarative",
+  "jobClass": "com.jasper.quartz.job.ReportJob",
+  "description": "每天凌晨 2 点执行",
+  "triggerName": "reportJob-trigger",
+  "triggerGroup": "declarative",
+  "triggerType": "CRON",
+  "cron": "0 0 2 * * ?",
+  "timeZone": "Asia/Shanghai",
+  "intervalSeconds": 0,
+  "repeatCount": 0,
+  "startAt": "",
+  "endAt": "",
+  "priority": 5,
+  "calendar": "",
+  "data": {
+    "message": "Daily task"
+  },
+  "durable": true,
+  "requestRecovery": false,
+  "misfirePolicy": "DO_NOTHING",
+  "replace": false
+}
+
+###
+PUT {{url}}/api/quartz/jobs/declarative/reportJob/cron
+Content-Type: application/json
+
+{
+  "cron": "0 0 3 * * ?",
+  "timeZone": "Asia/Shanghai",
+  "misfirePolicy": "SMART"
+}
+
+### delete job 已经不要这个job了
+DELETE {{url}}/api/quartz/jobs/declarative/reportJob
+
+// Job 控制
+### pasue job
+POST {{url}}/api/quartz/jobs/declarative/reportJob/pause
+Content-Type: application/x-www-form-urlencoded
+
+### resume job
+POST {{url}}/api/quartz/jobs/declarative/reportJob/resume
+Content-Type: application/x-www-form-urlencoded
+
+### trigger job now
+POST {{url}}/api/quartz/jobs/declarative/reportJob/trigger
+Content-Type: application/json
+
+### interrupt job
+
+POST {{url}}/api/quartz/jobs/demo/slowJob/interrupt
+Content-Type: application/x-www-form-urlencoded
+
+// Trigger 控制
+
+### 查询具体的job
+GET {{url}}/api/quartz/jobs/declarative/reportJob
+
+### pause trigger
+POST {{url}}/api/quartz/triggers/declarative/reportJob-trigger/pause
+Content-Type: application/x-www-form-urlencoded
+
+### resume trigger
+POST {{url}}/api/quartz/triggers/declarative/reportJob-trigger/resume
+Content-Type: application/x-www-form-urlencoded
+
+// cron 预览
+
+### +08:00	UTC 时区(全球）偏移量，表示比 UTC 快 8 小时
+GET {{url}}/api/quartz/cron/next?expression=0 0 9 * * ?&timeZone=Asia/Shanghai
+
+// calendar 预览
+###
+GET {{url}}/api/quartz/calendars
+
+###
+POST {{url}}/api/quartz/calendars/cnHolidays/holidays?date=2026-11-14
+Content-Type: application/x-www-form-urlencoded
+
+###
+DELETE {{url}}/api/quartz/calendars/cnHolidays/holidays?date=2026-11-14

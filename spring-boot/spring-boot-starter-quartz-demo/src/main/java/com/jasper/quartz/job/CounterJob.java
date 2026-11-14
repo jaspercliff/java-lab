@@ -30,12 +30,12 @@ public class CounterJob implements Job {
         // JobDetail 上的 JobDataMap 是可变的；本类执行完会被框架写回。
         JobDataMap data = context.getJobDetail().getJobDataMap();
 
-        int current = data.getIntValue("count");
+        int current = Integer.parseInt(data.getString("count"));
         int next = current + 1;
 
-        data.put("count", next);
+        data.put("count", String.valueOf(next));
         // JDBC 模式下值必须可序列化；Long 是安全的。
-        data.put("lastFireTime", System.currentTimeMillis());
+        data.put("lastFireTime", String.valueOf(System.currentTimeMillis()));
 
         log.info("[CounterJob] job={} 第 {} 次执行，累计数据已写回 JobDataMap（lastFireTime={}）",
                 context.getJobDetail().getKey(), next, data.getLongValue("lastFireTime"));

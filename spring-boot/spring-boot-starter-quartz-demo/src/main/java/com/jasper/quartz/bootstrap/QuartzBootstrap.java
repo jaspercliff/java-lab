@@ -127,8 +127,8 @@ public class QuartzBootstrap implements ApplicationRunner {
         JobDetail job = JobBuilder.newJob(FailureJob.class)
                 .withIdentity("failureJob", group)
                 .withDescription("前 2 次失败并 refireImmediately，第 3 次成功")
-                .usingJobData("failTimes", 2)
-                .usingJobData("businessFailTimes", 3) // 模拟业务执行失败的次数3 > 最大重试次数2 会删除trigger
+                .usingJobData("failTimes", "2")
+                .usingJobData("businessFailTimes", "3") // 模拟业务执行失败的次数3 > 最大重试次数2 会删除trigger
                 // JDBC + 集群模式下，节点崩溃后该 Job 会被其他节点恢复执行
                 .requestRecovery(true)
                 .build();
@@ -153,7 +153,7 @@ public class QuartzBootstrap implements ApplicationRunner {
                 .withIdentity("counterJob", group)
                 .withDescription("串行执行并把 count 写回 JobDataMap")
                 // 初始 count；JDBC 模式下后续执行会基于持久化值累加
-                .usingJobData("count", 0)
+                .usingJobData("count", "0")
                 .build();
 
         Trigger trigger = TriggerBuilder.newTrigger()
@@ -178,7 +178,7 @@ public class QuartzBootstrap implements ApplicationRunner {
         JobDetail job = JobBuilder.newJob(SlowJob.class)
                 .withIdentity("slowJob", group)
                 .withDescription("长任务，支持 Scheduler#interrupt")
-                .usingJobData("seconds", 20)
+                .usingJobData("seconds", "20")
                 .build();
 
         Trigger trigger = TriggerBuilder.newTrigger()
@@ -310,6 +310,8 @@ public class QuartzBootstrap implements ApplicationRunner {
                     .storeDurably(job.isDurable())
                     .build();
 
+            //Job 已存在时，是否替换原来的 JobDetail
+            // 更新 JobDetail 时，是否允许临时保存没有 Trigger 关联的非 Durable Job
             scheduler.addJob(updatedJob, true,true);
 
             log.info("Job 已更新: {}", jobKey);
