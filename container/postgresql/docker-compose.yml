@@ -1,0 +1,24 @@
+services:
+  postgres:
+    image: postgres:18
+    container_name: postgres18
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: java_lab
+      POSTGRES_USER: jasper
+      POSTGRES_PASSWORD: passwd
+      TZ: Asia/Shanghai
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U jasper -d java_lab"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+# 数据实际存储在 Docker 管理的 Linux 虚拟机中，不是直接存储在 macOS 文件系统的普通目录里
+volumes:
+  postgres_data:
+    name: java_lab_postgres_data

@@ -1,0 +1,16 @@
+server:
+  port: 18080
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/java_lab
+    username: jasper
+    password: passwd
+    driver-class-name: org.postgresql.Driver
+
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+  flyway:
+    enabled: true
+    locations: classpath:db/migration # 对已有数据库建立基线
+#    validate-on-migrate: true

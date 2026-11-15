@@ -15,6 +15,9 @@ mybatis = "3.5.19"
 mysql-connector = "26.7.0"
 mybatis-plus = "3.5.17"
 sharding-jdbc = "5.5.3"
+postgresql = "42.7.14"
+flyway = "13.12.1"
+
 jedis = "8.0.0"
 lettuce = "7.7.0.RELEASE"
 redisson-starter = "3.52.0"
@@ -62,6 +65,10 @@ lettuce-core = { module = "io.lettuce:lettuce-core", version.ref = "lettuce" }
 mysql-connector-j = { module = "com.mysql:mysql-connector-j", version.ref = "mysql-connector" }
 mybaits = { module = "org.mybatis:mybatis", version.ref = "mybatis" }
 mybatis-plus = { module = "com.baomidou:mybatis-plus-spring-boot3-starter", version.ref = "mybatis-plus" }
+postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
+flyway = {module = "org.flywaydb:flyway-core",version.ref = "flyway"}
+flyway-pg = {module = "org.flywaydb:flyway-database-postgresql",version.ref ="flyway"}
+flyway-mysql = {module ="org.flywaydb:flyway-mysql",version.ref ="flyway"}
 
 sharding-jdbc = { module = "org.apache.shardingsphere:shardingsphere-jdbc", version.ref = "sharding-jdbc" }
 # 5.5.x 起为可选插件，需显式引入

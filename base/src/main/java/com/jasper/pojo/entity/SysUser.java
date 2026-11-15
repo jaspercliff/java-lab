@@ -4,10 +4,9 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -23,8 +22,11 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @TableName("sys_user")
+@AllArgsConstructor
+@NoArgsConstructor
 public class SysUser implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**
@@ -79,13 +81,13 @@ public class SysUser implements Serializable {
      * 状态：0-禁用，1-正常
      */
     @TableField("`status`")
-    private Byte status;
+    private Short status;
 
     /**
      * 是否删除：0-未删除，1-已删除
      */
     @TableField("is_deleted")
-    private Byte isDeleted;
+    private Short isDeleted;
 
     /**
      * 创建时间
