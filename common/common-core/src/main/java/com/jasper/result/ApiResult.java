@@ -77,6 +77,16 @@ public record ApiResult<T>(
         );
     }
 
+    public static <T> ApiResult<T> error(int code, String message,T data) {
+        return new ApiResult<>(
+                code,
+                message,
+                data,
+                Instant.now().toEpochMilli(),
+                currentTraceId()
+        );
+    }
+
     /**
      * 根据统一错误码构建失败响应。
      *
