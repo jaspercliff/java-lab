@@ -1,0 +1,69 @@
+server:
+  port: 18090
+  # 反向代理之后要让文档里的 servers 显示外部地址，需由 Boot 自己处理转发头
+  forward-headers-strategy: framework
+
+spring:
+  application:
+    name: springdoc-swagger-demo
+
+# ---------------------------------------------------------------------------
+# springdoc：负责「生成」OpenAPI 描述
+# ---------------------------------------------------------------------------
+springdoc:
+  api-docs:
+    enabled: true
+    path: /v3/api-docs                 # JSON；YAML 版本自动出现在 /v3/api-docs.yaml
+    # version: openapi_3_0            # springdoc 2.10 默认输出 3.1.0；设成 openapi_3_0 可退回 3.0.1
+                                      # 3.1 下 @Schema 的 types/prefixItems/$id 等 2020-12 关键字才生效
+    groups:
+      enabled: true                   # 允许 /v3/api-docs/{group}；定义 GroupedOpenApi bean 后才有多组
+  swagger-ui:
+    enabled: true                     # ui starter 已随 springdoc-openapi-starter-webmvc-ui 引入
+    path: /swagger-ui.html            # 访问后 302 到 /swagger-ui/index.html
+    operations-sorter: alpha          # alpha / method / 不配置（按声明顺序）
+    tags-sorter: alpha
+    disable-swagger-default-url: true # 去掉顶部 petstore 示例地址
+    persist-authorization: true       # 刷新页面后保留 Authorize 填写的凭据
+    # show-common-extensions: true    # 在 UI 里展示 x- 扩展
+    # doc-expansion: none             # schema 默认折叠级别：none / list / full
+    # urls:                           # 分组文档：定义 GroupedOpenApi 后默认 /v3/api-docs 失效，用它切换
+    #   - url: /v3/api-docs/knowledge
+    #     name: 业务接口
+    #   - url: /v3/api-docs/advanced
+    #     name: OpenAPI 高级特性
+    # urls-primary-name: 业务接口
+  packages-to-scan: com.jasper.springdoc
+  paths-to-match: /api/**
+  # paths-to-exclude: /api/internal/**
+  show-actuator: false               # true 时把 actuator 端点也写进文档
+  cache:
+    disabled: true                   # 开发期关掉缓存，改注解立刻可见
+  # 让 @RestControllerAdvice 类上的 @ApiResponse 合并进「所有」操作的响应列表
+  override-with-generic-response: true
+  default-produces-media-type: application/json
+  default-consumes-media-type: application/json
+  model-and-view-allowed: false
+  writer-with-order-by-keys: true    # 输出 JSON 按 key 排序，便于 diff
+  # disable-i18n: true
+  # pre-loading-enabled: true        # 启动即预生成文档（默认首次请求才生成）
+  model-converters:
+    polymorphic-converter:
+      one-of-as-ref: true            # 多态 oneOf 抽成可复用 component
+      # one-of-ref-suffix: Variant
+    # java-nullable-property-customizer:
+    #   enabled: true                # 让 JSpecify/Spring @Nullable 在 schema 中体现为 nullable
+
+  # 分组的「配置式」写法（与 Java 里的 GroupedOpenApi bean 二选一）。
+  # 注意：一旦存在分组，默认 /v3/api-docs 会失效，Swagger UI 要按上面的 urls 切换。
+  # group-configs:
+  #   - group: knowledge
+  #     display-name: 业务接口
+  #     paths-to-match: /api/knowledge/**
+  #   - group: advanced
+  #     display-name: OpenAPI 高级特性
+  #     paths-to-match: /api/openapi-advanced/**
+
+logging:
+  level:
+    org.springdoc: INFO
