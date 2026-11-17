@@ -1,0 +1,18 @@
+server:
+  port: 18091
+
+spring:
+  application:
+    name: spring-boot-starter-validation-demo
+  messages:
+    # ValidationConfig 把该 MessageSource 挂到 Validator，注解里的 {key} 从这里取
+    basename: i18n/messages
+    encoding: UTF-8
+
+validation:
+  # 默认 false：收集全部字段错误；设 true 后遇到第一个错误即停止（见 ValidationConfig）
+  fail-fast: false
+
+logging:
+  level:
+    com.jasper.validation: INFO
