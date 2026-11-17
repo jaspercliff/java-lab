@@ -1,7 +1,7 @@
 package com.jasper.controller;
 
 import com.jasper.exchange.ProducerClient;
-import com.jasper.result.ApiResponse;
+import com.jasper.result.ApiResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,16 +15,16 @@ public class ExchangeController {
     private final ProducerClient producerClient;
 
     @GetMapping
-    public ApiResponse<String> index() {
+    public ApiResult<String> index() {
         return producerClient.index();
     }
 
     @GetMapping("/test")
-    public ApiResponse<String> test() {
+    public ApiResult<String> test() {
         return producerClient.test();
     }
     @GetMapping("/echo/{str}")
-    public ApiResponse<String> echo(@PathVariable String str) {
+    public ApiResult<String> echo(@PathVariable String str) {
         return producerClient.echo(str);
     }
 }

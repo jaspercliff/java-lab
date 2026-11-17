@@ -1,6 +1,6 @@
 package jasper.controller;
 
-import com.jasper.result.ApiResponse;
+import com.jasper.result.ApiResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +16,7 @@ public class ConsumerRestController {
     private final RestClient producerRestClient;
 
     @GetMapping
-    public ApiResponse<String> index() {
+    public ApiResult<String> index() {
         return producerRestClient.get()
                 .retrieve()
                 .body(new ParameterizedTypeReference<>() {
@@ -24,7 +24,7 @@ public class ConsumerRestController {
     }
 
     @GetMapping("/test")
-    public ApiResponse<String> test() {
+    public ApiResult<String> test() {
         return producerRestClient.get()
                 .uri("/test")
                 .retrieve()
@@ -33,7 +33,7 @@ public class ConsumerRestController {
     }
 
     @GetMapping("/echo/{str}")
-    public ApiResponse<String> echo(@PathVariable String str) {
+    public ApiResult<String> echo(@PathVariable String str) {
         return producerRestClient.get()
                 .uri("/echo/{str}", str)
                 .retrieve()

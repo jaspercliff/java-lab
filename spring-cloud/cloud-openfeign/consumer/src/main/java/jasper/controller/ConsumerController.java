@@ -1,6 +1,6 @@
 package jasper.controller;
 
-import com.jasper.result.ApiResponse;
+import com.jasper.result.ApiResult;
 import jasper.feign.ProducerServiceClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,16 +16,16 @@ public class ConsumerController {
     private final ProducerServiceClient producerServiceClient;
 
     @GetMapping
-    public ApiResponse<String> index() {
+    public ApiResult<String> index() {
         return producerServiceClient.index();
     }
 
     @GetMapping("/test")
-    public ApiResponse<String> test() {
+    public ApiResult<String> test() {
         return producerServiceClient.test();
     }
     @GetMapping("/echo/{str}")
-    public ApiResponse<String> echo(@PathVariable String str) {
+    public ApiResult<String> echo(@PathVariable String str) {
         return producerServiceClient.echo(str);
     }
 }

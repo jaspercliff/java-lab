@@ -2,7 +2,7 @@ package com.jasper.controller;
 
 import com.jasper.pojo.dto.CreateProductRequest;
 import com.jasper.pojo.dto.Product;
-import com.jasper.result.ApiResponse;
+import com.jasper.result.ApiResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -30,7 +30,7 @@ public class ProductController {
      * POST /producer/products
      */
     @PostMapping
-    public ApiResponse<Product> createProduct(
+    public ApiResult<Product> createProduct(
             @RequestBody CreateProductRequest request) {
 
         Product product = new Product(
@@ -40,14 +40,14 @@ public class ProductController {
                 request.stock()
         );
 
-        return ApiResponse.success(product);
+        return ApiResult.success(product);
     }
 
     /**
      * POST /producer/products/1001/stock?quantity=50
      */
     @PostMapping("/{id}/stock")
-    public ApiResponse<Product> updateStock(
+    public ApiResult<Product> updateStock(
             @PathVariable Long id,
             @RequestParam Integer quantity) {
 
@@ -58,11 +58,11 @@ public class ProductController {
                 quantity
         );
 
-        return ApiResponse.success(product);
+        return ApiResult.success(product);
     }
 
     @DeleteMapping("/{id}")
-    public ApiResponse<Product> deleteProduct(@PathVariable Long id) {
+    public ApiResult<Product> deleteProduct(@PathVariable Long id) {
 
         Product product = new Product(
                 id,
@@ -70,6 +70,6 @@ public class ProductController {
                 new BigDecimal("299.00"),
                 100
         );
-        return ApiResponse.success(product);
+        return ApiResult.success(product);
     }
 }

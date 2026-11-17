@@ -1,6 +1,6 @@
 package com.jasper.RESTClients.restClient.controller;
 
-import com.jasper.result.ApiResponse;
+import com.jasper.result.ApiResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +16,7 @@ public class ConsumerRestController {
     private final RestClient producerRestClient;
 
     @GetMapping
-    public ApiResponse<String> index() {
+    public ApiResult<String> index() {
         return producerRestClient
                 .get()
                 .retrieve()
@@ -25,7 +25,7 @@ public class ConsumerRestController {
     }
 
     @GetMapping("/test")
-    public ApiResponse<String> test() {
+    public ApiResult<String> test() {
         return producerRestClient.get()
 // 用 URI 方法指定请求 URI。此步骤为可选步骤，如果 RestClient 配置为默认 URI，可以跳过
 //        通常指定为字符串 ，并可选 URI 模板变量
@@ -37,7 +37,7 @@ public class ConsumerRestController {
     }
 
     @GetMapping("/echo/{str}")
-    public ApiResponse<String> echo(@PathVariable String str) {
+    public ApiResult<String> echo(@PathVariable String str) {
         return producerRestClient.get()
                 .uri("/echo/{str}", str)
                 .retrieve()

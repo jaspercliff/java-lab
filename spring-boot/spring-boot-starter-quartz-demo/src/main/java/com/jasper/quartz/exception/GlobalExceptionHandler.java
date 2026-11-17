@@ -1,7 +1,7 @@
 
 package com.jasper.quartz.exception;
 
-import com.jasper.result.ApiResponse;
+import com.jasper.result.ApiResult;
 import com.jasper.result.ResultCode;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +22,7 @@ public class GlobalExceptionHandler {
      * Job / Trigger 不存在
      */
     @ExceptionHandler(NoSuchElementException.class)
-    public ResponseEntity<ApiResponse<Void>> handleNotFound(
+    public ResponseEntity<ApiResult<Void>> handleNotFound(
             NoSuchElementException ex,
             HttpServletRequest request) {
 
@@ -37,7 +37,7 @@ public class GlobalExceptionHandler {
      * 非法参数：Cron、Job 类、时区等
      */
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<ApiResponse<Void>> handleBadRequest(
+    public ResponseEntity<ApiResult<Void>> handleBadRequest(
             IllegalArgumentException ex,
             HttpServletRequest request) {
 
@@ -52,7 +52,7 @@ public class GlobalExceptionHandler {
      * Job 当前状态不允许中断
      */
     @ExceptionHandler(UnableToInterruptJobException.class)
-    public ResponseEntity<ApiResponse<Void>> handleUnableToInterrupt(
+    public ResponseEntity<ApiResult<Void>> handleUnableToInterrupt(
             UnableToInterruptJobException ex,
             HttpServletRequest request) {
 
@@ -67,7 +67,7 @@ public class GlobalExceptionHandler {
      * Quartz 调度器异常
      */
     @ExceptionHandler(SchedulerException.class)
-    public ResponseEntity<ApiResponse<Void>> handleScheduler(
+    public ResponseEntity<ApiResult<Void>> handleScheduler(
             SchedulerException ex,
             HttpServletRequest request) {
 
@@ -88,7 +88,7 @@ public class GlobalExceptionHandler {
      * 未知异常兜底
      */
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ApiResponse<Void>> handleException(
+    public ResponseEntity<ApiResult<Void>> handleException(
             Exception ex,
             HttpServletRequest request) {
 
@@ -105,12 +105,12 @@ public class GlobalExceptionHandler {
         );
     }
 
-    private ResponseEntity<ApiResponse<Void>> build(
+    private ResponseEntity<ApiResult<Void>> build(
             HttpStatus status,
             ResultCode resultCode,
             String message) {
 
-        ApiResponse<Void> response = ApiResponse.error(
+        ApiResult<Void> response = ApiResult.error(
                 resultCode.getCode(),
                 message
         );

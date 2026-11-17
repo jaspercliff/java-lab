@@ -1,6 +1,6 @@
 package com.jasper.feign;
 
-import com.jasper.result.ApiResponse;
+import com.jasper.result.ApiResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.openfeign.FallbackFactory;
 import org.springframework.stereotype.Component;
@@ -17,18 +17,18 @@ public class ProducerServiceClientFallbackFactory
         return new ProducerServiceClient() {
 
             @Override
-            public ApiResponse<String> index() {
-                return ApiResponse.success("fallback");
+            public ApiResult<String> index() {
+                return ApiResult.success("fallback");
             }
 
             @Override
-            public ApiResponse<String> test() {
-                return ApiResponse.success("fallback");
+            public ApiResult<String> test() {
+                return ApiResult.success("fallback");
             }
 
             @Override
-            public ApiResponse<String> echo(String string) {
-                return ApiResponse.success("fallback");
+            public ApiResult<String> echo(String string) {
+                return ApiResult.success("fallback");
             }
         };
     }

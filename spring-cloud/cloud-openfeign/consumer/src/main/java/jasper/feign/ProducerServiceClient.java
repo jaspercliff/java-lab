@@ -1,6 +1,6 @@
 package jasper.feign;
 
-import com.jasper.result.ApiResponse;
+import com.jasper.result.ApiResult;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface ProducerServiceClient {
 
     @GetMapping
-    ApiResponse<String> index();
+    ApiResult<String> index();
 
     @GetMapping("/test")
-    ApiResponse<String> test();
+    ApiResult<String> test();
 
     @GetMapping("/echo/{string}")
-    ApiResponse<String> echo(@PathVariable("string") String string);
+    ApiResult<String> echo(@PathVariable("string") String string);
 }

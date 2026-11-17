@@ -1,6 +1,6 @@
 package com.jasper.controller;
 
-import com.jasper.result.ApiResponse;
+import com.jasper.result.ApiResult;
 import jakarta.annotation.Resource;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,28 +19,28 @@ public class ConsumerRestController {
     private  RestClient.Builder restClientBuilder;
 
     @GetMapping("index1")
-    public ApiResponse<String> index1() {
+    public ApiResult<String> index1() {
         return restClientBuilder
                 .build()
                 .get()
                 .uri("http://127.0.0.1:8081/producer")
                 .retrieve()
-                .body(new ParameterizedTypeReference<ApiResponse<String>>() {
+                .body(new ParameterizedTypeReference<ApiResult<String>>() {
                 });
     }
     @GetMapping
-    public ApiResponse<String> index() {
+    public ApiResult<String> index() {
         return loadBalanced
                 .build()
                 .get()
                 .uri("http://producer-service-rest/producer")
                 .retrieve()
-                .body(new ParameterizedTypeReference<ApiResponse<String>>() {
+                .body(new ParameterizedTypeReference<ApiResult<String>>() {
                 });
     }
 
     @GetMapping("/test")
-    public ApiResponse<String> test() {
+    public ApiResult<String> test() {
         return loadBalanced.build().get()
                 .uri("http://producer-service-rest/producer/test")
                 .retrieve()
@@ -49,7 +49,7 @@ public class ConsumerRestController {
     }
 
     @GetMapping("/echo/{str}")
-    public ApiResponse<String> echo(@PathVariable String str) {
+    public ApiResult<String> echo(@PathVariable String str) {
         return loadBalanced.build().get()
                 .uri("http://producer-service-rest/producer/echo/{str}", str)
                 .retrieve()

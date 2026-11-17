@@ -2,7 +2,7 @@ package com.jasper.RESTClients.restClient.controller;
 
 import com.jasper.pojo.dto.CreateProductRequest;
 import com.jasper.pojo.dto.Product;
-import com.jasper.result.ApiResponse;
+import com.jasper.result.ApiResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
@@ -39,7 +39,7 @@ public class ProductController {
     }
 
     @PostMapping
-    public ApiResponse<Product> createProduct(@RequestBody CreateProductRequest request){
+    public ApiResult<Product> createProduct(@RequestBody CreateProductRequest request){
         return  restClient.post()
                 .uri("http://localhost:8081/products")
                 // 指定 HTTP 请求和响应的数据格式
@@ -47,17 +47,17 @@ public class ProductController {
                 .accept(MediaType.APPLICATION_JSON)
                 .body(request)
                 .retrieve()
-                .body(new ParameterizedTypeReference<ApiResponse<Product>>() {
+                .body(new ParameterizedTypeReference<ApiResult<Product>>() {
                 });
     }
 
     @DeleteMapping("/{id}")
-    public ApiResponse<Product> deleteProduct(@PathVariable Long id) {
+    public ApiResult<Product> deleteProduct(@PathVariable Long id) {
         return  restClient
                 .delete()
                 .uri("http://localhost:8081/products/{id}", id)
                 .retrieve()
-                .body(new ParameterizedTypeReference<ApiResponse<Product>>() {
+                .body(new ParameterizedTypeReference<ApiResult<Product>>() {
                 });
     }
 }

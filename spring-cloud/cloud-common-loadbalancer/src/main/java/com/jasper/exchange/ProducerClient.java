@@ -1,6 +1,6 @@
 package com.jasper.exchange;
 
-import com.jasper.result.ApiResponse;
+import com.jasper.result.ApiResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.service.annotation.GetExchange;
 import org.springframework.web.service.annotation.HttpExchange;
@@ -9,11 +9,11 @@ import org.springframework.web.service.annotation.HttpExchange;
 public interface ProducerClient {
 
     @GetExchange
-    ApiResponse<String> index();
+    ApiResult<String> index();
 
     @GetExchange("/test")
-    ApiResponse<String> test();
+    ApiResult<String> test();
 
     @GetExchange("/echo/{str}")
-    ApiResponse<String> echo(@PathVariable String str);
+    ApiResult<String> echo(@PathVariable String str);
 }

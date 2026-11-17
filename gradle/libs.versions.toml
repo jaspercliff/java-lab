@@ -28,11 +28,16 @@ jakarta-servlet = "6.1.0"
 resilience4j = "2.4.0"
 spring-boot-admin= "3.5.11"
 prometheus = "1.17.1"
+# springdoc 2.x -> Spring Boot 3.x；3.x 才对应 Spring Boot 4
+springdoc = "2.10.0"
 
 spring = "6.2.19"
 spring-boot = "3.5.16"
 springCloud = "2025.0.0"
 springCloudAlibaba = "2025.0.0.0"
+# RocketMQ Remoting 客户端（4.x 兼容 API，含 ACL / trace / tools）与 5.x gRPC SDK
+rocketmq = "5.5.1"
+rocketmq-v5-sdk = "5.2.2"
 openfeign-jackson = "13.15"
 assertj = "3.27.7"
 mockito = "5.24.0"
@@ -65,6 +70,8 @@ lettuce-core = { module = "io.lettuce:lettuce-core", version.ref = "lettuce" }
 mysql-connector-j = { module = "com.mysql:mysql-connector-j", version.ref = "mysql-connector" }
 mybaits = { module = "org.mybatis:mybatis", version.ref = "mybatis" }
 mybatis-plus = { module = "com.baomidou:mybatis-plus-spring-boot3-starter", version.ref = "mybatis-plus" }
+# 3.5.9+ 分页/租户/动态表名等 SQL 解析插件不在 starter 传递依赖里，需单独引入
+mybatis-plus-jsqlparser = { module = "com.baomidou:mybatis-plus-jsqlparser", version.ref = "mybatis-plus" }
 postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
 flyway = {module = "org.flywaydb:flyway-core",version.ref = "flyway"}
 flyway-pg = {module = "org.flywaydb:flyway-database-postgresql",version.ref ="flyway"}
@@ -100,6 +107,10 @@ spring-boot = { module = "org.springframework.boot:spring-boot" }
 
 bom-springcloud = { module = "org.springframework.cloud:spring-cloud-dependencies", version.ref = "springCloud" }
 bom-alibaba = { module = "com.alibaba.cloud:spring-cloud-alibaba-dependencies", version.ref = "springCloudAlibaba" }
+# RocketMQ：老 SDK（Remoting 协议，DefaultMQProducer/PushConsumer/Admin）与 5.x 新 SDK（gRPC，SimpleConsumer/PushConsumer）
+rocketmq-client = { module = "org.apache.rocketmq:rocketmq-client", version.ref = "rocketmq" }
+rocketmq-tools = { module = "org.apache.rocketmq:rocketmq-tools", version.ref = "rocketmq" }
+rocketmq-client-java = { module = "org.apache.rocketmq:rocketmq-client-java", version.ref = "rocketmq-v5-sdk" }
 spring-boot-configuration-processor = {module="org.springframework.boot:spring-boot-configuration-processor"}
 micrometer-registry-prometheus = {module = "io.micrometer:micrometer-registry-prometheus",version.ref = "prometheus"}
 
@@ -118,8 +129,15 @@ spring-boot-starter-cache = {module = "org.springframework.boot:spring-boot-star
 spring-boot-starter-integration = {module = "org.springframework.boot:spring-boot-starter-integration"}
 
 spring-boot-starter-quartz = {module = "org.springframework.boot:spring-boot-starter-quartz"}
+spring-boot-starter-validation = { module = "org.springframework.boot:spring-boot-starter-validation" }
 
 ###################################### third starter
+
+# springdoc 官方整合 starter：传递引入 springdoc-openapi-starter-webmvc-api（生成 /v3/api-docs）
+# + springdoc-openapi-starter-webmvc-ui（渲染 /swagger-ui.html），不需要再单独声明这两个依赖
+springdoc-openapi-starter-webmvc-ui = { module = "org.springdoc:springdoc-openapi-starter-webmvc-ui", version.ref = "springdoc" }
+# 只要 JSON/YAML、不要任何 UI 时用这个（与上面的 ui starter 二选一）
+springdoc-openapi-starter-webmvc-api = { module = "org.springdoc:springdoc-openapi-starter-webmvc-api", version.ref = "springdoc" }
 
 redisson-spring-boot-starter = { module = "org.redisson:redisson-spring-boot-starter", version.ref = "redisson-starter" }
 resilience4j-spring-boot3 = {module ="io.github.resilience4j:resilience4j-spring-boot3",version.ref = "resilience4j"}

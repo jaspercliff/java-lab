@@ -1,6 +1,6 @@
 package jasper.controller;
 
-import com.jasper.result.ApiResponse;
+import com.jasper.result.ApiResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,23 +17,23 @@ public class ConsumerWebClientController {
     private final WebClient webClient;
 
     @GetMapping
-    public Mono<ApiResponse<String>> index() {
+    public Mono<ApiResult<String>> index() {
         return webClient.get()
                 .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<ApiResponse<String>>() {});
+                .bodyToMono(new ParameterizedTypeReference<ApiResult<String>>() {});
     }
 
     @GetMapping("/test")
-    public Mono<ApiResponse<String>> test() {
+    public Mono<ApiResult<String>> test() {
         return webClient.get()
                 .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<ApiResponse<String>>() {});
+                .bodyToMono(new ParameterizedTypeReference<ApiResult<String>>() {});
     }
 
     @GetMapping("/echo/{str}")
-    public Mono<ApiResponse<String>> echo(@PathVariable String str) {
+    public Mono<ApiResult<String>> echo(@PathVariable String str) {
         return webClient.get()
                 .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<ApiResponse<String>>() {});
+                .bodyToMono(new ParameterizedTypeReference<ApiResult<String>>() {});
     }
 }
