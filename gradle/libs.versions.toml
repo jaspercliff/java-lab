@@ -55,6 +55,9 @@ mapstruct-processor = { module = "org.mapstruct:mapstruct-processor", version.re
 #mapstruct 读取 lombok生成的getter setter 等
 mapstruct-lombok-binding = { module = "org.projectlombok:lombok-mapstruct-binding", version.ref = "mapstruct-lombok" }
 jackson = {module = "tools.jackson.core:jackson-databind",version.ref = "jackson"}
+# Spring Boot 3.x 使用的是 Jackson 2（com.fasterxml.jackson），与上面的 Jackson 3 并存
+jackson2-databind = { module = "com.fasterxml.jackson.core:jackson-databind" }
+jackson-datatype-jsr310 = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310" }
 ttl = {module= "com.alibaba:transmittable-thread-local",version.ref = "ttl"}
 cglib = {module = "cglib:cglib",version.ref = "cglib"}
 jakarta-annotation = {module = "jakarta.annotation:jakarta.annotation-api",version.ref="jakarta-annotation"}
@@ -147,6 +150,7 @@ spring-boot-admin-starter-client = {module = "de.codecentric:spring-boot-admin-s
 ###################################### cloud
 openfeign = { group = "org.springframework.cloud", name = "spring-cloud-starter-openfeign"}
 openfeign-jackson = {module = "io.github.openfeign:feign-jackson",version.ref="openfeign-jackson"}
+feign-core = { module = "io.github.openfeign:feign-core", version.ref = "openfeign-jackson" }
 nacos-discovery = { group = "com.alibaba.cloud", name = "spring-cloud-starter-alibaba-nacos-discovery" }
 nacos-config = { group = "com.alibaba.cloud", name = "spring-cloud-starter-alibaba-nacos-config" }
 seata = { group = "com.alibaba.cloud", name = "spring-cloud-starter-alibaba-seata" }
