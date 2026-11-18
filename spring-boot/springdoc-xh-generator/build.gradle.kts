@@ -7,7 +7,7 @@ plugins {
 
 dependencies {
     // OpenAPI 是 JSON，用 Jackson 3 解析成 JsonNode（无需引入 swagger-parser 整套模型）
-    implementation(libs.jackson)
+    implementation(libs.jackson.databind)
 }
 
 application {

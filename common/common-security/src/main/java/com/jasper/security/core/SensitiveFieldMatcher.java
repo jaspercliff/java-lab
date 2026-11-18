@@ -47,6 +47,7 @@ public final class SensitiveFieldMatcher {
         if (lower.contains("phone") || lower.contains("mobile")) {
             return SensitiveType.PHONE;
         }
+        //noinspection SpellCheckingInspection
         if (lower.contains("idcard") || lower.contains("idno") || lower.contains("identity")) {
             return SensitiveType.ID_CARD;
         }

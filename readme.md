@@ -11,10 +11,14 @@ gradle 依赖管理
 ## common 
 
 - 单独一个工程 通用模块 其他项目也可以导入
-- `common-core` 的 `BusinessException` 支持传 `IResultCode` 枚举，`ApiResult.code` 直接取枚举码；
-  旧 String code 构造保留，按 400 处理
+- **完整说明书见 [`common/readme.md`](common/readme.md)**（模块地图、工具类清单、脱敏用法、发布与踩坑）
+- `common-core`：`ApiResult.code` 改为 String，系统码为 "400"/"500"，业务码为 "RB1001" 形式
+- `IBusinessResultCode extends IEnum<String>`：`getCode()`=业务码、`getDesc()`=默认描述、`getMsg()`=i18n key；
+  `IResultCode` 默认 `getI18nKey()` = "SYS" + 数字码。业务码与系统码分开两套枚举
+- `BusinessException` 支持系统码枚举、业务码枚举、传统 String code 三种构造，均携带 i18nKey
 - `common-security`：脱敏纯逻辑（`@Sensitive` / `SensitiveType` / `SensitiveFieldMatcher`），不依赖 Spring；
   `SensitiveType implements IEnum<String>`；发布坐标 `com.jasper:common-security:1.0.0`
+- `TimeTracker` 新增 `silent(name)` 静默计时与 `elapsedMillis()`，供访问日志这类需要自定义日志级别的场景复用
 
 ## container 
 
@@ -62,11 +66,15 @@ gradle 依赖管理
 
 ### common-web-spring-boot-starter
 
+- 错误文案国际化：`WebI18nAutoConfiguration` 注册 MessageSource，basename 默认 `i18n/system`（SYS400、VALIDATION_BODY 等）
+  与 `i18n/business`（RB9999=stock not enough），按 Accept-Language 切换；
+  可用 `jasper.web.i18n.basenames` / `.encoding` 覆盖，key 不存在时回退默认文案
+- ApiResult.code 为字符串：业务异常返回 RB1001 这类业务码，系统异常返回 "400"/"500"
 - 校验异常的 `rejectedValue` 经 security starter 脱敏，密码/token 不回显；访问日志复用同一份敏感字段配置
 - 全局异常处理，统一返回 common 的 `ApiResult`：业务异常、三类参数校验异常、请求体/参数错误、
   405/404/413/415、下游调用 502/503，兜底 500；500 默认不暴露异常 message（日志始终打完整堆栈）
 - 成功响应自动包装 `ApiResult.success`，`@IgnoreApiResult` 可跳过；ResponseEntity/文件/SSE 自动跳过
-- 请求访问日志（方法/URI/脱敏参数/状态码/耗时/traceId），慢请求与 5xx 走 WARN
+- 请求访问日志（方法/URI/脱敏参数/状态码/耗时/traceId），耗时复用 common-core 的 `TimeTracker.silent()`（nanoTime），慢请求与 5xx 走 WARN
 - Jackson 全局约定：`yyyy-MM-dd HH:mm:ss`、`Asia/Shanghai`、Long/BigInteger 转字符串、忽略 null
 - 只装配在 Servlet Web 应用；总开关 `jasper.web.enabled=false`，
   子开关 `jasper.web.response.enabled`、`jasper.web.access-log.enabled`、`jasper.jackson.enabled`；

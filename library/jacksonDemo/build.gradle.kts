@@ -3,5 +3,6 @@ plugins {
 }
 
 dependencies{
-    implementation(libs.jackson)
+    implementation(libs.jackson2.databind)
+    implementation(libs.jackson.databind)
 }

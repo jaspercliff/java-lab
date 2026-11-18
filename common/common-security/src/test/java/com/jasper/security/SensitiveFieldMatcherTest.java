@@ -41,6 +41,7 @@ class SensitiveFieldMatcherTest {
         assertThat(SensitiveType.mask(null, SensitiveType.MASK)).isNull();
         assertThat(SensitiveType.mask("", SensitiveType.MASK)).isEmpty();
         assertThat(SensitiveType.mask("ab", SensitiveType.KEEP_EDGE)).isEqualTo("******");
+        assertThat(SensitiveType.mask("abc123", SensitiveType.KEEP_EDGE)).isEqualTo("a******3");
         assertThat(SensitiveType.mask("138123", SensitiveType.PHONE)).isEqualTo("1******3");
         // 14 位不是标准身份证号，退化为保留首尾
         assertThat(SensitiveType.mask("11010119900101", SensitiveType.ID_CARD)).isEqualTo("1******1");

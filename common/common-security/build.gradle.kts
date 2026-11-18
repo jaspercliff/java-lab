@@ -13,9 +13,11 @@ repositories {
 }
 
 dependencies {
-    // 对外可见类型：SensitiveType implements IEnum、@Sensitive 引用 Jackson 注解
+    // 对外可见类型：SensitiveType implements IEnum、@Sensitive 引用两套 Jackson 注解
     api("com.jasper:common-core:1.0.0")
     api(libs.jackson.databind)
+    // Spring Boot 3.5 内置 Jackson 2，@Sensitive 需要兼容两套序列化器
+    api(libs.jackson2.databind)
 
     testImplementation(platform(libs.junit.bom))
     testImplementation(libs.bundles.junit)

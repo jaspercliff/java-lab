@@ -8,6 +8,8 @@ ttl = "2.14.5"
 mapstruct = "1.6.3"
 mapstruct-lombok = "0.2.0"
 jackson = "3.2.2"
+# Spring Boot 3.5 内置 Jackson 2，web starter 需要兼容，锁定同一版本
+jackson2 = "2.19.2"
 cglib = "3.3.0"
 
 aspectj = "1.9.24"
@@ -54,10 +56,12 @@ mapstruct = { module = "org.mapstruct:mapstruct", version.ref = "mapstruct" }
 mapstruct-processor = { module = "org.mapstruct:mapstruct-processor", version.ref = "mapstruct" }
 #mapstruct 读取 lombok生成的getter setter 等
 mapstruct-lombok-binding = { module = "org.projectlombok:lombok-mapstruct-binding", version.ref = "mapstruct-lombok" }
-jackson = {module = "tools.jackson.core:jackson-databind",version.ref = "jackson"}
-# Spring Boot 3.x 使用的是 Jackson 2（com.fasterxml.jackson），与上面的 Jackson 3 并存
-jackson2-databind = { module = "com.fasterxml.jackson.core:jackson-databind" }
+# Jackson 3（tools.jackson.*）
+jackson-databind = { module = "tools.jackson.core:jackson-databind", version.ref = "jackson" }
+# Jackson 2（com.fasterxml.jackson.*），供 Spring Boot 3.5 的 web starter 双注解兼容
+jackson2-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson2" }
 jackson-datatype-jsr310 = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310" }
+
 ttl = {module= "com.alibaba:transmittable-thread-local",version.ref = "ttl"}
 cglib = {module = "cglib:cglib",version.ref = "cglib"}
 jakarta-annotation = {module = "jakarta.annotation:jakarta.annotation-api",version.ref="jakarta-annotation"}
