@@ -15,11 +15,13 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
+ * see also spring lab integration {@link IntegrationApplication}
  * async method
  * new thread（）<br>
  * @Async  <br>
  * TaskExecutor SimpleAsyncTaskExecutor  ThreadPoolTaskExecutor
  */
+@SuppressWarnings("JavadocReference")
 @Configuration
 @EnableScheduling
 @EnableAsync

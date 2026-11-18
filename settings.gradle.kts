@@ -124,3 +124,5 @@ include("spring-boot:springdoc-demo")
 include("spring-boot:springdoc-xh-generator")
 include("spring-boot:spring-boot-starter-validation-demo")
 include("spring-boot:spring-boot-starter-web")
+
+include("spring-boot:spring-boot-application")
