@@ -1,0 +1,7 @@
+com.jasper.web.config.WebI18nAutoConfiguration
+com.jasper.web.config.WebAutoConfiguration
+com.jasper.web.config.WebResponseAutoConfiguration
+com.jasper.web.config.WebAccessLogAutoConfiguration
+com.jasper.web.config.JacksonAutoConfiguration
+com.jasper.web.config.DownstreamExceptionAutoConfiguration
+com.jasper.web.config.FeignExceptionAutoConfiguration
