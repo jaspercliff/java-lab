@@ -4,3 +4,10 @@ server:
 spring:
   messages:
     basename: i18n/messages
+  main:
+    #     建议将属性spring.main.keep-alive设置为true。
+    #     这样即便所有线程都是虚拟线程，JVM 也能保持运行状态
+    keep-alive: true
+  threads:
+    virtual:
+      enabled: true # 虚拟线程

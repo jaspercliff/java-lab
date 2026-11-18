@@ -8,6 +8,7 @@ import org.springframework.mock.web.MockFilterChain;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.web.servlet.HandlerMapping;
+import org.springframework.web.util.ContentCachingResponseWrapper;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -138,6 +139,44 @@ class AccessLogFilterTest {
 
         // 关闭捕获时透传原始 request，下游仍读得到 body
         assertThat(chain.getRequest()).isSameAs(request);
+    }
+
+    @Test
+    void decodesUtf8JsonResponseBodyWhenEncodingIsLatin1() throws Exception {
+        // 容器默认 getCharacterEncoding()=ISO-8859-1，但 Jackson 按 UTF-8 写出 application/json
+        MockHttpServletResponse raw = new MockHttpServletResponse();
+        ContentCachingResponseWrapper cached = new ContentCachingResponseWrapper(raw);
+        cached.setContentType("application/json");
+        cached.getOutputStream().write("{\"message\":\"操作成功\"}".getBytes(StandardCharsets.UTF_8));
+
+        java.lang.reflect.Method method = AccessLogFilter.class.getDeclaredMethod(
+                "readResponseBody", ContentCachingResponseWrapper.class);
+        method.setAccessible(true);
+        String body = (String) method.invoke(filter, cached);
+
+        assertThat(body).contains("操作成功").doesNotContain("æ");
+    }
+
+    @Test
+    void decodesUtf8JsonRequestBodyWhenEncodingIsLatin1() throws Exception {
+        MockHttpServletRequest request = new MockHttpServletRequest("POST", "/api/user");
+        request.setContentType("application/json");
+        request.setCharacterEncoding("ISO-8859-1");
+        request.setContent("{\"name\":\"张三\"}".getBytes(StandardCharsets.UTF_8));
+
+        String body = readRequestBodyViaChain(request);
+
+        assertThat(body).contains("张三").doesNotContain("å¼");
+    }
+
+    @Test
+    void respectsExplicitCharsetInContentType() throws Exception {
+        MockHttpServletRequest request = new MockHttpServletRequest("POST", "/api/user");
+        request.setContentType("text/plain;charset=ISO-8859-1");
+        // é 在 ISO-8859-1 是单字节 0xE9；若误用 UTF-8 解码会变成 Ã©
+        request.setContent("café".getBytes(StandardCharsets.ISO_8859_1));
+
+        assertThat(readRequestBodyViaChain(request)).contains("café").doesNotContain("Ã");
     }
 
     /** 借助 filter 的响应体回写链路，取出脱敏后的请求体断言（通过反射调用私有方法）。 */

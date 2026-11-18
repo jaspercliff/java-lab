@@ -159,10 +159,43 @@ public class AccessLogFilter extends OncePerRequestFilter {
         if (content.length == 0) {
             return "";
         }
-        Charset charset = charset(encoding);
+        Charset charset = resolveCharset(encoding, contentType);
         int length = Math.min(content.length, properties.maxBodyLength());
         String body = new String(content, 0, length, charset);
         return maskBody(body, contentType);
+    }
+
+    /**
+     * 解析 body 字符集。Servlet 容器在响应未显式设置 charset 时，
+     * getCharacterEncoding() 默认返回 ISO-8859-1，而 Spring MVC 的 Jackson 消息转换器
+     * 固定按 UTF-8 写出 JSON（Content-Type 为 application/json，不带 charset 参数），
+     * 直接用容器返回值解码会把中文解成乱码。
+     *
+     * <p>优先级：Content-Type 显式 charset &gt; JSON 固定 UTF-8 &gt; 非容器默认的 encoding &gt; UTF-8。
+     */
+    private static Charset resolveCharset(String encoding, String contentType) {
+        if (contentType != null) {
+            Charset declared = declaredCharset(contentType);
+            if (declared != null) {
+                return declared;
+            }
+            if (contentType.toLowerCase(Locale.ROOT).contains("json")) {
+                return StandardCharsets.UTF_8;
+            }
+        }
+        Charset resolved = charset(encoding);
+        return StandardCharsets.ISO_8859_1.equals(resolved) ? StandardCharsets.UTF_8 : resolved;
+    }
+
+    /** 从 Content-Type 中解析 charset 参数，形如 {@code application/json;charset=UTF-8}。 */
+    private static Charset declaredCharset(String contentType) {
+        for (String part : contentType.split(";")) {
+            String trimmed = part.trim();
+            if (trimmed.toLowerCase(Locale.ROOT).startsWith("charset=")) {
+                return charset(trimmed.substring("charset=".length()).replace("\"", "").trim());
+            }
+        }
+        return null;
     }
 
     private String maskBody(String body, String contentType) {

@@ -4,9 +4,7 @@ plugins {
 
 dependencies {
     implementation(libs.spring.boot.starter.web)
-    implementation(libs.spring.boot.starter.jdbc)
-    implementation(libs.mysql.connector.j)
-    implementation(libs.mybatis.plus)
-
     implementation(project(":spring-boot:jasper-starter:jasper-spring-boot-starter"))
+    implementation(project(":spring-boot:common-web-spring-boot-starter"))
+    implementation(project(":spring-boot:common-trace-spring-boot-starter"))
 }

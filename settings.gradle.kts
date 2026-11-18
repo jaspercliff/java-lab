@@ -23,7 +23,6 @@ rootProject.name = "java-lab"
 
 include("java-basic")
 
-include("bootApplication")
 // spring-boot-starter
 include("spring-boot:spring-boot-starter-jdbc-demo")
 include("dataStructure")
@@ -102,7 +101,6 @@ include("spring-boot:resilience4j-boot")
 include("spring-boot:spring-boot-starter-actuator-demo")
 include("spring-boot:spring-boot-admin-server")
 include("spring-boot:spring-boot-starter-cache-demo")
-include("spring-boot:spring-boot-starter-integration-demo")
 include("dataAccess:mybatis-plus-demo")
 include("dataAccess:jpa-demo")
 include("library:vavrDemo")

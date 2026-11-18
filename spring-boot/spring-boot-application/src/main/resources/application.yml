@@ -1,0 +1,10 @@
+server:
+  port: 18080
+spring:
+  application:
+    name: bootApplication
+# starter
+jasper:
+  hello:
+    enabled: true
+    name: cliff
