@@ -14,6 +14,11 @@ public final class SensitiveFieldMatcher {
 
     public static final String MASK = "******";
 
+    /** 默认敏感字段关键字，与 security starter 的 SensitiveProperties 保持一致，供无 Spring 上下文的组件复用。 */
+    public static final List<String> DEFAULT_FIELDS = List.of(
+            "password", "pwd", "token", "secret", "accessKey",
+            "authorization", "credentials", "phone", "mobile", "idCard");
+
     private final List<String> normalizedFields;
 
     public SensitiveFieldMatcher(Collection<String> fields) {
