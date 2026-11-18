@@ -17,6 +17,8 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.BindException;
+import org.springframework.validation.FieldError;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -129,11 +131,21 @@ public class GlobalExceptionHandler {
         return ApiResult.error(CODE_BAD_REQUEST, message("BAD_REQUEST_JSON", "请求体格式错误"));
     }
 
-    /** 缺少必填参数 / 参数类型不匹配。 */
-    @ExceptionHandler({MissingServletRequestParameterException.class, MethodArgumentTypeMismatchException.class})
+    /**
+     * 处理 @RequestParam / @PathVariable 参数校验失败或绑定异常
+     */
+    @ExceptionHandler({BindException.class, MissingServletRequestParameterException.class, MethodArgumentTypeMismatchException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiResult<Void> handleBadRequest(Exception ex, HttpServletRequest request) {
-        log.warn("请求参数错误 {}: {}", request.getRequestURI(), ex.getMessage());
+    public ApiResult<Void> handleBindException(Exception e) {
+        String message = switch (e) {
+            case BindException bindEx -> bindEx.getFieldErrors().stream()
+                    .map(FieldError::getDefaultMessage)
+                    .collect(Collectors.joining("; "));
+            case MissingServletRequestParameterException missEx -> "缺少必填参数: " + missEx.getParameterName();
+            case MethodArgumentTypeMismatchException typeEx -> "参数类型错误: " + typeEx.getName();
+            default -> "参数绑定异常";
+        };
+        log.warn("参数绑定异常: {}", message);
         return ApiResult.error(CODE_BAD_REQUEST,
                 message(ResultCode.BAD_REQUEST.getI18nKey(), ResultCode.BAD_REQUEST.getMsg()));
     }
