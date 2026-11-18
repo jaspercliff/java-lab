@@ -5,7 +5,6 @@ plugins {
 dependencies {
     implementation(libs.spring.boot.starter.web)
     implementation(libs.springdoc.openapi.starter.webmvc.ui)
-    implementation(project(":spring-boot:common-trace-spring-boot-starter"))
 }
 
 // spring-boot-convention 只带 spring-boot-starter-test，没有开启 JUnit Platform

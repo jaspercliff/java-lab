@@ -1,4 +1,4 @@
-package com.jasper.config.filter;
+package com.jasper.filter;
 
 import jakarta.servlet.*;
 import lombok.extern.slf4j.Slf4j;

@@ -1,11 +1,9 @@
-package com.jasper.config.filter;
+package com.jasper.filter;
 
 import jakarta.servlet.DispatcherType;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import javax.swing.*;
 
 /**
  * 与具体的业务逻辑无关，属于 Web 层面的基础预处理/后处理，或者需要修改请求/响应流

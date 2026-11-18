@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <configuration>
 
-    <!-- 控制台输出 -->
+    <property name="LOG_PATTERN"
+              value="%cyan(%d{yyyy-MM-dd HH:mm:ss.SSS}) [%thread] %highlight(%-5level) %green([%X{traceId:-}]) %blue(%logger{50}) - %msg%n"/>
+
     <appender name="CONSOLE"
               class="ch.qos.logback.core.ConsoleAppender">
 
         <encoder>
-            <pattern>
-                %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%X{traceId}] %-5level %logger{50} - %msg%n
-            </pattern>
+            <pattern>${LOG_PATTERN}</pattern>
+            <charset>UTF-8</charset>
         </encoder>
-
     </appender>
-
-    <!-- Root Logger -->
 
     <root level="INFO">
         <appender-ref ref="CONSOLE"/>

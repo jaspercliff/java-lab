@@ -1,4 +1,4 @@
-package com.jasper.config.anno;
+package com.jasper.anno;
 
 import java.lang.annotation.*;
 

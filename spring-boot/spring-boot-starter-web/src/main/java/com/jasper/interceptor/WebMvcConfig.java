@@ -1,4 +1,4 @@
-package com.jasper.config.interceptor;
+package com.jasper.interceptor;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -12,7 +12,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
             InterceptorRegistry registry) {
 
         registry.addInterceptor(new AuthInterceptor())
-                .addPathPatterns("/api/**")
                 .addPathPatterns("/**");
 //                .excludePathPatterns(
 //                        "/login",

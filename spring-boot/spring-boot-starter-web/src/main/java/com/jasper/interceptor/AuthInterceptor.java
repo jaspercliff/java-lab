@@ -1,23 +1,25 @@
-package com.jasper.config.interceptor;
+package com.jasper.interceptor;
 
-import com.jasper.config.anno.Auth;
+import com.jasper.anno.Auth;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+@Slf4j
 public class AuthInterceptor implements HandlerInterceptor {
 
     public static final ThreadLocal<String> CURRENT_USER = new ThreadLocal<>();
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(@NonNull HttpServletRequest request,
+                             @NonNull HttpServletResponse response, @NonNull Object handler) throws Exception {
         
-        if (!(handler instanceof HandlerMethod)) {
+        if (!(handler instanceof HandlerMethod handlerMethod)) {
             return true; 
         }
-
-        HandlerMethod handlerMethod = (HandlerMethod) handler;
 
         Auth methodAuth = handlerMethod.getMethodAnnotation(Auth.class);
         Auth classAuth = handlerMethod.getBeanType().getAnnotation(Auth.class);
@@ -29,7 +31,8 @@ public class AuthInterceptor implements HandlerInterceptor {
 
         //  如果有 @Auth 注解，说明需要鉴权，开始校验 Token
         String token = request.getHeader("Authorization");
-        if (token == null || !validateToken(token)) {
+        if (!validateToken(token)) {
+            log.error("未登录或Token已过期，请先login");
             // 鉴权失败，返回 401
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.setContentType("application/json;charset=UTF-8");
@@ -45,7 +48,9 @@ public class AuthInterceptor implements HandlerInterceptor {
     }
 
     @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+    public void afterCompletion(@NonNull HttpServletRequest request,
+                                @NonNull HttpServletResponse response,
+                                @NonNull Object handler, Exception ex) throws Exception {
         // 请求结束，清理 ThreadLocal 防止内存泄漏
         CURRENT_USER.remove();
     }
