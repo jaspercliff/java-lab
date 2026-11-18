@@ -11,8 +11,8 @@ import java.time.Instant;
  *
  * <p>用于规范接口成功和失败时的响应格式，包含：
  * <ul>
- *     <li>code：业务响应码</li>
- *     <li>message：响应描述</li>
+ *     <li>code：响应码，系统码为 "400"/"500" 字符串，业务码为 "RB1001" 形式</li>
+ *     <li>message：国际化后的响应描述</li>
  *     <li>data：响应数据</li>
  *     <li>timestamp：响应时间戳（毫秒）</li>
  *     <li>traceId：请求追踪 ID</li>
@@ -25,7 +25,7 @@ import java.time.Instant;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record ApiResult<T>(
-        int code,
+        String code,
         String message,
         T data,
         long timestamp,
@@ -41,7 +41,7 @@ public record ApiResult<T>(
      */
     public static <T> ApiResult<T> success(T data) {
         return new ApiResult<>(
-                ResultCode.SUCCESS.getCode(),
+                String.valueOf(ResultCode.SUCCESS.getCode()),
                 ResultCode.SUCCESS.getMsg(),
                 data,
                 Instant.now().toEpochMilli(),
@@ -59,15 +59,25 @@ public record ApiResult<T>(
         return success(null);
     }
 
+    /** 兼容旧的 int 系统码调用方式。 */
+    public static <T> ApiResult<T> error(int code, String message) {
+        return error(String.valueOf(code), message);
+    }
+
+    /** 兼容旧的 int 系统码调用方式。 */
+    public static <T> ApiResult<T> error(int code, String message, T data) {
+        return error(String.valueOf(code), message, data);
+    }
+
     /**
-     * 构建失败响应。
+     * 构建失败响应，code 可传系统码字符串或业务码（如 RB1001）。
      *
-     * @param code    业务错误码
-     * @param message 错误描述
+     * @param code    响应码
+     * @param message 已国际化的错误描述
      * @param <T>     响应数据类型
      * @return 失败响应
      */
-    public static <T> ApiResult<T> error(int code, String message) {
+    public static <T> ApiResult<T> error(String code, String message) {
         return new ApiResult<>(
                 code,
                 message,
@@ -77,7 +87,7 @@ public record ApiResult<T>(
         );
     }
 
-    public static <T> ApiResult<T> error(int code, String message,T data) {
+    public static <T> ApiResult<T> error(String code, String message, T data) {
         return new ApiResult<>(
                 code,
                 message,
@@ -88,14 +98,26 @@ public record ApiResult<T>(
     }
 
     /**
-     * 根据统一错误码构建失败响应。
+     * 根据系统错误码构建失败响应。
      *
-     * @param resultCode 统一错误码
+     * @param resultCode 系统错误码
      * @param <T>        响应数据类型
      * @return 失败响应
      */
     public static <T> ApiResult<T> error(ResultCode resultCode) {
-        return error(resultCode.getCode(), resultCode.getMsg());
+        return error(String.valueOf(resultCode.getCode()), resultCode.getMsg());
+    }
+
+    /**
+     * 根据业务错误码构建失败响应，code 为 RB1001 形式。
+     *
+     * @param businessCode 业务错误码
+     * @param message      已国际化的错误描述
+     * @param <T>          响应数据类型
+     * @return 失败响应
+     */
+    public static <T> ApiResult<T> error(IBusinessResultCode businessCode, String message) {
+        return error(businessCode.getCode(), message);
     }
 
     /**

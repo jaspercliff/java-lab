@@ -17,6 +17,7 @@ public class TimeTracker implements AutoCloseable {
 
     private final String name;
     private final long start;
+    private final boolean silent;
     private boolean success = true;
 
     private static String indent(int level) {
@@ -24,16 +25,38 @@ public class TimeTracker implements AutoCloseable {
     }
 
     public TimeTracker(String name) {
+        this(name, false);
+    }
+
+    private TimeTracker(String name, boolean silent) {
         this.name = name;
         this.start = System.nanoTime();
-        int level = LEVEL.get();
-        // log.atInfo().log(() -> indent(level) + ">" + name);
-        log.info("{} {} start", indent(level), name);
-        LEVEL.set(level + 1);
+        this.silent = silent;
+        if (!silent) {
+            int level = LEVEL.get();
+            // log.atInfo().log(() -> indent(level) + ">" + name);
+            log.info("{} {} start", indent(level), name);
+            LEVEL.set(level + 1);
+        }
     }
 
     public static TimeTracker start(String name) {
         return new TimeTracker(name);
+    }
+
+    /**
+     * 静默计时：不打日志、不改动嵌套层级，只提供基于 nanoTime 的耗时。
+     *
+     * <p>适合访问日志这类需要自行组织日志级别（慢请求 WARN）与字段（traceId、状态码）的场景，
+     * 避免 start/end 两条日志把一次请求拆成两条记录。
+     */
+    public static TimeTracker silent(String name) {
+        return new TimeTracker(name, true);
+    }
+
+    /** 已耗时（毫秒），基于 nanoTime，不受系统时钟调整影响。 */
+    public long elapsedMillis() {
+        return TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - start);
     }
 
     public void fail() {
@@ -42,11 +65,14 @@ public class TimeTracker implements AutoCloseable {
 
     @Override
     public void close() {
+        if (silent) {
+            return;
+        }
         int currentLevel = LEVEL.get();
         int parentLevel = Math.max(0, currentLevel - 1);
 
         try {
-            long elapsed = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - start);
+            long elapsed = elapsedMillis();
             log.info(
                     "{} name:{}  elapsed:{} ms, success:{}",
                     indent(parentLevel),
